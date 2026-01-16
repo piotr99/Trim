@@ -1,0 +1,75 @@
+﻿@page
+@model Trim.Pages.Salesperson.ManageVehicles
+@{
+    ViewData["Title"] = "Manage vehicles";
+}
+<link rel="stylesheet" href="~/css/Container.css" />
+
+<div class="container1">
+    <div class="left-panel">
+
+        <button type="button" class="btn btn-success w-100 mb-3 js-add-vehicle">
+            Dodaj pojazd
+        </button>
+        
+        <form method="get" class="mb-3">
+            <div class="form-group mb-2">
+                <label asp-for="Filter">Filter</label>
+                <input asp-for="Filter" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Filtruj</button>
+            <a class="btn btn-outline-secondary" asp-page="/Salesperson/ManageVehicles">Wyczyść</a>
+        </form>
+
+        @foreach (var vehicle in Model.Vehicles)
+        {
+            <button type="button"
+                    class="item-button d-block text-decoration-none js-vehicle"
+                    data-id="@vehicle.Id">
+                <div class="item-button-main">
+                    <span class="item-name">@vehicle.Name</span>
+                    <p>@vehicle.Vin</p>
+                </div>
+            </button>
+        }
+        <div class="page-buttons mt-3 d-flex align-items-center gap-2">
+            <a class="btn btn-outline-primary @(Model.HasPrev ? "" : "disabled")"
+               asp-page="/Salesperson/ManageVehicles"
+               asp-route-Filter="@Model.Filter"
+               asp-route-CurrentPage="@(Model.CurrentPage - 1)">
+                -1
+            </a>
+
+            <span>@Model.CurrentPage / @Model.TotalPages</span>
+
+            <a class="btn btn-outline-primary @(Model.HasNext ? "" : "disabled")"
+               asp-page="/Salesperson/ManageVehicles"
+               asp-route-Filter="@Model.Filter"
+               asp-route-CurrentPage="@(Model.CurrentPage + 1)">
+                +1
+            </a>
+        </div>
+        
+        @Html.AntiForgeryToken()
+    </div>
+
+    <div class="right-panel" id="rightPanel">
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+document.querySelectorAll('.js-vehicle').forEach(b => b.onclick = async () => {
+  const t = document.querySelector('input[name="__RequestVerificationToken"]').value;
+  const id = b.dataset.id;
+  const r = await fetch('?handler=VehicleDetailsPartial', {
+    method: 'POST',
+    headers: {'Content-Type':'application/x-www-form-urlencoded'},
+    body: `vehicleId=${encodeURIComponent(id)}&__RequestVerificationToken=${encodeURIComponent(t)}`
+  });
+  document.getElementById('rightPanel').innerHTML = await r.text();
+});
+</script>
+}
+

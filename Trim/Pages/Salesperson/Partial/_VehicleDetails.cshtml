@@ -1,0 +1,13 @@
+﻿@model Trim.Models.Vehicle
+
+@if (Model == null)
+{
+    <p>Wybierz pojazd z listy.</p>
+}
+else
+{
+    <h2>@Model.Name</h2>
+    <p><strong>VIN:</strong> @Model.Vin</p>
+    <p><strong>Status:</strong> @Model.Status</p>
+    <p><strong>ID:</strong> @Model.Id</p>
+}

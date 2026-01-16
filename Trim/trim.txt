@@ -1,0 +1,265 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' ===== Użytkownicy / role =====
+abstract class Uzytkownik {
+  - id: int
+  - imie: string
+  - nazwisko: string
+  - email: string
+  - telefon: string
+  - login: string
+  - haslo: string
+  + zalogujSie(login: string, haslo: string): bool
+  + zmienHaslo(email: string, telefon: string): bool
+}
+
+class Handlowiec {
+  - sprzedanePojazdy: Map<int, int>  ' idPojazdu -> liczba sztuk
+  + wyslijOferteIndywidualna(klient: Klient, pojazd: Pojazd): Oferta
+  + dodajNowegoKlienta(klient: Klient): bool
+  + wyslijOferte(klient: Klient, pojazd: Pojazd): bool
+}
+
+class AdministratorSprzedazy {
+  + zaakceptujOferteIndywidualna(oferta: Oferta): bool
+  + modyfikujDaneKlienta(klient: Klient): bool
+  + anulujZamowienie(idZamowienia: int): bool
+  + zdefiniujCene(kodProduktu: string, cena: decimal): bool
+  + utworzKontoHandlowca(handlowiec: Handlowiec): bool
+  + utworzPromocje(idGrupyProduktu: int, promocjaProcent: decimal): bool
+}
+
+Uzytkownik <|-- Handlowiec
+Uzytkownik <|-- AdministratorSprzedazy
+
+' ===== Klient / Lead / Firma =====
+class Klient {
+  - idKlienta: int
+  - imie: string
+  - nazwisko: string
+  - email: string
+  - telefon: string
+  - nazwaFirmy: string
+  - nipLubPesel: string
+  - adres: string
+  + oplacFakture(numerFaktury: string): bool
+}
+
+class Lead {
+  - idLeada: int
+  - nazwaFirmy: string
+  - nip: string
+  - kontaktEmail: string
+  - kontaktTelefon: string
+  - status: LeadStatusEnum
+}
+
+class FirmaTransportowa {
+  - idFirmy: int
+  - nazwa: string
+  - nip: string
+  - adres: string
+}
+
+enum LeadStatusEnum {
+  NOWY
+  W_TRAKCIE
+  ZAMKNIETY
+}
+
+FirmaTransportowa "1" o-- "0..*" Klient
+FirmaTransportowa "1" o-- "0..*" Lead
+
+' ===== Pojazd i konfiguracja (FR1, UC2) =====
+class Pojazd {
+  - idPojazdu: int
+  - vin: string
+  - status: StatusPojazduEnum
+  + zapytajODostepnosc(): bool
+  + zamowPojazd(): string
+  + sprawdzStatus(): string
+}
+
+enum StatusPojazduEnum {
+  DOSTEPNY
+  ZAREZERWOWANY
+  ZAMOWIONY
+  DOSTARCZONY
+}
+
+class KonfiguracjaPojazdu {
+  - idKonfiguracji: int
+  - modelBazowy: string
+  + zwaliduj(): bool
+}
+
+class Opcja {
+  - idOpcji: int
+  - kodOpcji: string
+  - opis: string
+  - cena: decimal
+}
+
+class RegulaKompatybilnosci {
+  - idReguly: int
+  - typ: string   ' NIEDOZWOLONE / WYMAGANE / WARUNKOWE
+}
+
+KonfiguracjaPojazdu "1" o-- "1" Pojazd
+KonfiguracjaPojazdu "1" o-- "0..*" Opcja
+RegulaKompatybilnosci "1" o-- "1" Opcja : opcja1
+RegulaKompatybilnosci "1" o-- "1" Opcja : opcja2
+
+' ===== Oferta, wersje, zamówienie (UC3, UC4, UC7) =====
+class Oferta {
+  - idOferty: int
+  - numerOferty: string
+  - status: StatusOfertyEnum
+  + generujDokument(): DokumentPDF
+  + podpiszOfertę(): bool
+  + anulujOferte(): bool
+  + przeksztalcNaZamowienie(): Zamowienie
+}
+
+enum StatusOfertyEnum {
+  DRAFT
+  W_NEGOCJACJI
+  ZAAKCEPTOWANA
+  ANULOWANA
+}
+
+class WersjaOferty {
+  - idWersji: int
+  - numerWersji: string   ' np. V1.0
+  - dataUtworzenia: DateTime
+  - cena: decimal
+  - rabat: decimal
+  - marza: decimal
+}
+
+class Zamowienie {
+  - idZamowienia: int
+  - numerZamowienia: string
+  - status: StatusZamowieniaEnum
+  - cenaKoncowa: decimal
+  + obliczMarze(): decimal
+  + poinformujKlientaOStatusie(): bool
+  + wystawFakture(): Faktura
+}
+
+enum StatusZamowieniaEnum {
+  NOWE
+  W_REALIZACJI
+  ZAMOWIONE
+  ZAKONCZONE
+  ANULOWANE
+}
+
+class Faktura {
+  - idFaktury: int
+  - numerFaktury: string
+  - dataSprzedazy: DateTime
+  - dataPlatnosci: DateTime
+  - kwotaBrutto: decimal
+  - status: StatusFakturyEnum
+  + obliczKwoteVAT(): decimal
+  + wyslijPrzypomnienieOPlatnosci(): bool
+}
+
+enum StatusFakturyEnum {
+  NIEZAPLACONA
+  CZESCIOWO_ZAPLACONA
+  ZAPLACONA
+  PRZETERMINOWANA
+}
+
+Oferta "1" o-- "1..*" WersjaOferty
+Oferta "1" --> "0..1" Zamowienie
+Zamowienie "1" --> "0..1" Faktura
+
+Oferta "1" --> "1" Klient
+Oferta "1" --> "1" Pojazd
+Zamowienie "1" --> "1" Klient
+Zamowienie "1" --> "1" Pojazd
+
+Handlowiec "1" --> "0..*" Oferta : tworzy >
+Handlowiec "1" --> "0..*" Zamowienie : obsługuje >
+
+' ===== Cenniki, rabaty, bonusy (FR4, FR5, UC3) =====
+class Cennik {
+  - idCennika: int
+  - nazwa: string
+  - dataOd: DateTime
+  - dataDo: DateTime
+}
+
+class PozycjaCennika {
+  - idPozycji: int
+  - kodProduktu: string
+  - cenaBazowa: decimal
+}
+
+class RabatFlotowy {
+  - idRabatu: int
+  - progIlosciowy: int
+  - procentRabatu: decimal
+}
+
+class BonusHandlowy {
+  - idBonusu: int
+  - nazwa: string
+  - procent: decimal
+  - warunki: string
+}
+
+class KalkulatorCeny {
+  + obliczCene(oferta: Oferta): decimal
+  + obliczRabatFlotowy(oferta: Oferta): decimal
+}
+
+Cennik "1" o-- "1..*" PozycjaCennika
+KalkulatorCeny ..> Cennik
+KalkulatorCeny ..> RabatFlotowy
+KalkulatorCeny ..> BonusHandlowy
+KalkulatorCeny ..> Oferta
+
+AdministratorSprzedazy ..> Cennik
+AdministratorSprzedazy ..> RabatFlotowy
+AdministratorSprzedazy ..> BonusHandlowy
+
+' ===== Dokumenty i komunikacja (FR6, FR7) =====
+class DokumentPDF {
+  - idDokumentu: int
+  - sciezkaPliku: string
+  - dataUtworzenia: DateTime
+}
+
+class KomunikacjaZKlientem {
+  - idKomunikatu: int
+  - typ: TypKomunikatuEnum
+  - dataWysylki: DateTime
+  - statusDoreczenia: string
+}
+
+enum TypKomunikatuEnum {
+  OFERTA_WYSLANA
+  PRZYPOMNIENIE_PLATNOSCI
+  ZMIANA_STATUSU_ZAMOWIENIA
+}
+
+Oferta "1" --> "0..*" KomunikacjaZKlientem
+Faktura "1" --> "0..*" KomunikacjaZKlientem
+Klient "1" --> "0..*" KomunikacjaZKlientem
+
+Oferta "1" --> "0..1" DokumentPDF
+
+' ===== Integracja z systemem finansowym (UC7) =====
+class SystemFinansowy {
+  + zarejestrujZamowienie(zamowienie: Zamowienie): bool
+  + pobierzStatusFaktury(numerFaktury: string): StatusFakturyEnum
+}
+
+Zamowienie ..> SystemFinansowy
+Faktura ..> SystemFinansowy
+@enduml

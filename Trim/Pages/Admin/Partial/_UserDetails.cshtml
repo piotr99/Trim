@@ -1,0 +1,59 @@
+﻿@model Trim.Models.ViewModels.UserDetailsVM
+
+@if (Model == null)
+{
+    <p>Wybierz usera z listy.</p>
+}
+else
+{
+    <h2>Szczegóły użytkownika</h2>
+
+    <div class="mb-2">
+        <strong>ID:</strong> @Model.User.Id Status @(Model.IsLocked ? "Zablokowany" : "Aktywny")
+    </div>
+
+    <div class="mb-2">
+        <strong>Login:</strong> @Model.User.UserName
+    </div>
+
+    <div class="mb-2">
+        <strong>Email:</strong> @Model.User.Email
+    </div>
+
+    <div class="mb-2">
+        <strong>Imię i nazwisko:</strong>
+        @(string.Join(" ", new[] { Model.User.FirstName, Model.User.LastName }.Where(s => !string.IsNullOrWhiteSpace(s))))
+    </div>
+
+    <div class="mb-2">
+        <strong>Telefon:</strong> @Model.User.PhoneNumber
+    </div>
+
+    <div class="mb-2">
+        <strong>Email confirmed:</strong> @(Model.User.EmailConfirmed ? "Yes" : "No")
+    </div>
+
+    <div class="mb-3">
+        <strong>Phone confirmed:</strong> @(Model.User.PhoneNumberConfirmed ? "Yes" : "No")
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="button" class="btn btn-outline-secondary js-edit-user" data-id="@Model.User.Id">
+            Edytuj
+        </button>
+        
+        @if (@Model.IsLocked)
+        {
+            <button type="button" class="btn btn-outline-danger js-enable-disable-user" data-id="@Model.User.Id">
+                Włącz
+            </button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-outline-danger js-enable-disable-user" data-id="@Model.User.Id">
+                Wyłącz
+            </button>
+        }
+        
+    </div>
+}

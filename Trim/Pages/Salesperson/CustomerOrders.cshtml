@@ -1,0 +1,78 @@
+﻿@page
+@using Microsoft.IdentityModel.Tokens
+@model Trim.Pages.Salesperson.CustomerOrders
+
+@{
+}
+<link rel="stylesheet" href="~/css/Container.css" />
+
+<div class="container1">
+    <div class="left-panel">
+
+        <button type="button" class="btn btn-success w-100 mb-3 js-add-------------">
+            Dodaj Zamówienie
+        </button>
+        
+        <form method="get" class="mb-3">
+            <input type="hidden" name="customerId" value="@Model.customerId" />
+
+            <div class="form-group mb-2">
+                <label asp-for="Filter">Filter</label>
+                <input asp-for="Filter" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Filtruj</button>
+
+            <a class="btn btn-outline-secondary"
+               asp-page="/Salesperson/CustomerOffers"
+               asp-route-customerId="@Model.customerId">
+                Wyczyść
+            </a>
+        </form>
+
+        Liczba ofert: @Model.Orders.Count()
+        klinet: @Model.customerId
+        @if (Model.Orders.IsNullOrEmpty())
+        {
+            <h3>Brak zamówień</h3>
+        }
+        else
+        {
+            @foreach (var order in Model.Orders)
+            {
+                <button type="button"
+                        class="item-button d-block text-decoration-none js-order"
+                        data-id="@order.Id">
+                    <div class="item-button-main">
+                        <span class="item-name">@order.Id @order.OrderNumber</span>
+                        <p>@order.FinalPrice</p>
+                    </div>
+                </button>
+            }
+        }
+        
+
+
+        
+        @Html.AntiForgeryToken()
+        
+    </div>
+
+    <div class="right-panel" id="rightPanel">
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+document.querySelectorAll('.js-order').forEach(b => b.onclick = async () => {
+  const t = document.querySelector('input[name="__RequestVerificationToken"]').value;
+  const id = b.dataset.id;
+  const r = await fetch('?handler=OrderDetailsPartial', {
+    method: 'POST',
+    headers: {'Content-Type':'application/x-www-form-urlencoded'},
+    body: `orderId=${encodeURIComponent(id)}&__RequestVerificationToken=${encodeURIComponent(t)}`
+  });
+  document.getElementById('rightPanel').innerHTML = await r.text();
+});
+</script>
+}

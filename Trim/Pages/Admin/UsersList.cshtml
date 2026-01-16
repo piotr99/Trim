@@ -1,0 +1,70 @@
+﻿@page
+@model Trim.Pages.Admin.UsersList
+@{
+    ViewData["Title"] = "Panel Administratora";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <partial name="_StatusMessage" />
+    <h1>Lista Użytkowników</h1>
+    <span class="badge bg-primary">Łącznie: @Model.users.Count</span>
+</div>
+
+<table class="table table-striped mt-4">
+    <thead>
+    <tr>
+        <th>Imię i Nazwisko</th>
+        <th>Status</th>
+        <th>Akcje</th>
+        
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in Model.users)
+    {
+        <tr>
+            <td>@user.FirstName @user.LastName</td>
+            <td>
+                @if (user.Id.ToString() == Model.currentUserId)
+                {
+                    <span class="badge bg-info text-dark">
+                        <i class="bi bi-person-fill"></i> To Ty
+                    </span>
+                }
+                else
+                {
+                    if (user.LockoutEnabled)
+                    {
+                        <span class="badge bg-success">Aktywny</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-dark-subtle">Włączony</span>
+                    }
+                }
+                    
+            </td>
+            <td>
+                @if (user.Id.ToString() == Model.currentUserId)
+                {
+                    
+                }
+                else if (user.LockoutEnabled)
+                {
+                    <form method="post" asp-page-handler="Deactivate" asp-route-id="@user.Id" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-warning">Wyłącz</button>
+                    </form>
+                }
+                else
+                {
+                    <form method="post" asp-page-handler="Activate" asp-route-id="@user.Id" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-success shadow-sm">
+                            <i class="bi bi-person-check-fill"></i> Włącz
+                        </button>
+                    </form>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

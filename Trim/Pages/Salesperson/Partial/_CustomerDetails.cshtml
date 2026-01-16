@@ -1,0 +1,26 @@
+﻿@model Trim.Models.Customer?
+
+@if (Model == null)
+{
+    <p>Wybierz klienta z listy.</p>
+}
+else
+{
+    <h2>@Model.FirstName @Model.LastName</h2>
+    <p><strong>Address:</strong> @Model.Address</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+
+    <div class="d-flex gap-2">
+        <a class="btn btn-primary"
+           asp-page="/Salesperson/CustomerOffers"
+           asp-route-customerId="@Model.Id">
+            Oferty
+        </a>
+
+        <a class="btn btn-primary"
+           asp-page="/Salesperson/CustomerOrders"
+           asp-route-customerId="@Model.Id">
+            Zamówienia
+        </a>
+    </div>
+}

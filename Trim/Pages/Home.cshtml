@@ -1,0 +1,68 @@
+﻿@page
+@model Trim.Pages.Home
+
+@{
+    ViewData["Title"] = "Witaj";
+}
+<link rel="stylesheet" href="~/css/Home.css" />
+
+<section class="dashboard">
+    <h1 class="dashboard__title">Panel</h1>
+    <p class="dashboard__subtitle">Wybierz moduł</p>
+ 
+    <div class="tiles">
+        <a class="tile" asp-page="/Salesperson/ManageCustomers">
+            <div class="tile__icon">👥</div>
+            <div class="tile__title">klienci</div>
+            <div class="tile__desc">Lista, dodawanie, szczegóły</div>
+        </a>
+        
+        <a class="tile" asp-page="/Salesperson/ManageVehicles">
+            <div class="tile__icon">🚗</div>
+            <div class="tile__title">Pojazdy</div>
+            <div class="tile__desc">Tworzenie i negocjacje</div>
+        </a>
+ 
+        <a class="tile" asp-page="/Orders/Index">
+            <div class="tile__icon">♥️</div>
+            <div class="tile__title">Kocham moją niunie</div>
+            <div class="tile__desc">Statusy i realizacja</div>
+        </a>
+ 
+        <a class="tile" asp-page="/Products/Index">
+            <div class="tile__icon">🛠️</div>
+            <div class="tile__title">Produkty</div>
+            <div class="tile__desc">Cenniki i konfiguracje</div>
+        </a>
+ 
+        <a class="tile" asp-page="/Reports/Index">
+            <div class="tile__icon">📊</div>
+            <div class="tile__title">Raporty</div>
+            <div class="tile__desc">Wyniki i analizy</div>
+        </a>
+ 
+        <a class="tile" asp-page="/Calendar/Index">
+            <div class="tile__icon">📅</div>
+            <div class="tile__title">Kalendarz</div>
+            <div class="tile__desc">Spotkania i zadania</div>
+        </a>
+ 
+        <a class="tile" asp-page="/Invoices/Index">
+            <div class="tile__icon">💳</div>
+            <div class="tile__title">Faktury</div>
+            <div class="tile__desc">Wystawianie i historia</div>
+        </a>
+ 
+        <a class="tile" asp-page="/Admin/ManageUsers">
+            <div class="tile__icon">⚙️</div>
+            <div class="tile__title">Ustawienia</div>
+            <div class="tile__desc">Role, uprawnienia</div>
+        </a>
+ 
+        <a class="tile tile--accent" asp-page="/">
+            <div class="tile__icon">❓</div>
+            <div class="tile__title">Pomoc</div>
+            <div class="tile__desc">FAQ i kontakt</div>
+        </a>
+    </div>
+</section>

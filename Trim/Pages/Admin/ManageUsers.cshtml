@@ -1,0 +1,148 @@
+﻿@page
+@model Trim.Pages.Admin.ManageUsers
+@{
+    ViewData["Title"] = "Manage users";
+}
+<link rel="stylesheet" href="~/css/Container.css" />
+
+<div class="container1">
+    <div class="left-panel">
+
+        <button type="button" class="btn btn-success w-100 mb-3 js-add-user">
+            Dodaj usera
+        </button>
+
+        <form method="get" class="mb-3">
+            <div class="form-group mb-2">
+                <label asp-for="Filter">Filter</label>
+                <input asp-for="Filter" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Filtruj</button>
+            <a class="btn btn-outline-secondary" asp-page="/Admin/ManageUsers">Wyczyść</a>
+        </form>
+
+        @foreach (var u in Model.Users)
+        {
+            <button type="button"
+                    class="item-button d-block text-decoration-none js-user"
+                    data-id="@u.Id">
+                <div class="item-button-main">
+                    <span class="item-name">
+                        @(string.IsNullOrWhiteSpace(u.FirstName) && string.IsNullOrWhiteSpace(u.LastName)
+                            ? u.UserName
+                            : $"{u.FirstName} {u.LastName}")
+                    </span>
+                    <p>@u.Email</p>
+                </div>
+            </button>
+        }
+
+        <div class="page-buttons mt-3 d-flex align-items-center gap-2">
+            <a class="btn btn-outline-primary @(Model.HasPrev ? "" : "disabled")"
+               asp-page="/Admin/ManageUsers"
+               asp-route-Filter="@Model.Filter"
+               asp-route-CurrentPage="@(Model.CurrentPage - 1)">
+                -1
+            </a>
+
+            <span>@Model.CurrentPage / @Model.TotalPages</span>
+
+            <a class="btn btn-outline-primary @(Model.HasNext ? "" : "disabled")"
+               asp-page="/Admin/ManageUsers"
+               asp-route-Filter="@Model.Filter"
+               asp-route-CurrentPage="@(Model.CurrentPage + 1)">
+                +1
+            </a>
+        </div>
+
+        @Html.AntiForgeryToken()
+    </div>
+
+    <div class="right-panel" id="rightPanel">
+        <p>Wybierz usera z listy albo kliknij „Dodaj usera”.</p>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+const rp = document.getElementById('rightPanel');
+const token = () => document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+document.querySelectorAll('.js-user').forEach(b => b.onclick = async () => {
+  const r = await fetch('?handler=UserDetailsPartial', {
+    method: 'POST',
+    headers: {'Content-Type':'application/x-www-form-urlencoded'},
+    body: `userId=${encodeURIComponent(b.dataset.id)}&__RequestVerificationToken=${encodeURIComponent(token())}`
+  });
+  rp.innerHTML = await r.text();
+});
+
+document.querySelector('.js-add-user').onclick = async () => {
+  const r = await fetch('?handler=UserCreateFormPartial', {
+    method: 'POST',
+    headers: {'Content-Type':'application/x-www-form-urlencoded'},
+    body: `__RequestVerificationToken=${encodeURIComponent(token())}`
+  });
+  rp.innerHTML = await r.text();
+};
+
+// submit formularza dodawania usera (ładowanego AJAX-em)
+document.addEventListener('submit', async (e) => {
+  if (e.target.id !== 'userCreateForm') return;
+  e.preventDefault();
+
+  const r = await fetch('?handler=CreateUser', {
+    method: 'POST',
+    headers: {'Content-Type':'application/x-www-form-urlencoded'},
+    body: new URLSearchParams(new FormData(e.target))
+  });
+  rp.innerHTML = await r.text();
+});
+//Wyłącz usera dla js-disable-user
+document.addEventListener('click', async (e) => {
+    if (!e.target.classList.contains('js-disable-user')) return;
+
+    const btn = e.target;
+    const userId = btn.dataset.id;
+
+    const r = await fetch('?handler=DisableUser', {
+        method: 'POST',
+        headers: {'Content-Type':'application/x-www-form-urlencoded'},
+        body: `userId=${encodeURIComponent(userId)}&__RequestVerificationToken=${encodeURIComponent(token())}`
+    });
+
+    rp.innerHTML = await r.text();
+});
+//Włącz usera dla js-enable-user
+document.addEventListener('click', async (e) => {
+    if (!e.target.classList.contains('js-enable-disable-user')) return;
+
+    const btn = e.target;
+    const userId = btn.dataset.id;
+
+    const r = await fetch('?handler=EnableDisableUser', {
+        method: 'POST',
+        headers: {'Content-Type':'application/x-www-form-urlencoded'},
+        body: `userId=${encodeURIComponent(userId)}&__RequestVerificationToken=${encodeURIComponent(token())}`
+    });
+
+    rp.innerHTML = await r.text();
+});
+//js-edit-user
+document.addEventListener('click', async (e) => {
+    if (!e.target.classList.contains('js-edit-user')) return;
+
+    const btn = e.target;
+    const userId = btn.dataset.id;
+
+    const r = await fetch('?handler=EditUser', {
+        method: 'POST',
+        headers: {'Content-Type':'application/x-www-form-urlencoded'},
+        body: `userId=${encodeURIComponent(userId)}&__RequestVerificationToken=${encodeURIComponent(token())}`
+    });
+
+    rp.innerHTML = await r.text();
+});
+</script>
+}
