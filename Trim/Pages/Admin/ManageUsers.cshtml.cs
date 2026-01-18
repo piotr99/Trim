@@ -38,6 +38,7 @@ public class ManageUsers : PageModel
     [BindProperty]
     public UserCreateVm UserCreateVm { get; set; } = new();
     public UserDetailsVM  UserDetailsVM { get; set; } = new();
+    public EditUserVm EditUserVm { get; set; } = new();
 
     public async Task OnGetAsync()
     {
@@ -70,10 +71,12 @@ public class ManageUsers : PageModel
     {
         var user = await _userManager.Users.AsNoTracking()
             .FirstOrDefaultAsync(u => u.Id == userId);
+        var roles = await _userManager.GetRolesAsync(user);
         UserDetailsVM = new UserDetailsVM
         {
             User = user,
-            IsLocked = await _userManager.IsLockedOutAsync(user)
+            IsLocked = await _userManager.IsLockedOutAsync(user),
+            Role = roles.FirstOrDefault(),
         };
 
         return Partial("Admin/Partial/_UserDetails", UserDetailsVM);
@@ -132,9 +135,17 @@ public class ManageUsers : PageModel
                 return Partial("Admin/Partial/_UserCreateForm", UserCreateVm);
             }
         }
+        var roles = await _userManager.GetRolesAsync(u);
+
+        UserDetailsVM = new UserDetailsVM
+        {
+            User = u,
+            IsLocked = await _userManager.IsLockedOutAsync(u),
+            Role = roles.FirstOrDefault(),
+        };
 
         // zwróć HTML do rightPanel (AJAX)
-        return Partial("Admin/Partial/_UserDetails", u);
+        return Partial("Admin/Partial/_UserDetails", UserDetailsVM);
     }
     //lick user
     public async Task<IActionResult> OnPostEnableDisableUserAsync([FromForm] string userId)
@@ -156,19 +167,119 @@ public class ManageUsers : PageModel
         
         await _userManager.UpdateSecurityStampAsync(user);
         
-        var viewModel = new UserDetailsVM
+        var role = await _userManager.GetRolesAsync(user);
+        UserDetailsVM = new UserDetailsVM
         {
             User = user,
-            IsLocked = await _userManager.IsLockedOutAsync(user)
+            IsLocked = await _userManager.IsLockedOutAsync(user),
+            Role = role.FirstOrDefault()
         };
 
-        return Partial("Admin/Partial/_UserDetails", viewModel);
+        return Partial("Admin/Partial/_UserDetails", UserDetailsVM);
     }
 
     public async Task<IActionResult> OnPostEditUserAsync([FromForm] string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
         if (user == null) return NotFound();
-        return Partial("Admin/Partial/_EditUser", user);
+
+        var userRoles = await _userManager.GetRolesAsync(user);
+
+        var vm = new EditUserVm
+        {
+            UserId  = userId,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            SelectedRole = userRoles.FirstOrDefault(),
+            Roles = await _roleManager.Roles.AsNoTracking()
+                .OrderBy(r => r.Name)
+                .Select(r => new SelectListItem
+                {
+                    Value = r.Name!,
+                    Text = r.Name!
+                })
+                .ToListAsync(),
+        };
+
+        return Partial("Admin/Partial/_EditUser", vm);
     }
+
+    public async Task<IActionResult> OnPostSaveUserAsync(EditUserVm model, [FromForm] string userId)
+{
+    ModelState.Remove("Password");
+    if (!ModelState.IsValid)
+    {
+        // odbuduj Roles (select) i zwróć partial formularza
+        model.Roles = await _roleManager.Roles.AsNoTracking()
+            .OrderBy(r => r.Name)
+            .Select(r => new SelectListItem { Value = r.Name!, Text = r.Name! })
+            .ToListAsync();
+
+        return Partial("Admin/Partial/_EditUser", model);
+    }
+
+    var user = await _userManager.FindByIdAsync(userId);
+    if (user == null) return NotFound();
+
+    // aktualizacja pól
+    user.FirstName = model.FirstName;
+    user.LastName  = model.LastName;
+    user.Email     = model.Email;
+    user.UserName  = model.Email; // jeśli u Ciebie username = email (opcjonalnie)
+
+    var update = await _userManager.UpdateAsync(user);
+    if (!update.Succeeded)
+    {
+        foreach (var err in update.Errors)
+            ModelState.AddModelError(string.Empty, err.Description);
+
+        model.Roles = await _roleManager.Roles.AsNoTracking()
+            .OrderBy(r => r.Name)
+            .Select(r => new SelectListItem { Value = r.Name!, Text = r.Name! })
+            .ToListAsync();
+
+        return Partial("Admin/Partial/_EditUser", model);
+    }
+
+    // role
+    var roles = await _userManager.GetRolesAsync(user);     // IList<string>
+    var currentRole = roles.FirstOrDefault();              // string? (zakładamy 1 rolę)
+    var newRole = string.IsNullOrWhiteSpace(model.SelectedRole) ? null : model.SelectedRole;
+
+    if (currentRole != newRole)
+    {
+        if (currentRole != null)
+            await _userManager.RemoveFromRoleAsync(user, currentRole);
+
+        if (newRole != null)
+            await _userManager.AddToRoleAsync(user, newRole);
+    }
+    var rolesAfter = await _userManager.GetRolesAsync(user);
+    // zwróć widok szczegółów (albo JSON)
+    UserDetailsVM = new UserDetailsVM
+    {
+        User = user,
+        IsLocked = await _userManager.IsLockedOutAsync(user),
+        Role = rolesAfter.FirstOrDefault()
+    };
+
+    return Partial("Admin/Partial/_UserDetails", UserDetailsVM);
+}
+
+    public async Task<IActionResult> OnPostCancelEditUserAsync([FromForm] string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        
+        if (user == null) return NotFound();
+        var roles = await _userManager.GetRolesAsync(user);
+        UserDetailsVM = new UserDetailsVM
+        {
+            User = user,
+            IsLocked = await _userManager.IsLockedOutAsync(user),
+            Role = roles.FirstOrDefault()
+        };
+        return Partial("Admin/Partial/_UserDetails", UserDetailsVM);
+    }
+
 }

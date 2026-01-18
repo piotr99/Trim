@@ -1,0 +1,100 @@
+﻿@page
+@using Trim.Models
+@model Trim.Pages.Salesperson.VehicleConfigurator
+
+<link rel="stylesheet" href="~/css/Container.css" />
+
+<h2>Dodaj pojazd i konfigurację</h2>
+
+<form method="post" asp-page-handler="CreateVehicle">
+
+    <input type="hidden" asp-for="customerId" />
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <fieldset>
+        <legend>Pojazd</legend>
+
+        <div class="form-group">
+            <label class="form-label" asp-for="NewVehicle.Name">Nazwa</label>
+            <input class="form-control" asp-for="NewVehicle.Name" />
+            <span class="text-danger" asp-validation-for="NewVehicle.Name"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" asp-for="NewVehicle.Vin">VIN</label>
+            <input class="form-control" asp-for="NewVehicle.Vin" />
+            <span class="text-danger" asp-validation-for="NewVehicle.Vin"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" asp-for="NewVehicle.Status">Status</label>
+            <select class="form-control"
+                    asp-for="NewVehicle.Status"
+                    asp-items="Html.GetEnumSelectList<VehicleStatusEnum>()">
+            </select>
+            <span class="text-danger" asp-validation-for="NewVehicle.Status"></span>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Konfiguracja</legend>
+
+        <div class="grid grid-2">
+            <div class="form-group">
+                <label class="form-label" asp-for="NewConfiguration.Size">Kabina</label>
+                <select class="form-control"
+                        asp-for="NewConfiguration.Size"
+                        asp-items="Html.GetEnumSelectList<VehicleCabSizeEnum>()"></select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" asp-for="NewConfiguration.Engine">Silnik</label>
+                <select class="form-control"
+                        asp-for="NewConfiguration.Engine"
+                        asp-items="Html.GetEnumSelectList<VehicleEngineEnum>()"></select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" asp-for="NewConfiguration.Gerabox">Skrzynia</label>
+                <select class="form-control"
+                        asp-for="NewConfiguration.Gerabox"
+                        asp-items="Html.GetEnumSelectList<VehicleGeraboxEnum>()"></select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" asp-for="NewConfiguration.Interior">Wnętrze</label>
+                <select class="form-control"
+                        asp-for="NewConfiguration.Interior"
+                        asp-items="Html.GetEnumSelectList<VehicleInteriorEnum>()"></select>
+            </div>
+
+            <div class="form-group grid-span-2">
+                <label class="form-label" asp-for="NewConfiguration.Drivetrain">Napęd</label>
+                <select class="form-control"
+                        asp-for="NewConfiguration.Drivetrain"
+                        asp-items="Html.GetEnumSelectList<VehicleDrivetrainEnum>()"></select>
+            </div>
+            <legend>Opcje dodatkowe</legend>
+            <div class="form-group">
+                <label class="form-label" asp-for="NewOption.Description">Opis</label>
+                <input class="form-control" asp-for="NewOption.Description" />
+                <span class="text-danger" asp-validation-for="NewOption.Description"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label" asp-for="NewOption.Price">cena</label>
+                <input class="form-control" asp-for="NewOption.Price" />
+                <span class="text-danger" asp-validation-for="NewOption.Price"></span>
+            </div>
+        </div>
+    </fieldset>
+
+    <button type="submit" class="btn btn-primary">Zapisz pojazd</button>
+</form>
+
+<style>
+    .form-group { margin-bottom: 12px; }
+    .grid { display: grid; gap: 12px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-span-2 { grid-column: span 1; }
+</style>

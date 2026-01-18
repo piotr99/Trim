@@ -144,5 +144,80 @@ document.addEventListener('click', async (e) => {
 
     rp.innerHTML = await r.text();
 });
+//js-save-user to do
+document.addEventListener('click', async (e) => {
+    if (!e.target.classList.contains('.js-edit-user')) return;
+
+    const btn = e.target;
+    const userId = btn.dataset.id;
+
+    const r = await fetch('?handler=EditUser', {
+        method: 'POST',
+        headers: {'Content-Type':'application/x-www-form-urlencoded'},
+        body: `userId=${encodeURIComponent(userId)}&__RequestVerificationToken=${encodeURIComponent(token())}`
+    });
+
+    rp.innerHTML = await r.text();
+});
+// zapis usera (submit formularza z partiala)
+document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.js-save-user');
+    if (!btn) return;
+
+    const form = btn.closest('form');
+    if (!form) return;
+
+    // pobierz userId z hiddena
+    const userId = form.querySelector('input[name="userId"]')?.value?.trim();
+    if (!userId) return;
+
+    // pobierz wartości z inputów (ID muszą istnieć)
+    const firstName = (document.getElementById('FirstName')?.value ?? '').trim();
+    const lastName  = (document.getElementById('LastName')?.value ?? '').trim();
+
+    const fd = new FormData(form);
+
+    if (!fd.has('__RequestVerificationToken')) {
+        fd.append('__RequestVerificationToken', token());
+    }
+
+    const body = new URLSearchParams(fd);
+
+    const r = await fetch('?handler=SaveUser', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString()
+    });
+
+    const html = await r.text();
+    rp.innerHTML = html;
+
+    // aktualizacja nazwy w liście (button[data-id=UserId] -> span.item-name)
+    const listBtn = document.querySelector(`button[data-id="${CSS.escape(userId)}"]`);
+    const nameSpan = listBtn?.querySelector('div span.item-name') || listBtn?.querySelector('span.item-name');
+
+    if (nameSpan) {
+        const fullName = `${firstName} ${lastName}`.replace(/\s+/g, ' ').trim();
+        nameSpan.textContent = fullName;
+    }
+});
+
+//js-cancel-edit-user
+document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.js-cancel-edit-user');
+    if (!btn) return;
+    console.log('cancel-edit-user');
+    const form = btn.closest('form');
+    const userId = form.querySelector('input[name="userId"]').value;
+
+    const r = await fetch('?handler=CancelEditUser', {
+        method: 'POST',
+        headers: {'Content-Type':'application/x-www-form-urlencoded'},
+        body: `userId=${encodeURIComponent(userId)}&__RequestVerificationToken=${encodeURIComponent(token())}`
+    });
+
+    rp.innerHTML = await r.text();
+});
+
 </script>
 }

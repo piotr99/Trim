@@ -6,8 +6,13 @@
 }
 else
 {
-    <h2>@Model.Name</h2>
+    <h2>@Model.Name Status: @Model.Status.ToString()</h2>
     <p><strong>VIN:</strong> @Model.Vin</p>
     <p><strong>Status:</strong> @Model.Status</p>
     <p><strong>ID:</strong> @Model.Id</p>
+    <p><strong>Klient </strong>
+        @(Model.Customer.Email ?? "Brak informacji") 
+        <strong>Frima </strong>
+        @(Model.Customer.CompanyName ?? "Brak informacji")
+    </p>
 }

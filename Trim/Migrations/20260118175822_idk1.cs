@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Trim.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialIdentityAndDomain : Migration
+    public partial class idk1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,7 @@ namespace Trim.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    UserType = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    UserType = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -75,7 +75,6 @@ namespace Trim.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OptionCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false)
                 },
@@ -127,20 +126,6 @@ namespace Trim.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TransportCompanies", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Vehicles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Vin = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vehicles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -250,30 +235,27 @@ namespace Trim.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CompatibilityRules",
+                name: "VehicleConfigurations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Option1Id = table.Column<int>(type: "int", nullable: false),
-                    Option2Id = table.Column<int>(type: "int", nullable: false)
+                    Size = table.Column<int>(type: "int", nullable: false),
+                    Engine = table.Column<int>(type: "int", nullable: false),
+                    Gerabox = table.Column<int>(type: "int", nullable: false),
+                    Interior = table.Column<int>(type: "int", nullable: false),
+                    Drivetrain = table.Column<int>(type: "int", nullable: false),
+                    OptionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CompatibilityRules", x => x.Id);
+                    table.PrimaryKey("PK_VehicleConfigurations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CompatibilityRules_Options_Option1Id",
-                        column: x => x.Option1Id,
+                        name: "FK_VehicleConfigurations_Options_OptionId",
+                        column: x => x.OptionId,
                         principalTable: "Options",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CompatibilityRules_Options_Option2Id",
-                        column: x => x.Option2Id,
-                        principalTable: "Options",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -309,11 +291,18 @@ namespace Trim.Migrations
                     Phone = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     CompanyName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: true),
-                    TransportCompanyId = table.Column<int>(type: "int", nullable: true)
+                    TransportCompanyId = table.Column<int>(type: "int", nullable: true),
+                    SalespersonId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Customers_AspNetUsers_SalespersonId",
+                        column: x => x.SalespersonId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Customers_TransportCompanies_TransportCompanyId",
                         column: x => x.TransportCompanyId,
@@ -347,48 +336,37 @@ namespace Trim.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SalespersonSales",
-                columns: table => new
-                {
-                    SalespersonId = table.Column<int>(type: "int", nullable: false),
-                    VehicleId = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SalespersonSales", x => new { x.SalespersonId, x.VehicleId });
-                    table.ForeignKey(
-                        name: "FK_SalespersonSales_AspNetUsers_SalespersonId",
-                        column: x => x.SalespersonId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SalespersonSales_Vehicles_VehicleId",
-                        column: x => x.VehicleId,
-                        principalTable: "Vehicles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "VehicleConfigurations",
+                name: "Vehicles",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BaseModel = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    VehicleId = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Vin = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    ConfigurationId = table.Column<int>(type: "int", nullable: true),
+                    TransportCompanyId = table.Column<int>(type: "int", nullable: true),
+                    CustomerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VehicleConfigurations", x => x.Id);
+                    table.PrimaryKey("PK_Vehicles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VehicleConfigurations_Vehicles_VehicleId",
-                        column: x => x.VehicleId,
-                        principalTable: "Vehicles",
+                        name: "FK_Vehicles_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Vehicles_TransportCompanies_TransportCompanyId",
+                        column: x => x.TransportCompanyId,
+                        principalTable: "TransportCompanies",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Vehicles_VehicleConfigurations_ConfigurationId",
+                        column: x => x.ConfigurationId,
+                        principalTable: "VehicleConfigurations",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -428,25 +406,26 @@ namespace Trim.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VehicleConfigurationOptions",
+                name: "SalespersonSales",
                 columns: table => new
                 {
-                    VehicleConfigurationId = table.Column<int>(type: "int", nullable: false),
-                    OptionId = table.Column<int>(type: "int", nullable: false)
+                    SalespersonId = table.Column<int>(type: "int", nullable: false),
+                    VehicleId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VehicleConfigurationOptions", x => new { x.VehicleConfigurationId, x.OptionId });
+                    table.PrimaryKey("PK_SalespersonSales", x => new { x.SalespersonId, x.VehicleId });
                     table.ForeignKey(
-                        name: "FK_VehicleConfigurationOptions_Options_OptionId",
-                        column: x => x.OptionId,
-                        principalTable: "Options",
+                        name: "FK_SalespersonSales_AspNetUsers_SalespersonId",
+                        column: x => x.SalespersonId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_VehicleConfigurationOptions_VehicleConfigurations_VehicleConfigurationId",
-                        column: x => x.VehicleConfigurationId,
-                        principalTable: "VehicleConfigurations",
+                        name: "FK_SalespersonSales_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -481,10 +460,9 @@ namespace Trim.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OfferNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    OfferFriendlyName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    VehicleId = table.Column<int>(type: "int", nullable: false),
                     SalespersonId = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -509,12 +487,6 @@ namespace Trim.Migrations
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
-                    table.ForeignKey(
-                        name: "FK_Offers_Vehicles_VehicleId",
-                        column: x => x.VehicleId,
-                        principalTable: "Vehicles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -554,12 +526,36 @@ namespace Trim.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OfferVehicle",
+                columns: table => new
+                {
+                    OfferId = table.Column<int>(type: "int", nullable: false),
+                    VehicleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OfferVehicle", x => new { x.OfferId, x.VehicleId });
+                    table.ForeignKey(
+                        name: "FK_OfferVehicle_Offers_OfferId",
+                        column: x => x.OfferId,
+                        principalTable: "Offers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OfferVehicle_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OfferVersions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    VersionNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    VersionNumber = table.Column<int>(type: "int", maxLength: 20, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Discount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
@@ -638,16 +634,6 @@ namespace Trim.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompatibilityRules_Option1Id",
-                table: "CompatibilityRules",
-                column: "Option1Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CompatibilityRules_Option2Id",
-                table: "CompatibilityRules",
-                column: "Option2Id");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CustomerCommunications_CustomerId",
                 table: "CustomerCommunications",
                 column: "CustomerId");
@@ -661,6 +647,11 @@ namespace Trim.Migrations
                 name: "IX_CustomerCommunications_OfferId",
                 table: "CustomerCommunications",
                 column: "OfferId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Customers_SalespersonId",
+                table: "Customers",
+                column: "SalespersonId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_TransportCompanyId",
@@ -690,9 +681,9 @@ namespace Trim.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Offers_OfferNumber",
+                name: "IX_Offers_Id",
                 table: "Offers",
-                column: "OfferNumber",
+                column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -708,20 +699,14 @@ namespace Trim.Migrations
                 column: "SalespersonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Offers_VehicleId",
-                table: "Offers",
+                name: "IX_OfferVehicle_VehicleId",
+                table: "OfferVehicle",
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OfferVersions_OfferId",
                 table: "OfferVersions",
                 column: "OfferId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Options_OptionCode",
-                table: "Options",
-                column: "OptionCode",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
@@ -768,15 +753,24 @@ namespace Trim.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleConfigurationOptions_OptionId",
-                table: "VehicleConfigurationOptions",
+                name: "IX_VehicleConfigurations_OptionId",
+                table: "VehicleConfigurations",
                 column: "OptionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleConfigurations_VehicleId",
-                table: "VehicleConfigurations",
-                column: "VehicleId",
-                unique: true);
+                name: "IX_Vehicles_ConfigurationId",
+                table: "Vehicles",
+                column: "ConfigurationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_CustomerId",
+                table: "Vehicles",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_TransportCompanyId",
+                table: "Vehicles",
+                column: "TransportCompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_Vin",
@@ -804,9 +798,6 @@ namespace Trim.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CompatibilityRules");
-
-            migrationBuilder.DropTable(
                 name: "CustomerCommunications");
 
             migrationBuilder.DropTable(
@@ -814,6 +805,9 @@ namespace Trim.Migrations
 
             migrationBuilder.DropTable(
                 name: "Leads");
+
+            migrationBuilder.DropTable(
+                name: "OfferVehicle");
 
             migrationBuilder.DropTable(
                 name: "OfferVersions");
@@ -831,9 +825,6 @@ namespace Trim.Migrations
                 name: "SalespersonSales");
 
             migrationBuilder.DropTable(
-                name: "VehicleConfigurationOptions");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -846,25 +837,25 @@ namespace Trim.Migrations
                 name: "PriceLists");
 
             migrationBuilder.DropTable(
-                name: "Options");
-
-            migrationBuilder.DropTable(
-                name: "VehicleConfigurations");
-
-            migrationBuilder.DropTable(
                 name: "Orders");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Vehicles");
 
             migrationBuilder.DropTable(
+                name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "VehicleConfigurations");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "TransportCompanies");
+
+            migrationBuilder.DropTable(
+                name: "Options");
         }
     }
 }

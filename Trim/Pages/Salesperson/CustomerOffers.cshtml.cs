@@ -14,8 +14,7 @@ public class CustomerOffers : PageModel
     public List<Offer> Offers { get; set; } = new();
 
     [BindProperty(SupportsGet = true)]
-    public int customerId { get; set; }   // albo Guid, zależnie od Id w Customer
-
+    public int customerId { get; set; }
     public Customer? Customer { get; set; }
 
     [BindProperty(SupportsGet = true)]
@@ -33,15 +32,18 @@ public class CustomerOffers : PageModel
 
         if (Customer == null)
             return RedirectToPage("/Salesperson/CustomerOffers");
+        
 
-        var q = _db.Offers.AsNoTracking()
-            .Include(o => o.Vehicle)
-            .Where(o => o.CustomerId == customerId);
+        IQueryable<Offer> q = _db.Offers
+            .AsNoTracking()
+            .Where(o => o.CustomerId == customerId)
+            .Include(o => o.OfferVehicles)
+            .ThenInclude(ov => ov.Vehicle);
 
         if (!string.IsNullOrWhiteSpace(Filter))
         {
             var f = Filter.Trim();
-            q = q.Where(o => o.OfferNumber.Contains(f));
+            q = q.Where(o => EF.Functions.Like(o.OfferFriendlyName, $"%{f}%"));
         }
 
         Offers = await q.OrderByDescending(o => o.Id).ToListAsync();

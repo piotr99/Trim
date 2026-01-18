@@ -14,7 +14,6 @@ public class TransportCompany
 
     public ICollection<Customer> Customers { get; set; } = new List<Customer>();
     public ICollection<Lead> Leads { get; set; } = new List<Lead>();
-    public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
 }
 
 public class Customer
@@ -41,14 +40,14 @@ public class Customer
 
         public int? TransportCompanyId { get; set; }
         public TransportCompany? TransportCompany { get; set; }
-
-        // ✅ NOWE: przypisanie do handlowca
+        
         public int? SalespersonId { get; set; }
         public Salesperson? Salesperson { get; set; }
 
         public ICollection<Offer> Offers { get; set; } = new List<Offer>();
         public ICollection<Order> Orders { get; set; } = new List<Order>();
         public ICollection<CustomerCommunication> Communications { get; set; } = new List<CustomerCommunication>();
+        public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
     }
 
 public class Lead

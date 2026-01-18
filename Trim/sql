@@ -5,3 +5,12 @@ docker run --name "Trim" `
     -e MSSQL_COLLATION=Polish_100_CI_AS `
     -p 1439:1433 `
     -d mcr.microsoft.com/mssql/server:latest
+    
+    dotnet ef database drop -f
+    dotnet ef migrations add Initial
+    dotnet ef database update
+    
+    git status
+    git add .
+    git commit -m "konfiguracja pojazdu"
+    git push

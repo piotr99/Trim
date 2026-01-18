@@ -9,9 +9,11 @@
 <div class="container1">
     <div class="left-panel">
 
-        <button type="button" class="btn btn-success w-100 mb-3 js-add----------------------">
+        <a class="btn btn-success w-100 mb-3"
+           asp-page="/Salesperson/CreateOffer"
+           asp-route-customerId="@Model.customerId">
             Dodaj Ofertę
-        </button>
+        </a>
         
         <form method="get" class="mb-3">
             <input type="hidden" name="customerId" value="@Model.customerId" />
@@ -45,7 +47,7 @@
                         data-id="@offer.Id">
                     <div class="item-button-main">
                         <span class="item-name">@offer.Id @offer.Status</span>
-                        <p>@offer.Vehicle.Name</p>
+                        <p>@offer.</p>
                     </div>
                 </button>
             }

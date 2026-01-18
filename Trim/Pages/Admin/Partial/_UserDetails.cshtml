@@ -9,7 +9,7 @@ else
     <h2>Szczegóły użytkownika</h2>
 
     <div class="mb-2">
-        <strong>ID:</strong> @Model.User.Id Status @(Model.IsLocked ? "Zablokowany" : "Aktywny")
+        <strong>ID:</strong> @Model.User.Id <strong>Status</strong> @(Model.IsLocked ? "Zablokowany" : "Aktywny") <strong>Rola</strong> @Model.Role
     </div>
 
     <div class="mb-2">

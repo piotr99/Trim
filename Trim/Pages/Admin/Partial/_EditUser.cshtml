@@ -1,9 +1,10 @@
-﻿@model Trim.Models.ApplicationUser
+﻿@model Trim.Models.ViewModels.EditUserVm;
 
 <h2>Uaktualnij usera</h2>
 
-<form id="userCreateForm" method="post" asp-page-handler="UpdateUser">
+<form id="userEditForm" method="post" asp-page-handler="SaveUser">
     @Html.AntiForgeryToken()
+    <input type="hidden" name="userId" value="@Model.UserId" />
 
     <div asp-validation-summary="ModelOnly" class="text-danger mb-2"></div>
 
@@ -26,15 +27,15 @@
     </div>
 
     <div class="mb-3">
-        <label class="form-label" asp-for="RoleName">Rola</label>
-        <select class="form-select" asp-for="RoleName" asp-items="Model.Roles">
+        <label class="form-label" asp-for="SelectedRole">Rola</label>
+        <select class="form-select" asp-for="SelectedRole" asp-items="Model.Roles">
             <option value="">-- wybierz rolę --</option>
         </select>
-        <span class="text-danger" asp-validation-for="RoleName"></span>
+        <span class="text-danger" asp-validation-for="SelectedRole"></span>
     </div>
 
     <div class="d-flex gap-2">
-        <button class="btn btn-primary" type="submit">Zapisz</button>
-        <button class="btn btn-outline-secondary js-cancel-user" type="button">Anuluj</button>
+        <button class="btn btn-primary js-save-user" type="button">Zapisz</button>
+        <button class="btn btn-outline-secondary js-cancel-edit-user" type="button">Anuluj</button>
     </div>
 </form>

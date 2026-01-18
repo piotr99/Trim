@@ -5,7 +5,7 @@
 namespace Trim.Migrations
 {
     /// <inheritdoc />
-    public partial class usermanager : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

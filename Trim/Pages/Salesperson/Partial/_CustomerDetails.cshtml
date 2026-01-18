@@ -22,5 +22,11 @@ else
            asp-route-customerId="@Model.Id">
             Zamówienia
         </a>
+        
+        <a class="btn btn-primary"
+           asp-page="/Salesperson/CustomerVehicles"
+           asp-route-customerId="@Model.Id">
+            Pojazdy
+        </a>
     </div>
 }

@@ -86,12 +86,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Bodzio_Lokalne/RiderProjects/Trim/Trim/Pages/Salesperson/CreateOffer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZXNwZXJzb25cQ3JlYXRlT2ZmZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Bodzio_Lokalne/RiderProjects/Trim/Trim/Pages/Salesperson/CustomerOffers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZXNwZXJzb25cQ3VzdG9tZXJPZmZlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Bodzio_Lokalne/RiderProjects/Trim/Trim/Pages/Salesperson/CustomerOrders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZXNwZXJzb25cQ3VzdG9tZXJPcmRlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Bodzio_Lokalne/RiderProjects/Trim/Trim/Pages/Salesperson/CustomerVehicles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZXNwZXJzb25cQ3VzdG9tZXJWZWhpY2xlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Bodzio_Lokalne/RiderProjects/Trim/Trim/Pages/Salesperson/ManageCustomers.cshtml]
@@ -120,6 +128,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Bodzio_Lokalne/RiderProjects/Trim/Trim/Pages/Salesperson/Partial/_VehicleDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZXNwZXJzb25cUGFydGlhbFxfVmVoaWNsZURldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Bodzio_Lokalne/RiderProjects/Trim/Trim/Pages/Salesperson/VehicleConfigurator.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZXNwZXJzb25cVmVoaWNsZUNvbmZpZ3VyYXRvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Bodzio_Lokalne/RiderProjects/Trim/Trim/Pages/Shared/_StatusMessage.cshtml]

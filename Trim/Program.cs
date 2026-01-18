@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore.Design;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//run this shit on https://your_ip:5072
 // builder.WebHost.ConfigureKestrel(options =>
 // {
 //     options.ListenAnyIP(5072, listenOptions =>

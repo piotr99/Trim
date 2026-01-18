@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <Folder Include="Helpers\" />
-      <Folder Include="Migrations\" />
       <Folder Include="Repos\" />
       <Folder Include="ViewModels\" />
     </ItemGroup>

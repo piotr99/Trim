@@ -220,8 +220,8 @@ namespace Trim.Migrations
 
                     b.Property<string>("UserType")
                         .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
 
                     b.HasKey("Id");
 
@@ -238,34 +238,6 @@ namespace Trim.Migrations
                     b.HasDiscriminator<string>("UserType").HasValue("User");
 
                     b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("Trim.Models.CompatibilityRule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Option1Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Option2Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Option1Id");
-
-                    b.HasIndex("Option2Id");
-
-                    b.ToTable("CompatibilityRules");
                 });
 
             modelBuilder.Entity("Trim.Models.Customer", b =>
@@ -464,7 +436,7 @@ namespace Trim.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("OfferNumber")
+                    b.Property<string>("OfferFriendlyName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -478,14 +450,11 @@ namespace Trim.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("OfferNumber")
+                    b.HasIndex("Id")
                         .IsUnique();
 
                     b.HasIndex("OrderId")
@@ -494,9 +463,22 @@ namespace Trim.Migrations
 
                     b.HasIndex("SalespersonId");
 
+                    b.ToTable("Offers");
+                });
+
+            modelBuilder.Entity("Trim.Models.OfferVehicle", b =>
+                {
+                    b.Property<int>("OfferId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OfferId", "VehicleId");
+
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("Offers");
+                    b.ToTable("OfferVehicle");
                 });
 
             modelBuilder.Entity("Trim.Models.OfferVersion", b =>
@@ -525,10 +507,9 @@ namespace Trim.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("VersionNumber")
-                        .IsRequired()
+                    b.Property<int>("VersionNumber")
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -549,19 +530,11 @@ namespace Trim.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
-                    b.Property<string>("OptionCode")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<decimal>("Price")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OptionCode")
-                        .IsUnique();
 
                     b.ToTable("Options");
                 });
@@ -770,6 +743,12 @@ namespace Trim.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("ConfigurationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -788,6 +767,10 @@ namespace Trim.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ConfigurationId");
+
+                    b.HasIndex("CustomerId");
+
                     b.HasIndex("TransportCompanyId");
 
                     b.HasIndex("Vin")
@@ -804,42 +787,43 @@ namespace Trim.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("BaseModel")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("VehicleId")
+                    b.Property<int>("Drivetrain")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Engine")
+                        .HasColumnType("int");
 
-                    b.HasIndex("VehicleId")
-                        .IsUnique();
+                    b.Property<int>("Gerabox")
+                        .HasColumnType("int");
 
-                    b.ToTable("VehicleConfigurations");
-                });
-
-            modelBuilder.Entity("Trim.Models.VehicleConfigurationOption", b =>
-                {
-                    b.Property<int>("VehicleConfigurationId")
+                    b.Property<int>("Interior")
                         .HasColumnType("int");
 
                     b.Property<int>("OptionId")
                         .HasColumnType("int");
 
-                    b.HasKey("VehicleConfigurationId", "OptionId");
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("OptionId");
 
-                    b.ToTable("VehicleConfigurationOptions");
+                    b.ToTable("VehicleConfigurations");
+                });
+
+            modelBuilder.Entity("Trim.Models.Administrator", b =>
+                {
+                    b.HasBaseType("Trim.Models.ApplicationUser");
+
+                    b.HasDiscriminator().HasValue("Administrator");
                 });
 
             modelBuilder.Entity("Trim.Models.SalesAdministrator", b =>
                 {
                     b.HasBaseType("Trim.Models.ApplicationUser");
 
-                    b.HasDiscriminator().HasValue("Administrator");
+                    b.HasDiscriminator().HasValue("SalesAdministrator");
                 });
 
             modelBuilder.Entity("Trim.Models.Salesperson", b =>
@@ -898,25 +882,6 @@ namespace Trim.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Trim.Models.CompatibilityRule", b =>
-                {
-                    b.HasOne("Trim.Models.Option", "Option1")
-                        .WithMany("RulesAsOption1")
-                        .HasForeignKey("Option1Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Trim.Models.Option", "Option2")
-                        .WithMany("RulesAsOption2")
-                        .HasForeignKey("Option2Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Option1");
-
-                    b.Navigation("Option2");
                 });
 
             modelBuilder.Entity("Trim.Models.Customer", b =>
@@ -1000,17 +965,28 @@ namespace Trim.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Trim.Models.Vehicle", "Vehicle")
-                        .WithMany("Offers")
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Customer");
 
                     b.Navigation("Order");
 
                     b.Navigation("Salesperson");
+                });
+
+            modelBuilder.Entity("Trim.Models.OfferVehicle", b =>
+                {
+                    b.HasOne("Trim.Models.Offer", "Offer")
+                        .WithMany("OfferVehicles")
+                        .HasForeignKey("OfferId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Trim.Models.Vehicle", "Vehicle")
+                        .WithMany("OfferVehicles")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Offer");
 
                     b.Navigation("Vehicle");
                 });
@@ -1096,41 +1072,35 @@ namespace Trim.Migrations
 
             modelBuilder.Entity("Trim.Models.Vehicle", b =>
                 {
-                    b.HasOne("Trim.Models.TransportCompany", "TransportCompany")
+                    b.HasOne("Trim.Models.VehicleConfiguration", "Configuration")
+                        .WithMany()
+                        .HasForeignKey("ConfigurationId");
+
+                    b.HasOne("Trim.Models.Customer", "Customer")
                         .WithMany("Vehicles")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Trim.Models.TransportCompany", "TransportCompany")
+                        .WithMany()
                         .HasForeignKey("TransportCompanyId");
+
+                    b.Navigation("Configuration");
+
+                    b.Navigation("Customer");
 
                     b.Navigation("TransportCompany");
                 });
 
             modelBuilder.Entity("Trim.Models.VehicleConfiguration", b =>
                 {
-                    b.HasOne("Trim.Models.Vehicle", "Vehicle")
-                        .WithOne("Configuration")
-                        .HasForeignKey("Trim.Models.VehicleConfiguration", "VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Vehicle");
-                });
-
-            modelBuilder.Entity("Trim.Models.VehicleConfigurationOption", b =>
-                {
                     b.HasOne("Trim.Models.Option", "Option")
-                        .WithMany("Configurations")
+                        .WithMany()
                         .HasForeignKey("OptionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Trim.Models.VehicleConfiguration", "VehicleConfiguration")
-                        .WithMany("Options")
-                        .HasForeignKey("VehicleConfigurationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Option");
-
-                    b.Navigation("VehicleConfiguration");
                 });
 
             modelBuilder.Entity("Trim.Models.Customer", b =>
@@ -1140,6 +1110,8 @@ namespace Trim.Migrations
                     b.Navigation("Offers");
 
                     b.Navigation("Orders");
+
+                    b.Navigation("Vehicles");
                 });
 
             modelBuilder.Entity("Trim.Models.Invoice", b =>
@@ -1151,18 +1123,11 @@ namespace Trim.Migrations
                 {
                     b.Navigation("Communications");
 
+                    b.Navigation("OfferVehicles");
+
                     b.Navigation("PdfDocument");
 
                     b.Navigation("Versions");
-                });
-
-            modelBuilder.Entity("Trim.Models.Option", b =>
-                {
-                    b.Navigation("Configurations");
-
-                    b.Navigation("RulesAsOption1");
-
-                    b.Navigation("RulesAsOption2");
                 });
 
             modelBuilder.Entity("Trim.Models.Order", b =>
@@ -1180,22 +1145,13 @@ namespace Trim.Migrations
                     b.Navigation("Customers");
 
                     b.Navigation("Leads");
-
-                    b.Navigation("Vehicles");
                 });
 
             modelBuilder.Entity("Trim.Models.Vehicle", b =>
                 {
-                    b.Navigation("Configuration");
-
-                    b.Navigation("Offers");
+                    b.Navigation("OfferVehicles");
 
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("Trim.Models.VehicleConfiguration", b =>
-                {
-                    b.Navigation("Options");
                 });
 
             modelBuilder.Entity("Trim.Models.Salesperson", b =>

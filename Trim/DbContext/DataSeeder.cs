@@ -19,6 +19,7 @@ public static class DataSeeder
 
         // Migracje
         await db.Database.MigrateAsync();
+        
 
         // ===== Roles =====
         var roles = new[] { "Salesperson", "SalesAdministrator", "Administrator"};
@@ -145,8 +146,7 @@ public static class DataSeeder
             Phone = "+48555555555",
             CompanyName = "Transport Demo Sp. z o.o.",
             Address = "Warszawa, ul. Przykładowa 1",
-            TransportCompanyId = 1,
-            SalespersonId = 1
+            SalespersonId = salesperson1.Id
             
         };
 
@@ -158,11 +158,8 @@ public static class DataSeeder
             Phone = "+48666666666",
             CompanyName = "Logistyka Test S.A.",
             Address = "Kraków, ul. Testowa 2",
-            TransportCompanyId = 1,
-            SalespersonId = 1
+            SalespersonId = salesperson2.Id
         };
-
-        db.Customers.AddRange(customer1, customer2);
 
         // ===== Lead (2) =====
         var lead1 = new Lead
@@ -202,92 +199,65 @@ public static class DataSeeder
             Status = VehicleStatusEnum.ORDERED
         };
 
-        db.Vehicles.AddRange(vehicle1, vehicle2);
-
-        // ===== VehicleConfiguration (2) =====
-        var conf1 = new VehicleConfiguration
-        {
-            BaseModel = "R500 4x2",
-            Vehicle = vehicle1
-        };
-
-        var conf2 = new VehicleConfiguration
-        {
-            BaseModel = "S450 6x2",
-            Vehicle = vehicle2
-        };
-
-        db.VehicleConfigurations.AddRange(conf1, conf2);
+        
+        customer1.Vehicles.Add(vehicle1);
+        customer2.Vehicles.Add(vehicle2);
+        db.Customers.AddRange(customer1, customer2);
+        
 
         // ===== Option (2) =====
         var option1 = new Option
         {
-            OptionCode = "OPT-NAVI",
             Description = "Premium navigation",
             Price = 4500m
         };
 
         var option2 = new Option
         {
-            OptionCode = "OPT-LED",
             Description = "LED headlights",
             Price = 3200m
         };
 
         db.Options.AddRange(option1, option2);
-
-        // ===== VehicleConfigurationOption (2) =====
-        db.VehicleConfigurationOptions.AddRange(
-            new VehicleConfigurationOption { VehicleConfiguration = conf1, Option = option1 },
-            new VehicleConfigurationOption { VehicleConfiguration = conf2, Option = option2 }
-        );
-
-        // ===== CompatibilityRule (2) =====
-        db.CompatibilityRules.AddRange(
-            new CompatibilityRule { Type = "REQUIRED", Option1 = option1, Option2 = option2 },
-            new CompatibilityRule { Type = "CONDITIONAL", Option1 = option2, Option2 = option1 }
-        );
+        
 
         // ===== Offer (2) =====
         var offer1 = new Offer
         {
-            OfferNumber = "OFF-2026-0001",
+            OfferFriendlyName = "OFF-2026-0001",
             Status = OfferStatusEnum.IN_NEGOTIATION,
             Customer = customer1,
-            Vehicle = vehicle1,
-            SalespersonId = salesperson1.Id
+            SalespersonId = salesperson1.Id,
         };
+
+        offer1.OfferVehicles.Add(new OfferVehicle { Vehicle = vehicle1 });
 
         var offer2 = new Offer
         {
-            OfferNumber = "OFF-2026-0002",
+            OfferFriendlyName = "OFF-2026-0002",
             Status = OfferStatusEnum.DRAFT,
             Customer = customer2,
-            Vehicle = vehicle2,
-            SalespersonId = salesperson2.Id
+            SalespersonId = salesperson2.Id,
         };
 
+        offer2.OfferVehicles.Add(new OfferVehicle { Vehicle = vehicle2 });
         db.Offers.AddRange(offer1, offer2);
 
         // ===== OfferVersion (2) =====
         var version1 = new OfferVersion
         {
             Offer = offer1,
-            VersionNumber = "V1.0",
+            VersionNumber = 1,
             CreatedAt = DateTime.UtcNow.AddDays(-2),
             Price = 520000m,
-            Discount = 15000m,
-            Margin = 22000m
         };
 
         var version2 = new OfferVersion
         {
             Offer = offer2,
-            VersionNumber = "V1.0",
+            VersionNumber = 1,
             CreatedAt = DateTime.UtcNow.AddDays(-1),
             Price = 480000m,
-            Discount = 10000m,
-            Margin = 18000m
         };
 
         db.OfferVersions.AddRange(version1, version2);

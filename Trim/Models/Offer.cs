@@ -8,15 +8,14 @@ public class Offer
     public int Id { get; set; }
 
     [Required, MaxLength(50)]
-    public string OfferNumber { get; set; } = default!;
+    public string OfferFriendlyName { get; set; } = default!;
 
     public OfferStatusEnum Status { get; set; } = OfferStatusEnum.DRAFT;
 
     public int CustomerId { get; set; }
     public Customer Customer { get; set; } = default!;
 
-    public int VehicleId { get; set; }
-    public Vehicle Vehicle { get; set; } = default!;
+    public ICollection<OfferVehicle> OfferVehicles { get; set; } = new List<OfferVehicle>();
 
     public int SalespersonId { get; set; }
     public Salesperson Salesperson { get; set; } = default!;
@@ -31,12 +30,13 @@ public class Offer
     public ICollection<CustomerCommunication> Communications { get; set; } = new List<CustomerCommunication>();
 }
 
+
 public class OfferVersion
 {
     public int Id { get; set; }
 
     [Required, MaxLength(20)]
-    public string VersionNumber { get; set; } = default!; // e.g. V1.0
+    public int VersionNumber { get; set; } = default!; // e.g. V1.0
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

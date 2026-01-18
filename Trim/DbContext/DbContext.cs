@@ -17,9 +17,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     public DbSet<Vehicle> Vehicles => Set<Vehicle>();
     public DbSet<VehicleConfiguration> VehicleConfigurations => Set<VehicleConfiguration>();
     public DbSet<Option> Options => Set<Option>();
-    public DbSet<VehicleConfigurationOption> VehicleConfigurationOptions => Set<VehicleConfigurationOption>();
-    public DbSet<CompatibilityRule> CompatibilityRules => Set<CompatibilityRule>();
-
     public DbSet<Offer> Offers => Set<Offer>();
     public DbSet<OfferVersion> OfferVersions => Set<OfferVersion>();
     public DbSet<Order> Orders => Set<Order>();
@@ -45,7 +42,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             .HasValue<ApplicationUser>("User")
             .HasValue<Salesperson>("Salesperson")
             .HasValue<SalesAdministrator>("SalesAdministrator")
-            .HasValue<SalesAdministrator>("Administrator");
+            .HasValue<Administrator>("Administrator");
         
         // ===== Customers -> Salesperson =====
         b.Entity<Customer>()
@@ -54,6 +51,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             .HasForeignKey(c => c.SalespersonId)
             .OnDelete(DeleteBehavior.SetNull);
 
+        b.Entity<Vehicle>()
+            .HasOne(v => v.Customer)
+            .WithMany(c => c.Vehicles)
+            .HasForeignKey(v => v.CustomerId)
+            .OnDelete(DeleteBehavior.SetNull);
+            
         // ===== TransportCompany -> Customers/Leads =====
         b.Entity<TransportCompany>()
             .HasIndex(x => x.TaxId)
@@ -71,55 +74,32 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             .HasForeignKey(x => x.TransportCompanyId)
             .OnDelete(DeleteBehavior.SetNull);
         
+        b.Entity<OfferVehicle>(entity =>
+        {
+            entity.HasKey(x => new { x.OfferId, x.VehicleId });
 
+            entity.HasOne(x => x.Offer)
+                .WithMany(o => o.OfferVehicles)
+                .HasForeignKey(x => x.OfferId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(x => x.Vehicle)
+                .WithMany(v => v.OfferVehicles)
+                .HasForeignKey(x => x.VehicleId)
+                .OnDelete(DeleteBehavior.Restrict); 
+            // Restrict jest często lepsze: nie chcesz skasować pojazdu przez skasowanie oferty.
+        });
+
+            
 
         // ===== Vehicle <-> VehicleConfiguration (1:1) =====
         b.Entity<Vehicle>()
             .HasIndex(x => x.Vin)
             .IsUnique();
 
-        b.Entity<VehicleConfiguration>()
-            .HasOne(x => x.Vehicle)
-            .WithOne(x => x.Configuration)
-            .HasForeignKey<VehicleConfiguration>(x => x.VehicleId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        // ===== VehicleConfiguration <-> Options (M:N via join) =====
-        b.Entity<VehicleConfigurationOption>()
-            .HasKey(x => new { x.VehicleConfigurationId, x.OptionId });
-
-        b.Entity<VehicleConfigurationOption>()
-            .HasOne(x => x.VehicleConfiguration)
-            .WithMany(x => x.Options)
-            .HasForeignKey(x => x.VehicleConfigurationId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        b.Entity<VehicleConfigurationOption>()
-            .HasOne(x => x.Option)
-            .WithMany(x => x.Configurations)
-            .HasForeignKey(x => x.OptionId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        b.Entity<Option>()
-            .HasIndex(x => x.OptionCode)
-            .IsUnique();
-
-        // ===== CompatibilityRule: two FKs to Option =====
-        b.Entity<CompatibilityRule>()
-            .HasOne(r => r.Option1)
-            .WithMany(o => o.RulesAsOption1)
-            .HasForeignKey(r => r.Option1Id)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        b.Entity<CompatibilityRule>()
-            .HasOne(r => r.Option2)
-            .WithMany(o => o.RulesAsOption2)
-            .HasForeignKey(r => r.Option2Id)
-            .OnDelete(DeleteBehavior.Restrict);
-
         // ===== Offer -> OfferVersions (1..*) =====
         b.Entity<Offer>()
-            .HasIndex(o => o.OfferNumber)
+            .HasIndex(o => o.Id)
             .IsUnique();
 
         b.Entity<Offer>()
@@ -150,11 +130,18 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             .OnDelete(DeleteBehavior.Restrict);
         
 
-        b.Entity<Offer>()
-            .HasOne(o => o.Vehicle)
-            .WithMany(v => v.Offers)
-            .HasForeignKey(o => o.VehicleId)
-            .OnDelete(DeleteBehavior.Restrict);
+        b.Entity<OfferVehicle>()
+            .HasKey(x => new { x.OfferId, x.VehicleId });
+
+        b.Entity<OfferVehicle>()
+            .HasOne(x => x.Offer)
+            .WithMany(o => o.OfferVehicles)
+            .HasForeignKey(x => x.OfferId);
+
+        b.Entity<OfferVehicle>()
+            .HasOne(x => x.Vehicle)
+            .WithMany(v => v.OfferVehicles)
+            .HasForeignKey(x => x.VehicleId);
 
         b.Entity<Offer>()
             .HasOne(o => o.Salesperson)
