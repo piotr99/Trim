@@ -18,7 +18,6 @@ public class Vehicle
 
     public ICollection<OfferVehicle> OfferVehicles { get; set; } = new List<OfferVehicle>();
     public ICollection<Order> Orders { get; set; } = new List<Order>();
-    public TransportCompany? TransportCompany { get; set; }
     public Customer? Customer { get; set; }
     public int? CustomerId { get; set; }
 }
@@ -27,24 +26,25 @@ public class VehicleConfiguration
 {
     public int Id { get; set; }
 
-    public VehicleCabSizeEnum Size { get; set; }
-    public VehicleEngineEnum Engine { get; set; }
-    public VehicleGeraboxEnum Gerabox { get; set; }
-    public VehicleInteriorEnum Interior { get; set; }
-    public VehicleDrivetrainEnum Drivetrain { get; set; }
+    public VehicleCabSize Size { get; set; }
+    public VehicleEngine Engine { get; set; }
+    public VehicleGearbox Gearbox { get; set; }
+    public VehicleInterior Interior { get; set; }
+    public VehicleDrivetrain Drivetrain { get; set; }
     
-    public int OptionId { get; set; }
-    public Option? Option { get; set; }
+    public string? AdditonalEquipment { get; set; }
+    public int? AdditionalPrice { get; set; }
 
 }
 
-public class Option
+public class OfferVehicleConfiguration : VehicleConfiguration
 {
-    public int Id { get; set; }
+    public int OfferId { get; set; }
+    public Offer Offer { get; set; }
+}
 
-    [MaxLength(400)]
-    public string? Description { get; set; }
-
-    [Precision(18, 2)]
-    public decimal Price { get; set; }
+public class OrderVehicleConfiguration : VehicleConfiguration
+{
+    public int VehicleId { get; set; }
+    public Vehicle Vehicle { get; set; }
 }

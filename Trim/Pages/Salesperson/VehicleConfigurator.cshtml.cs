@@ -30,7 +30,6 @@ public class VehicleConfigurator : PageModel
     public VehicleConfiguration NewConfiguration { get; set; } = new();
 
     // dropdown opcji
-    public Option NewOption { get; set; } = new();
 
     public async Task OnGetAsync()
     {
@@ -51,14 +50,9 @@ public class VehicleConfigurator : PageModel
         {
             Size = NewConfiguration.Size,
             Engine = NewConfiguration.Engine,
-            Gerabox = NewConfiguration.Gerabox,
+            Gearbox = NewConfiguration.Gearbox,
             Interior = NewConfiguration.Interior,
             Drivetrain = NewConfiguration.Drivetrain,
-            Option = new Option
-            {
-                Description = NewOption.Description,
-                Price = NewOption.Price
-            }
         };
 
         _db.Vehicles.Add(NewVehicle);

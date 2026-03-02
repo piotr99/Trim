@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Trim")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bfa3157d47e862cb28d7cc6a01938e512838b84e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1acb06b2fe11941fe23fc7f84fcd0d63f12f1513")]
 [assembly: System.Reflection.AssemblyProductAttribute("Trim")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Trim")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Trim.DbContext;
 using Trim.Models;
+using Trim.Models.ViewModels;
 
 namespace Trim.Pages.Salesperson;
 
@@ -32,13 +34,14 @@ public class CustomerOffers : PageModel
 
         if (Customer == null)
             return RedirectToPage("/Salesperson/CustomerOffers");
-        
+
 
         IQueryable<Offer> q = _db.Offers
             .AsNoTracking()
             .Where(o => o.CustomerId == customerId)
-            .Include(o => o.OfferVehicles)
-            .ThenInclude(ov => ov.Vehicle);
+            .Include(o => o.Versions)
+            .Include(v => v.OfferVehicleConfigurations);
+            
 
         if (!string.IsNullOrWhiteSpace(Filter))
         {
@@ -53,9 +56,27 @@ public class CustomerOffers : PageModel
     public async Task<PartialViewResult> OnPostOfferDetailsPartialAsync([FromForm] int offerId)
     {
         var offer = await _db.Offers.AsNoTracking()
+            .Include(o => o.Versions)
+            .Include(v => v.OfferVehicleConfigurations)
             .FirstOrDefaultAsync(o => o.Id == offerId);
-        return Partial("Salesperson/Partial/_OfferDetails", offer);
+
+        var vm = new OfferDetailsVm
+        {
+            Offer = offer,
+
+            OfferVersions = offer.Versions
+                .OrderByDescending(v => v.CreatedAt)
+                .ToList(),
+
+            OfferVehicleConfigurations = offer.OfferVehicleConfigurations
+                .ToList()
+        };
+
+
+
+        return Partial("Salesperson/Partial/_OfferDetails", vm);
     }
+
 
 }
 //adm-spl_pietrzakp@scania.pl #@nyo9eINc*T0V2q6^0ee

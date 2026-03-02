@@ -14,15 +14,17 @@ public enum VehicleStatusEnum
     RESERVED = 1,
     ORDERED = 2,
     DELIVERED = 3,
-    OFFERED = 4
+    OFFERED = 4,
+    DRAFT = 5,
 }
 
 public enum OfferStatusEnum
 {
     DRAFT = 0,
-    IN_NEGOTIATION = 1,
-    ACCEPTED = 2,
-    CANCELLED = 3
+    SENT = 1,
+    IN_NEGOTIATION = 2,
+    ACCEPTED = 3,
+    CANCELLED = 4
 }
 
 public enum OrderStatusEnum
@@ -78,7 +80,7 @@ public enum VehicleEngineEnum
     V8_16 = 2
 }
 
-public enum VehicleGeraboxEnum
+public enum VehicleGearboxEnum
 {
     [Display(Name = "Manual (G-series)")]
     Manual = 0,

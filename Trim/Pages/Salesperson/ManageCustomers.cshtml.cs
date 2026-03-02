@@ -41,16 +41,6 @@ public class ManageCustomers : PageModel
     [BindProperty]
     public CustomerCreateVm CustomerCreateVm { get; set; } = new();
 
-    private async Task<List<SelectListItem>> GetCompaniesSelectAsync()
-        => await _db.TransportCompanies.AsNoTracking()
-            .OrderBy(tc => tc.Name)
-            .Select(tc => new SelectListItem
-            {
-                Value = tc.Id.ToString(),
-                Text = tc.Name
-            })
-            .ToListAsync();
-
     private async Task<List<SelectListItem>> GetSalespeopleSelectAsync() 
         => await _userManager.Users.AsNoTracking()
             .OrderBy(u => u.UserName)
@@ -112,7 +102,6 @@ public class ManageCustomers : PageModel
         var vm = new CustomerCreateVm
         {
             Customer = new Customer(),
-            TransportCompanies = await GetCompaniesSelectAsync(),
             Salespeople = await GetSalespeopleSelectAsync()
         };
 
@@ -121,8 +110,6 @@ public class ManageCustomers : PageModel
 
     public async Task<IActionResult> OnPostCreateCustomerAsync()
     {
-        // na wypadek walidacji musisz doładować listy
-        CustomerCreateVm.TransportCompanies = await GetCompaniesSelectAsync();
         CustomerCreateVm.Salespeople = await GetSalespeopleSelectAsync();
 
         if (!ModelState.IsValid)

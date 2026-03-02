@@ -1,13 +1,24 @@
 ﻿@page
 @using Trim.Models
+@using Microsoft.AspNetCore.Mvc.Rendering
 @model Trim.Pages.Salesperson.Partial.CreateOffer
+@{
+    var statusItems = Enum.GetValues<OfferStatusEnum>()
+        .Where(e => e == OfferStatusEnum.DRAFT || e == OfferStatusEnum.SENT)
+        .Select(e => new SelectListItem
+        {
+            Value = ((int)e).ToString(),
+            Text = e.ToString()
+        })
+        .ToList();
+}
 
 <link rel="stylesheet" href="~/css/Container.css" />
 
 <section class="page">
     <header class="page-header">
         <h2>Utwórz ofertę</h2>
-        <p class="muted">Wypełnij dane oferty, pojazdu i konfiguracji. Pola wymagane oznaczone są walidacją.</p>
+        <p class="muted">Wypełnij dane oferty, pojazdu i konfiguracji. Ceny przeliczają się automatycznie.</p>
     </header>
 
     <form method="post" asp-page-handler="CreateOffer" class="card">
@@ -25,33 +36,131 @@
                     <input class="form-control" asp-for="NewOffer.OfferFriendlyName" />
                     <span class="text-danger" asp-validation-for="NewOffer.OfferFriendlyName"></span>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-label" asp-for="NewOffer.Status">Status</label>
-                    <select class="form-control"
-                            asp-for="NewOffer.Status"
-                            asp-items="Html.GetEnumSelectList<OfferStatusEnum>()">
-                    </select>
-                    <span class="text-danger" asp-validation-for="NewOffer.Status"></span>
-                </div>
             </div>
         </fieldset>
 
-        <!-- POJAZD -->
+        <!-- POJAZDY / KONFIGURACJE -->
         <fieldset class="fieldset">
-            <legend>Pojazd</legend>
+            <legend>Pojazdy</legend>
 
-                <div class="form-group">
-                    <label class="form-label" asp-for="NewOption.Price">Cena</label>
-                    <input class="form-control" asp-for="NewOption.Price" type="number" step="0.01" />
-                    <span class="text-danger" asp-validation-for="NewOption.Price"></span>
-                </div>
+            <div id="vehiclesContainer">
+                @for (var i = 0; i < Model.NewVehicleConfigurations.Count; i++)
+                {
+                    <div class="vehicle-block card mb-3 p-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <strong>Pojazd @(i + 1)</strong>
+                            <button type="button" class="btn btn-outline-danger btn-sm remove-vehicle"
+                                    @(Model.NewVehicleConfigurations.Count == 1 ? "disabled" : "")>
+                                Usuń
+                            </button>
+                        </div>
 
-                <div class="form-group grid-span-2">
-                    <label class="form-label" asp-for="NewOption.Description">Opis</label>
-                    <input class="form-control" asp-for="NewOption.Description" />
-                    <span class="text-danger" asp-validation-for="NewOption.Description"></span>
-                </div>
+                        <!-- Rozmiar kabiny -->
+                        <div class="form-group">
+                            <label class="form-label">Rozmiar kabiny</label>
+                            <select class="form-control js-size"
+                                    name="NewVehicleConfigurations[@i].Size.Id">
+                                @foreach (var opt in Model.VehicleCabSizes)
+                                {
+                                    <option value="@opt.Id">@opt.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Silnik -->
+                        <div class="form-group">
+                            <label class="form-label">Silnik</label>
+                            <select class="form-control js-engine"
+                                    name="NewVehicleConfigurations[@i].Engine.Id">
+                                @foreach (var opt in Model.VehicleEngines)
+                                {
+                                    <option value="@opt.Id">@opt.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Skrzynia -->
+                        <div class="form-group">
+                            <label class="form-label">Skrzynia biegów</label>
+                            <select class="form-control js-gearbox"
+                                    name="NewVehicleConfigurations[@i].Gearbox.Id">
+                                @foreach (var opt in Model.VehicleGearboxes)
+                                {
+                                    <option value="@opt.Id">@opt.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Wnętrze -->
+                        <div class="form-group">
+                            <label class="form-label">Wnętrze</label>
+                            <select class="form-control js-interior"
+                                    name="NewVehicleConfigurations[@i].Interior.Id">
+                                @foreach (var opt in Model.VehicleInteriors)
+                                {
+                                    <option value="@opt.Id">@opt.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Napęd -->
+                        <div class="form-group">
+                            <label class="form-label">Napęd</label>
+                            <select class="form-control js-drivetrain"
+                                    name="NewVehicleConfigurations[@i].Drivetrain.Id">
+                                @foreach (var opt in Model.VehicleDrivetrains)
+                                {
+                                    <option value="@opt.Id">@opt.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Dodatkowe wyposażenie / dopłata -->
+                        <div class="grid grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Dodatkowe wyposażenie</label>
+                                <input class="form-control"
+                                       name="NewVehicleConfigurations[@i].AdditonalEquipment"
+                                       value="@(Model.NewVehicleConfigurations[i].AdditonalEquipment ?? "")" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Dopłata</label>
+                                <input class="form-control js-additional-price"
+                                       type="number" step="0.01"
+                                       name="NewVehicleConfigurations[@i].AdditionalPrice"
+                                       value="@(Model.NewVehicleConfigurations[i].AdditionalPrice ?? 0)" />
+                            </div>
+                        </div>
+
+                        <!-- CENA POD POJAZDEM -->
+                        <div class="vehicle-pricing mt-3 p-2 border rounded">
+                            <div class="muted mb-1"><strong>Cena pojazdu</strong></div>
+
+                            <div class="grid grid-3">
+                                <div class="form-group">
+                                    <label class="form-label">Cena</label>
+                                    <input class="form-control js-veh-price" type="number" step="0.01" readonly />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Cena ostateczna</label>
+                                    <input class="form-control js-veh-final" type="number" step="0.01" readonly />
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Marża</label>
+                                    <input class="form-control js-veh-margin" type="number" step="0.01" readonly />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <button type="button" class="btn btn-outline-primary" id="addVehicleBtn">
+                + Dodaj kolejny pojazd
+            </button>
         </fieldset>
 
         <!-- WERSJA OFERTY -->
@@ -59,11 +168,16 @@
             <legend>Wersja oferty</legend>
 
             <div class="grid grid-2">
-
                 <div class="form-group">
                     <label class="form-label" asp-for="NewOfferVersion.Price">Cena</label>
                     <input class="form-control" asp-for="NewOfferVersion.Price" type="number" step="0.01" />
                     <span class="text-danger" asp-validation-for="NewOfferVersion.Price"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" asp-for="NewOfferVersion.FinalPrice">Cena ostateczna</label>
+                    <input class="form-control" asp-for="NewOfferVersion.FinalPrice" type="number" step="0.01" />
+                    <span class="text-danger" asp-validation-for="NewOfferVersion.FinalPrice"></span>
                 </div>
 
                 <div class="form-group">
@@ -74,21 +188,35 @@
 
                 <div class="form-group">
                     <label class="form-label" asp-for="NewOfferVersion.Margin">Marża</label>
-                    <input class="form-control" asp-for="NewOfferVersion.Margin" type="number" step="0.01" />
-                    <span class="text-danger" asp-validation-for="NewOfferVersion.Margin"></span>
+                    <input class="form-control" asp-for="NewOfferVersion.Margin" type="number" step="0.01" readonly />
+                    <button type="button" class="btn btn-primary js-update-margin">Przelicz</button>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" asp-for="NewOffer.Status">Status</label>
+                <select class="form-control" asp-for="NewOffer.Status" asp-items="statusItems"></select>
             </div>
         </fieldset>
 
-        <!-- PDF -->
+        <!-- SUMA ŁĄCZNA -->
         <fieldset class="fieldset">
-            <legend>PDF</legend>
+            <legend>Suma łączna</legend>
 
-            <div class="grid grid-2">
-                <div class="form-group grid-span-2">
-                    <label class="form-label" asp-for="NewPdfDocument.FilePath">Ścieżka pliku</label>
-                    <input class="form-control" asp-for="NewPdfDocument.FilePath" placeholder="np. /files/offers/oferta-123.pdf" />
-                    <span class="text-danger" asp-validation-for="NewPdfDocument.FilePath"></span>
+            <div class="grid grid-3">
+                <div class="form-group">
+                    <label class="form-label">Cena łączna</label>
+                    <input class="form-control js-total-price" type="number" step="0.01" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Cena łączna ostateczna</label>
+                    <input class="form-control js-total-final" type="number" step="0.01" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Marża łączna</label>
+                    <input class="form-control js-total-margin" type="number" step="0.01" readonly />
                 </div>
             </div>
         </fieldset>
@@ -99,3 +227,202 @@
         </footer>
     </form>
 </section>
+
+@section Scripts {
+<script>
+    function t() {
+        return document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+    }
+
+    const container = document.getElementById("vehiclesContainer");
+    const addBtn = document.getElementById("addVehicleBtn");
+    const collectionName = "NewVehicleConfigurations";
+
+    // ====== indeksowanie kolekcji (clone/remove) ======
+    function reindex() {
+        const blocks = container.querySelectorAll(".vehicle-block");
+
+        blocks.forEach((block, i) => {
+            // name: NewVehicleConfigurations[0].X -> NewVehicleConfigurations[i].X
+            block.querySelectorAll("[name]").forEach(el => {
+                el.name = el.name.replace(
+                    new RegExp(collectionName + "\\[\\d+\\]", "g"),
+                    `${collectionName}[${i}]`
+                );
+            });
+
+            // header
+            const header = block.querySelector("strong");
+            if (header) header.textContent = `Pojazd ${i + 1}`;
+        });
+
+        const removeButtons = container.querySelectorAll(".remove-vehicle");
+        removeButtons.forEach(btn => btn.disabled = (blocks.length === 1));
+    }
+
+    function clearBlock(block) {
+        // reset selects
+        block.querySelectorAll("select").forEach(sel => sel.selectedIndex = 0);
+
+        // reset inputs
+        block.querySelectorAll("input").forEach(inp => {
+            if (inp.classList.contains("js-veh-price") ||
+                inp.classList.contains("js-veh-final") ||
+                inp.classList.contains("js-veh-margin")) {
+                inp.value = "";
+                return;
+            }
+            if (inp.classList.contains("js-additional-price")) {
+                inp.value = "0";
+                return;
+            }
+            inp.value = "";
+        });
+
+        // clear validation messages
+        block.querySelectorAll(".text-danger").forEach(span => span.textContent = "");
+    }
+
+    function addBlock() {
+        const blocks = container.querySelectorAll(".vehicle-block");
+        const last = blocks[blocks.length - 1];
+        const clone = last.cloneNode(true);
+
+        clearBlock(clone);
+        container.appendChild(clone);
+        reindex();
+        scheduleRecalc();
+    }
+
+    function removeBlock(btn) {
+        const block = btn.closest(".vehicle-block");
+        if (!block) return;
+        block.remove();
+        reindex();
+        scheduleRecalc();
+    }
+
+    addBtn.addEventListener("click", addBlock);
+    container.addEventListener("click", (e) => {
+        const btn = e.target.closest(".remove-vehicle");
+        if (btn) removeBlock(btn);
+    });
+
+    // ====== payload do backendu ======
+    // wysyłamy listę obiektów:
+    // [{ size: 0, engine: 1, gearbox: 2, interior: 1, drivetrain: 0 }, ...]
+    function collectConfigs() {
+        const blocks = container.querySelectorAll(".vehicle-block");
+
+        return Array.from(blocks).map(block => {
+            const size = block.querySelector('.js-size')?.value ?? null;
+            const engine = block.querySelector('.js-engine')?.value ?? null;
+            const gearbox = block.querySelector('.js-gearbox')?.value ?? null;
+            const interior = block.querySelector('.js-interior')?.value ?? null;
+            const drivetrain = block.querySelector('.js-drivetrain')?.value ?? null;
+
+            // dodatkowa dopłata – jeśli chcesz, dołóż do DTO i backendu
+            // const additionalPrice = block.querySelector('.js-additional-price')?.value ?? "0";
+
+            return {
+                size: size ? Number(size) : null,
+                engine: engine ? Number(engine) : null,
+                gearbox: gearbox ? Number(gearbox) : null,
+                interior: interior ? Number(interior) : null,
+                drivetrain: drivetrain ? Number(drivetrain) : null
+            };
+        });
+    }
+
+    // ====== UI update ======
+    function setVehiclePricing(index, p) {
+        const blocks = container.querySelectorAll(".vehicle-block");
+        const block = blocks[index];
+        if (!block) return;
+
+        const priceEl = block.querySelector(".js-veh-price");
+        const finalEl = block.querySelector(".js-veh-final");
+        const marginEl = block.querySelector(".js-veh-margin");
+
+        if (priceEl) priceEl.value = p?.price ?? 0;
+        if (finalEl) finalEl.value = p?.finalPrice ?? 0;
+        if (marginEl) marginEl.value = p?.margin ?? 0;
+    }
+
+    function setTotals(tot) {
+        document.querySelector(".js-total-price").value = tot?.price ?? 0;
+        document.querySelector(".js-total-final").value = tot?.finalPrice ?? 0;
+        document.querySelector(".js-total-margin").value = tot?.margin ?? 0;
+
+        // synchronizacja z polami wersji oferty
+        const p = document.querySelector('#NewOfferVersion_Price');
+        const fp = document.querySelector('#NewOfferVersion_FinalPrice');
+        const m = document.querySelector('#NewOfferVersion_Margin');
+
+        if (p) p.value = tot?.price ?? 0;
+        if (fp) fp.value = tot?.finalPrice ?? 0;
+        if (m) m.value = tot?.margin ?? 0;
+    }
+
+    // ====== AJAX ======
+    let recalcTimer = null;
+    function scheduleRecalc() {
+        if (recalcTimer) clearTimeout(recalcTimer);
+        recalcTimer = setTimeout(recalcAjax, 250);
+    }
+
+    async function recalcAjax() {
+        const discount = document.querySelector('#NewOfferVersion_Discount')?.value ?? "0";
+        const configs = collectConfigs();
+        const payload = JSON.stringify(configs);
+
+        const body = new URLSearchParams();
+        body.append("__RequestVerificationToken", t());
+        body.append("payload", payload);
+        body.append("discount", discount);
+
+        const r = await fetch('?handler=CalculateMargin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: body.toString(),
+            credentials: 'same-origin'
+        });
+
+        if (!r.ok) {
+            console.error("CalculateMargin failed:", await r.text());
+            return;
+        }
+
+        const data = await r.json();
+
+        // backend zwraca:
+        // { vehicles: [{price, finalPrice, margin}...], total: {price, finalPrice, margin} }
+        if (Array.isArray(data.vehicles)) {
+            data.vehicles.forEach((p, i) => setVehiclePricing(i, p));
+        }
+        setTotals(data.total);
+    }
+
+    // przelicz po każdej zmianie w selectach i dopłacie
+    container.addEventListener("change", (e) => {
+        if (e.target.matches("select") || e.target.classList.contains("js-additional-price")) {
+            scheduleRecalc();
+        }
+    });
+
+    // przelicz po zmianie rabatu
+    const discountEl = document.querySelector('#NewOfferVersion_Discount');
+    if (discountEl) discountEl.addEventListener("input", scheduleRecalc);
+
+    // przycisk też działa
+    const btn = document.querySelector('.js-update-margin');
+    if (btn) btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        scheduleRecalc();
+    });
+
+    // start
+    reindex();
+    scheduleRecalc();
+</script>
+}

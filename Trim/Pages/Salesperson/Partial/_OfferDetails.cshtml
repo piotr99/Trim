@@ -1,5 +1,191 @@
-﻿@model Trim.Models.Offer
+﻿@model Trim.Models.ViewModels.OfferDetailsVm
 
-<div>test</div>
-numer oferty
-@Model.OfferFriendlyName
+@{
+    var offer = Model.Offer;
+    var versions = Model.OfferVersions ?? new List<Trim.Models.OfferVersion>();
+
+    // Jeśli masz CreatedAt/VersionNumber, podmień sortowanie
+    var latest = versions
+        .OrderByDescending(v => v.Id)
+        .FirstOrDefault();
+}
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start gap-3">
+            <div>
+                <h5 class="mb-1">
+                    @offer.OfferFriendlyName
+                    <span class="badge bg-secondary ms-2">@offer.Status</span>
+                </h5>
+                <div class="text-muted small">
+                    ID oferty: <strong>@offer.Id</strong>
+                    <span class="mx-2">•</span>
+                    Klient ID: <strong>@offer.CustomerId</strong>
+                    <span class="mx-2">•</span>
+                    Sprzedawca ID: <strong>@offer.SalespersonId</strong>
+                </div>
+            </div>
+
+            <div class="text-end">
+                <a class="btn btn-primary"
+                   asp-page="/Salesperson/NegotiateOffer"
+                   asp-route-customerId="@offer.CustomerId"
+                   asp-route-offerId="@offer.Id">
+                    Negocjuj ofertę
+                </a>
+                <div class="small text-muted mt-2">
+                    @if (latest is not null)
+                    {
+                        <span>Ostatnia wersja: <strong>#@latest.Id</strong></span>
+                    }
+                    else
+                    {
+                        <span>Brak wersji oferty</span>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-3" />
+
+        <div class="row g-3">
+            <div class="col-12 col-lg-6">
+                <div class="p-3 bg-light rounded">
+                    <div class="fw-semibold mb-2">Podsumowanie</div>
+
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted">Status</span>
+                        <span>@offer.Status</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted">Liczba wersji</span>
+                        <span>@versions.Count</span>
+                    </div>
+
+                    @* Jeśli OfferVersion ma Price *@
+                    <div class="d-flex justify-content-between">
+                        
+                        <span>
+                            @if (latest is null)
+                            {
+                                <span class="text-muted">—</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">Cena</span>
+                                @latest.Price
+                                <span class="text-muted">Rabat</span>
+                                @latest.Discount
+                                <span class="text-muted">Marża</span>
+                                @latest.Margin
+                            }
+                        </span>
+                    </div>
+
+                    @* Jeśli masz marżę itp., tu jest dobre miejsce *@
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="p-3 bg-light rounded">
+                    <div class="fw-semibold mb-2">Akcje</div>
+
+                    <div class="d-flex flex-wrap gap-2">
+                        <a class="btn btn-outline-secondary"
+                           asp-page="/Salesperson/Offer"
+                           asp-route-offerId="@offer.Id">
+                            Szczegóły oferty
+                        </a>
+
+                        <a class="btn btn-outline-secondary"
+                           asp-page="/Salesperson/Customer"
+                           asp-route-customerId="@offer.CustomerId">
+                            Profil klienta
+                        </a>
+
+                        @* Dodaj np. PDF jeśli masz *@
+                        @* <a class="btn btn-outline-secondary" asp-page="/Salesperson/OfferPdf" asp-route-offerId="@offer.Id">PDF</a> *@
+                    </div>
+
+                    <div class="small text-muted mt-2">
+                        Tip: jeśli wprowadzisz edycję, lepiej przejść na VM z polami tylko do widoku.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (versions.Count > 0)
+        {
+            <hr class="my-3" />
+            <div class="fw-semibold mb-2">Wersje oferty</div>
+
+            <div class="table-responsive">
+                <table class="table table-sm align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 90px;">Wersja</th>
+                            <th style="width: 160px;">Cena</th>
+                            <th>Uwagi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var v in versions.OrderByDescending(x => x.Id))
+                    {
+                        <tr>
+                            <td>#@v.Id</td>
+                            <td>@v.Price</td>
+                            <td class="text-muted">
+                                @* Jeśli masz np. v.Comment / v.CreatedAt to tu *@
+                                —
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        @* Jeśli w VM masz pojazdy: Vehicles *@
+        @if (Model.OfferVehicleConfigurations is not null && Model.OfferVehicleConfigurations.Count > 0)
+        {
+            <hr class="my-3" />
+            <div class="fw-semibold mb-2">Konfiguracje pojazdów w ofercie</div>
+
+            <div class="table-responsive">
+                <table class="table table-sm align-middle mb-0">
+                    <thead class="table-light">
+                    <tr>
+                        <th>Kabina</th>
+                        <th>Silnik</th>
+                        <th>Skrzynia biegów</th>
+                        <th>Wnętrze</th>
+                        <th>Napęd</th>
+                        <th>Dodatkowe wyposażenie</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var configuration in Model.OfferVehicleConfigurations)
+                    {
+                        <tr>
+                            <td class="text-muted">@configuration.Size</td>
+                            <td class="text-muted">@configuration.Engine</td>
+                            <td class="text-muted">@configuration.Gearbox</td>
+                            <td class="text-muted">@configuration.Interior</td>
+                            <td class="text-muted">@configuration.Drivetrain</td>
+                            <td class="text-muted">@configuration.AdditonalEquipment : @configuration.AdditionalPrice</td>
+                        </tr>
+                        
+                    }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <hr class="my-3" />
+            <div class="text-muted">Brak pojazdów / konfiguracji do wyświetlenia.</div>
+        }
+    </div>
+</div>

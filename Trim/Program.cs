@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Trim.DbContext;
 using Trim.Models;
 using Microsoft.EntityFrameworkCore.Design;
+using Trim.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +44,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Account/Login";
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
-
+builder.Services.AddScoped<IOfferCalculator, OfferCalculator>();
 // 5) Razor Pages + konwencje (tylko raz)
 builder.Services.AddRazorPages(options =>
 {
@@ -56,6 +57,8 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AllowAnonymousToPage("/Account/Login");
     options.Conventions.AllowAnonymousToPage("/Account/AccessDenied");
 });
+
+
 
 var app = builder.Build();
 

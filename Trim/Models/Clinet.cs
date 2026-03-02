@@ -2,20 +2,6 @@
 
 namespace Trim.Models;
 
-public class TransportCompany
-{
-    public int Id { get; set; }
-
-    [Required, MaxLength(200)] public string Name { get; set; } = default!;
-
-    [Required, MaxLength(20)] public string TaxId { get; set; } = default!; // NIP
-
-    [MaxLength(400)] public string? Address { get; set; }
-
-    public ICollection<Customer> Customers { get; set; } = new List<Customer>();
-    public ICollection<Lead> Leads { get; set; } = new List<Lead>();
-}
-
 public class Customer
     {
         public int Id { get; set; }
@@ -37,9 +23,7 @@ public class Customer
 
         [MaxLength(400)]
         public string? Address { get; set; }
-
-        public int? TransportCompanyId { get; set; }
-        public TransportCompany? TransportCompany { get; set; }
+        public string TaxId { get; set; }
         
         public int? SalespersonId { get; set; }
         public Salesperson? Salesperson { get; set; }
@@ -69,5 +53,4 @@ public class Lead
     public LeadStatusEnum Status { get; set; } = LeadStatusEnum.NEW;
 
     public int? TransportCompanyId { get; set; }
-    public TransportCompany? TransportCompany { get; set; }
 }

@@ -14,9 +14,7 @@ public class Offer
 
     public int CustomerId { get; set; }
     public Customer Customer { get; set; } = default!;
-
-    public ICollection<OfferVehicle> OfferVehicles { get; set; } = new List<OfferVehicle>();
-
+    public ICollection<OfferVehicleConfiguration> OfferVehicleConfigurations { get; set; } = new List<OfferVehicleConfiguration>();
     public int SalespersonId { get; set; }
     public Salesperson Salesperson { get; set; } = default!;
 
@@ -24,21 +22,18 @@ public class Offer
 
     public int? OrderId { get; set; }
     public Order? Order { get; set; }
-
     public PdfDocument? PdfDocument { get; set; }
 
     public ICollection<CustomerCommunication> Communications { get; set; } = new List<CustomerCommunication>();
 }
 
-
 public class OfferVersion
 {
     public int Id { get; set; }
 
-    [Required, MaxLength(20)]
-    public int VersionNumber { get; set; } = default!; // e.g. V1.0
-
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    [Precision(18, 2)]
+    public decimal FinalPrice { get; set; }
 
     [Precision(18, 2)]
     public decimal Price { get; set; }

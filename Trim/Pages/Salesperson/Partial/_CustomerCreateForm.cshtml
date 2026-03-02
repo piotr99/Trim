@@ -20,6 +20,12 @@
     </div>
 
     <div class="mb-2">
+        <label class="form-label" asp-for="Customer.TaxId"></label>
+        <input class="form-control" asp-for="Customer.TaxId" />
+        <span class="text-danger" asp-validation-for="Customer.TaxId"></span>
+    </div>
+    
+    <div class="mb-2">
         <label class="form-label" asp-for="Customer.CompanyName"></label>
         <input class="form-control" asp-for="Customer.CompanyName" />
         <span class="text-danger" asp-validation-for="Customer.CompanyName"></span>
@@ -36,16 +42,6 @@
         <input class="form-control" asp-for="Customer.Phone" />
         <span class="text-danger" asp-validation-for="Customer.Phone"></span>
     </div>
-
-    <div class="mb-3">
-        <label class="form-label" asp-for="Customer.TransportCompanyId">Transport company</label>
-
-        <select class="form-select"
-                asp-for="Customer.TransportCompanyId"
-                asp-items="Model.TransportCompanies">
-            <option value="">-- wybierz firmę --</option>
-        </select>
-    </div> 
     
     <div class="mb-3">
         <label class="form-label" asp-for="Customer.SalespersonId">Handlowiec</label>
