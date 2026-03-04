@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
 
 namespace Trim.Models;
 
@@ -9,44 +12,33 @@ public class Offer
 
     [Required, MaxLength(50)]
     public string OfferFriendlyName { get; set; } = default!;
+    public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
 
     public OfferStatusEnum Status { get; set; } = OfferStatusEnum.DRAFT;
 
     public int CustomerId { get; set; }
+    [ValidateNever, BindNever]
     public Customer Customer { get; set; } = default!;
+    [ValidateNever, BindNever]
     public ICollection<OfferVehicleConfiguration> OfferVehicleConfigurations { get; set; } = new List<OfferVehicleConfiguration>();
     public int SalespersonId { get; set; }
+    [ValidateNever, BindNever]
     public Salesperson Salesperson { get; set; } = default!;
-
-    public ICollection<OfferVersion> Versions { get; set; } = new List<OfferVersion>();
-
     public int? OrderId { get; set; }
     public Order? Order { get; set; }
     public PdfDocument? PdfDocument { get; set; }
-
     public ICollection<CustomerCommunication> Communications { get; set; } = new List<CustomerCommunication>();
-}
-
-public class OfferVersion
-{
-    public int Id { get; set; }
-
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    //kasa
     [Precision(18, 2)]
     public decimal FinalPrice { get; set; }
-
     [Precision(18, 2)]
     public decimal Price { get; set; }
-
     [Precision(18, 2)]
     public decimal Discount { get; set; }
-
     [Precision(18, 2)]
-    public decimal Margin { get; set; }
-
-    public int OfferId { get; set; }
-    public Offer Offer { get; set; } = default!;
+    public decimal Bonus { get; set; }
 }
+
 
 public class Order
 {

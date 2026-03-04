@@ -9,7 +9,7 @@ public class VehicleCabSize
     [Precision(18, 2)]
     public decimal Price { get; set; }
     [Precision(18, 2)]
-    public decimal Bonus { get; set; } = 0;
+    public decimal BonusMultiplier { get; set; } = 0;
 }
 
 public class VehicleEngine
@@ -19,7 +19,7 @@ public class VehicleEngine
     [Precision(18, 2)]
     public decimal Price { get; set; }
     [Precision(18, 2)]
-    public decimal Bonus { get; set; } = 0;
+    public decimal BonusMultiplier { get; set; } = 0;
 }
 
 public class VehicleGearbox
@@ -29,7 +29,7 @@ public class VehicleGearbox
     [Precision(18, 2)]
     public decimal Price { get; set; }
     [Precision(18, 2)]
-    public decimal Bonus { get; set; } = 0;
+    public decimal BonusMultiplier { get; set; } = 0;
 }
 
 public class VehicleInterior
@@ -38,8 +38,9 @@ public class VehicleInterior
     public string Name { get; set; } = string.Empty;
     [Precision(18, 2)]
     public decimal Price { get; set; }
-    [Precision(18, 2)]
-    public decimal Bonus { get; set; } = 0;
+
+    [Precision(18, 2)] 
+    public decimal BonusMultiplier { get; set; } = 0;
 }
 
 public class VehicleDrivetrain
@@ -49,5 +50,5 @@ public class VehicleDrivetrain
     [Precision(18, 2)]
     public decimal Price { get; set; }
     [Precision(18, 2)]
-    public decimal Bonus { get; set; } = 0;
+    public decimal BonusMultiplier { get; set; } = 0;
 }

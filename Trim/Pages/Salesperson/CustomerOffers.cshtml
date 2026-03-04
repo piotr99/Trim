@@ -33,7 +33,7 @@
         </form>
 
         Liczba ofert: @Model.Offers.Count()
-        klinet: @Model.customerId
+        klinet ID: @Model.customerId
         @if (Model.Offers.IsNullOrEmpty())
         {
             <h3>Brak ofert</h3>
@@ -46,8 +46,8 @@
                         class="item-button d-block text-decoration-none js-offer"
                         data-id="@offer.Id">
                     <div class="item-button-main">
-                        <span class="item-name">@offer.Id @offer.Status</span>
-                        <p>@offer.</p>
+                        <span class="item-name">@offer.OfferFriendlyName </span>
+                        <p>@offer.Status</p>
                     </div>
                 </button>
             }

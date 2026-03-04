@@ -17,8 +17,8 @@ public static class DataSeeder
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
         // Migracje
-        await db.Database.EnsureCreatedAsync();
         await db.Database.MigrateAsync();
+        await db.Database.EnsureCreatedAsync();
 
 
         // ===== Roles =====
@@ -162,58 +162,60 @@ public static class DataSeeder
             Status = LeadStatusEnum.IN_PROGRESS,
         };
         // ===== Vehicle Components =====
+        
         //Cab
-        if (!db.VehicleCabSizes.Any(x => x.Id == 0))
+        if (!db.VehicleCabSizes.Any())
         {
             db.VehicleCabSizes.AddRange(
-                new VehicleCabSize { Id = 0, Name = "P - niska (P-cab)", Price = 44000m },
-                new VehicleCabSize { Id = 1, Name = "G - normalna (G-cab)", Price = 40000m },
-                new VehicleCabSize { Id = 2, Name = "R - wysoka (R-cab)", Price = 48000m },
-                new VehicleCabSize { Id = 3, Name = "S - najwyższa (S-cab)", Price = 60000m },
-                new VehicleCabSize { Id = 4, Name = "L - długa (L-cab)", Price = 42000m }
+                new VehicleCabSize {Name = "P - niska (P-cab)", Price = 44000m, BonusMultiplier = 0.4m},
+                new VehicleCabSize {Name = "G - normalna (G-cab)", Price = 40000m, BonusMultiplier = 0.3m},
+                new VehicleCabSize {Name = "R - wysoka (R-cab)", Price = 48000m },
+                new VehicleCabSize {Name = "S - najwyższa (S-cab)", Price = 60000m },
+                new VehicleCabSize {Name = "L - długa (L-cab)", Price = 42000m }
             );
         }
         // ENGINE
-        if (!db.VehicleEngines.Any(x => x.Id == 1))
+        if (!db.VehicleEngines.Any())
         {
             db.VehicleEngines.AddRange(
-                new VehicleEngine { Id = 0, Name = "9L 360 KM", Price = 38000m },
-                new VehicleEngine { Id = 1, Name = "13L 560 KM", Price = 40000m },
-                new VehicleEngine { Id = 2, Name = "16L V8 770 KM", Price = 60000m }
+                new VehicleEngine {Name = "9L 360 KM", Price = 38000m, BonusMultiplier = 2.5m },
+                new VehicleEngine {Name = "13L 560 KM", Price = 40000m },
+                new VehicleEngine {Name = "16L V8 770 KM", Price = 60000m }
             );
         }
         // GEARBOX
         if (!db.VehicleGearboxes.Any())
         {
             db.VehicleGearboxes.AddRange(
-                    new VehicleGearbox { Id = 0, Name = "Manual (G-series)",Price = 60000m },
-                    new VehicleGearbox { Id = 1, Name = "Opticruise / Automated (AMT)",Price = 100000m },
-                    new VehicleGearbox { Id = 2, Name = "Allison (automat - zastosowania specjalne)", Price = 100000m }
+                    new VehicleGearbox {Name = "Manual (G-series)",Price = 60000m },
+                    new VehicleGearbox {Name = "Opticruise / Automated (AMT)",Price = 100000m, BonusMultiplier = 0.1m },
+                    new VehicleGearbox {Name = "Allison (automat - zastosowania specjalne)", Price = 100000m }
             );
         }
         // INTERIOR
         if (!db.VehicleInteriors.Any())
         {
             db.VehicleInteriors.AddRange(
-                    new VehicleInterior { Id = 0, Name = "Standard",              Price = 60000m },
-                    new VehicleInterior { Id = 1, Name = "Comfort",               Price = 100000m },
-                    new VehicleInterior { Id = 2, Name = "Premium / Highline",    Price = 160000m },
-                    new VehicleInterior { Id = 3, Name = "Luxury / Topline",      Price = 260000m }
+                    new VehicleInterior {Name = "Standard",              Price = 60000m },
+                    new VehicleInterior {Name = "Comfort",               Price = 100000m, BonusMultiplier = 0.8m },
+                    new VehicleInterior {Name = "Premium / Highline",    Price = 160000m },
+                    new VehicleInterior {Name = "Luxury / Topline",      Price = 260000m }
                 );
         }
         // DRIVETRAIN
         if (!db.VehicleDrivetrains.Any())
         {
             db.VehicleDrivetrains.AddRange(
-                new VehicleDrivetrain { Id = 0, Name = "4x2", Price = 80000m },
-                new VehicleDrivetrain { Id = 1, Name = "6x2", Price = 90000m },
-                new VehicleDrivetrain { Id = 2, Name = "6x4", Price = 100000m} ,
-                new VehicleDrivetrain { Id = 3, Name = "8x2", Price = 100000m },
-                new VehicleDrivetrain { Id = 4, Name = "8x4", Price = 160000m }
+                new VehicleDrivetrain {Name = "4x2", Price = 80000m },
+                new VehicleDrivetrain {Name = "6x2", Price = 90000m },
+                new VehicleDrivetrain {Name = "6x4", Price = 100000m} ,
+                new VehicleDrivetrain {Name = "8x2", Price = 100000m, BonusMultiplier = 0.5m },
+                new VehicleDrivetrain {Name = "8x4", Price = 160000m }
                 );
         }
         
         await db.SaveChangesAsync();
+        db.ChangeTracker.Clear();
         
         // ===== Vehicles (2) =====
         
@@ -240,9 +242,16 @@ public static class DataSeeder
         // Dodaj do contextu
         db.Customers.AddRange(customer1, customer2);
         db.Leads.AddRange(lead1, lead2);
-
-        Console.WriteLine(db.VehicleCabSizes.Count()); // otrzymuję 0
+        
         // ===== Offers (2) =====
+        
+        var gCab = await db.VehicleCabSizes.AsNoTracking().SingleAsync(x => x.Name.Contains("G - normalna"));
+        var eng13 = await db.VehicleEngines.AsNoTracking().SingleAsync(x => x.Name.Contains("13L 560"));
+        var gbAllison = await db.VehicleGearboxes.AsNoTracking().SingleAsync(x => x.Name.Contains("Allison"));
+        var intrComfort = await db.VehicleInteriors.AsNoTracking().SingleAsync(x => x.Name.Contains("Comfort"));
+        var drv6x2 = await db.VehicleDrivetrains.AsNoTracking().SingleAsync(x => x.Name == "6x2");
+
+        
         var offer1 = new Offer
         {
             OfferFriendlyName = "OFF-2026-0001",
@@ -253,11 +262,11 @@ public static class DataSeeder
             {
                 new OfferVehicleConfiguration
                 {
-                    Size = db.VehicleCabSizes.Single(x => x.Id == 0),
-                    Engine = db.VehicleEngines.Single(x => x.Id == 1),
-                    Gearbox = db.VehicleGearboxes.Single(x => x.Id == 2),
-                    Interior = db.VehicleInteriors.Single(x => x.Id == 1),
-                    Drivetrain = db.VehicleDrivetrains.Single(x => x.Id == 0),
+                    SizeId = gCab.Id,
+                    EngineId = eng13.Id,
+                    GearboxId = gbAllison.Id,
+                    InteriorId = intrComfort.Id,
+                    DrivetrainId = drv6x2.Id
                 }
             }
         };
@@ -272,34 +281,16 @@ public static class DataSeeder
             {
                 new OfferVehicleConfiguration
                 {
-                    Size = db.VehicleCabSizes.First(x => x.Id == 0),
-                    Engine = db.VehicleEngines.First(x => x.Id == 1),
-                    Gearbox = db.VehicleGearboxes.First(x => x.Id == 2),
-                    Interior = db.VehicleInteriors.First(x => x.Id == 1),
-                    Drivetrain = db.VehicleDrivetrains.First(x => x.Id == 0),
+                    SizeId = gCab.Id,
+                    EngineId = eng13.Id,
+                    GearboxId = gbAllison.Id,
+                    InteriorId = intrComfort.Id,
+                    DrivetrainId = drv6x2.Id
                 }
             }
         };
 
         db.Offers.AddRange(offer1, offer2);
-
-        // ===== OfferVersions (2) =====
-        db.OfferVersions.AddRange(
-            new OfferVersion
-            {
-                Offer = offer1,
-                CreatedAt = DateTime.UtcNow.AddDays(-2),
-                Price = 520000m,
-                FinalPrice = 520000m
-            },
-            new OfferVersion
-            {
-                Offer = offer2,
-                CreatedAt = DateTime.UtcNow.AddDays(-1),
-                Price = 480000m,
-                FinalPrice = 480000m
-            }
-        );
 
         // ===== Orders (2) =====
         var order1 = new Order
@@ -427,64 +418,6 @@ public static class DataSeeder
             new SalespersonSales { SalespersonId = salesperson1.Id, Vehicle = vehicle1, Quantity = 1 },
             new SalespersonSales { SalespersonId = salesperson2.Id, Vehicle = vehicle2, Quantity = 2 }
         );
-
-        // 5) Zapis na końcu (jeden SaveChanges)
-        await db.SaveChangesAsync();
-
-        //Vehicle Options
-        var existing = await db.OptionPrices
-            .Select(x => new { x.Group, x.EnumValue })
-            .ToListAsync();
-        var existingSet = existing
-            .Select(x => (x.Group, x.EnumValue))
-            .ToHashSet();
-        var toAdd = new List<OptionPrice>();
-
-        void Add(string group, int enumValue, decimal price)
-        {
-            if (!existingSet.Contains((group, enumValue)))
-            {
-                toAdd.Add(new OptionPrice
-                {
-                    Group = group,
-                    EnumValue = enumValue,
-                    Price = price
-                });
-            }
-        }
-
-        if (!await db.OptionPrices.AnyAsync())
-        {
-            db.OptionPrices.AddRange(
-                //engine
-                new OptionPrice { Group="Engine", EnumValue=(int)VehicleEngineEnum.L09, Price=38000m },
-                new OptionPrice { Group="Engine", EnumValue=(int)VehicleEngineEnum.L13, Price=40000m },
-                new OptionPrice { Group="Engine", EnumValue=(int)VehicleEngineEnum.V8_16, Price=60000m },
-                //cab
-                new OptionPrice { Group="CabSize", EnumValue=(int)VehicleCabSizeEnum.GCab, Price=40000m },
-                new OptionPrice { Group="CabSize", EnumValue=(int)VehicleCabSizeEnum.LCab, Price=42000m },
-                new OptionPrice { Group="CabSize", EnumValue=(int)VehicleCabSizeEnum.PCab, Price=44000m },
-                new OptionPrice { Group="CabSize", EnumValue=(int)VehicleCabSizeEnum.RCab, Price=48000m },
-                new OptionPrice { Group="CabSize", EnumValue=(int)VehicleCabSizeEnum.SCab, Price=60000m },
-                //gearbox
-                new OptionPrice { Group="Gearbox", EnumValue=(int)VehicleGearboxEnum.AllisonAutomatic, Price=100000m },
-                new OptionPrice { Group="Gearbox", EnumValue=(int)VehicleGearboxEnum.Manual, Price=60000m },
-                new OptionPrice { Group="Gearbox", EnumValue=(int)VehicleGearboxEnum.Opticruise, Price=100000m },
-                //interior
-                new OptionPrice { Group="Interior", EnumValue=(int)VehicleInteriorEnum.Standard, Price=60000m },
-                new OptionPrice { Group="Interior", EnumValue=(int)VehicleInteriorEnum.Comfort, Price=100000m },
-                new OptionPrice { Group="Interior", EnumValue=(int)VehicleInteriorEnum.Luxury, Price=260000m },
-                new OptionPrice { Group="Interior", EnumValue=(int)VehicleInteriorEnum.Premium, Price=160000m },
-                //drivetrain
-                new OptionPrice { Group="Drivetrain", EnumValue=(int)VehicleDrivetrainEnum._4x2, Price=80000m },
-                new OptionPrice { Group="Drivetrain", EnumValue=(int)VehicleDrivetrainEnum._6x2, Price=90000m },
-                new OptionPrice { Group="Drivetrain", EnumValue=(int)VehicleDrivetrainEnum._6x4, Price=100000m },
-                new OptionPrice { Group="Drivetrain", EnumValue=(int)VehicleDrivetrainEnum._8x2, Price=100000m },
-                new OptionPrice { Group="Drivetrain", EnumValue=(int)VehicleDrivetrainEnum._8x4, Price=160000m }
-            );
-        }
-
-        await db.SaveChangesAsync();
     
 }
 }

@@ -15,9 +15,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
 
     public DbSet<Vehicle> Vehicles => Set<Vehicle>();
     public DbSet<OrderVehicleConfiguration> OrderVehicleConfigurations => Set<OrderVehicleConfiguration>();
-    public DbSet<OfferVehicleConfiguration>  OfferVehicleConfigurations => Set<OfferVehicleConfiguration>();
+    public DbSet<OfferVehicleConfiguration> OfferVehicleConfigurations => Set<OfferVehicleConfiguration>();
     public DbSet<Offer> Offers => Set<Offer>();
-    public DbSet<OfferVersion> OfferVersions => Set<OfferVersion>();
     public DbSet<Order> Orders => Set<Order>();
     public DbSet<Invoice> Invoices => Set<Invoice>();
     public DbSet<PdfDocument> PdfDocuments => Set<PdfDocument>();
@@ -45,7 +44,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
         // If ApplicationUser is abstract -> remove HasValue<ApplicationUser>("User")
         b.Entity<ApplicationUser>()
             .HasDiscriminator<string>("UserType")
-            .HasValue<ApplicationUser>("User")
             .HasValue<Salesperson>("Salesperson")
             .HasValue<SalesAdministrator>("SalesAdministrator")
             .HasValue<Administrator>("Administrator");
@@ -58,11 +56,25 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             .OnDelete(DeleteBehavior.SetNull);
 
             //v comps
-        b.Entity<VehicleCabSize>().Property(x => x.Id).ValueGeneratedNever();
-        b.Entity<VehicleEngine>().Property(x => x.Id).ValueGeneratedNever();
-        b.Entity<VehicleGearbox>().Property(x => x.Id).ValueGeneratedNever();
-        b.Entity<VehicleInterior>().Property(x => x.Id).ValueGeneratedNever();
-        b.Entity<VehicleDrivetrain>().Property(x => x.Id).ValueGeneratedNever();
+        
+                base.OnModelCreating(b);
+
+                b.Entity<VehicleConfiguration>(e =>
+                {
+                    e.HasKey(x => x.Id);
+
+                    e.HasOne(x => x.Size).WithMany().HasForeignKey(x => x.SizeId).OnDelete(DeleteBehavior.Restrict);
+                    e.HasOne(x => x.Engine).WithMany().HasForeignKey(x => x.EngineId).OnDelete(DeleteBehavior.Restrict);
+                    e.HasOne(x => x.Gearbox).WithMany().HasForeignKey(x => x.GearboxId).OnDelete(DeleteBehavior.Restrict);
+                    e.HasOne(x => x.Interior).WithMany().HasForeignKey(x => x.InteriorId).OnDelete(DeleteBehavior.Restrict);
+                    e.HasOne(x => x.Drivetrain).WithMany().HasForeignKey(x => x.DrivetrainId).OnDelete(DeleteBehavior.Restrict);
+
+                    e.Property(x => x.Price).HasPrecision(18,2);
+                    e.Property(x => x.Bonus).HasPrecision(18,2);
+                    e.Property(x => x.BonusMultiplier).HasPrecision(18,2);
+                    e.Property(x => x.AdditionalPrice).HasPrecision(18,2);
+                    e.Property(x => x.AdditionalEquipment).HasMaxLength(500);
+                });
         
         b.Entity<Vehicle>()
             .HasOne(v => v.Customer)
@@ -89,18 +101,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             .HasMany(o => o.OfferVehicleConfigurations)
             .WithOne(vc => vc.Offer)
             .HasForeignKey(vc => vc.OfferId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
         b.Entity<Offer>()
             .HasOne(o => o.Salesperson)
             .WithMany(s => s.CreatedOffers)
             .HasForeignKey(o => o.SalespersonId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        
-        b.Entity<Offer>()
-            .HasMany(o => o.Versions)
-            .WithOne(v => v.Offer)
-            .HasForeignKey(v => v.OfferId)
             .OnDelete(DeleteBehavior.Restrict);
 
         // Offer -> Order (0..1)

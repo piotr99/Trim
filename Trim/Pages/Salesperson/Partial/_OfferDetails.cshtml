@@ -1,13 +1,9 @@
 ﻿@model Trim.Models.ViewModels.OfferDetailsVm
+@using System.Globalization
 
 @{
     var offer = Model.Offer;
-    var versions = Model.OfferVersions ?? new List<Trim.Models.OfferVersion>();
-
-    // Jeśli masz CreatedAt/VersionNumber, podmień sortowanie
-    var latest = versions
-        .OrderByDescending(v => v.Id)
-        .FirstOrDefault();
+    string Money(decimal v) => v.ToString("N2", CultureInfo.GetCultureInfo("pl-PL")) + " zł";
 }
 
 <div class="card shadow-sm border-0">
@@ -34,16 +30,6 @@
                    asp-route-offerId="@offer.Id">
                     Negocjuj ofertę
                 </a>
-                <div class="small text-muted mt-2">
-                    @if (latest is not null)
-                    {
-                        <span>Ostatnia wersja: <strong>#@latest.Id</strong></span>
-                    }
-                    else
-                    {
-                        <span>Brak wersji oferty</span>
-                    }
-                </div>
             </div>
         </div>
 
@@ -60,31 +46,24 @@
                     </div>
 
                     <div class="d-flex justify-content-between">
-                        <span class="text-muted">Liczba wersji</span>
-                        <span>@versions.Count</span>
+                        <span class="text-muted">Cena</span>
+                        <span class="fw-semibold">@Money(offer.Price)</span>
                     </div>
 
-                    @* Jeśli OfferVersion ma Price *@
                     <div class="d-flex justify-content-between">
-                        
-                        <span>
-                            @if (latest is null)
-                            {
-                                <span class="text-muted">—</span>
-                            }
-                            else
-                            {
-                                <span class="text-muted">Cena</span>
-                                @latest.Price
-                                <span class="text-muted">Rabat</span>
-                                @latest.Discount
-                                <span class="text-muted">Marża</span>
-                                @latest.Margin
-                            }
-                        </span>
+                        <span class="text-muted">Rabat</span>
+                        <span>@Money(offer.Discount)</span>
                     </div>
 
-                    @* Jeśli masz marżę itp., tu jest dobre miejsce *@
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted">Bonus (marża)</span>
+                        <span>@Money(offer.Bonus)</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between border-top pt-2 mt-2">
+                        <span class="text-muted">Cena ostateczna</span>
+                        <span class="fw-bold">@Money(offer.FinalPrice)</span>
+                    </div>
                 </div>
             </div>
 
@@ -104,9 +83,6 @@
                            asp-route-customerId="@offer.CustomerId">
                             Profil klienta
                         </a>
-
-                        @* Dodaj np. PDF jeśli masz *@
-                        @* <a class="btn btn-outline-secondary" asp-page="/Salesperson/OfferPdf" asp-route-offerId="@offer.Id">PDF</a> *@
                     </div>
 
                     <div class="small text-muted mt-2">
@@ -116,76 +92,64 @@
             </div>
         </div>
 
-        @if (versions.Count > 0)
-        {
-            <hr class="my-3" />
-            <div class="fw-semibold mb-2">Wersje oferty</div>
+        @* ===== KONFIGURACJE POJAZDÓW (W PUNKTACH) ===== *@
+       @if (Model.OfferVehicleConfigurations is not null && Model.OfferVehicleConfigurations.Count > 0)
+{
+    <hr class="my-3" />
+    <div class="fw-semibold mb-2">Konfiguracje pojazdów w ofercie</div>
 
-            <div class="table-responsive">
-                <table class="table table-sm align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th style="width: 90px;">Wersja</th>
-                            <th style="width: 160px;">Cena</th>
-                            <th>Uwagi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var v in versions.OrderByDescending(x => x.Id))
-                    {
-                        <tr>
-                            <td>#@v.Id</td>
-                            <td>@v.Price</td>
-                            <td class="text-muted">
-                                @* Jeśli masz np. v.Comment / v.CreatedAt to tu *@
-                                —
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
+    <div class="row g-3">
+        @{
+            var idx = 1;
+        }
+
+        @foreach (var cfg in Model.OfferVehicleConfigurations)
+        {
+            <div class="col-12 col-lg-6">
+                <div class="border rounded p-3 h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div class="fw-semibold">Pojazd @idx</div>
+                        <span class="badge bg-light text-dark">
+                            Cena: @cfg.Price
+                        </span>
+                    </div>
+
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-1"><span class="text-muted">• Kabina:</span> <span class="fw-semibold">@cfg.Size?.Name</span></li>
+                        <li class="mb-1"><span class="text-muted">• Silnik:</span> <span class="fw-semibold">@cfg.Engine?.Name</span></li>
+                        <li class="mb-1"><span class="text-muted">• Skrzynia:</span> <span class="fw-semibold">@cfg.Gearbox?.Name</span></li>
+                        <li class="mb-1"><span class="text-muted">• Wnętrze:</span> <span class="fw-semibold">@cfg.Interior?.Name</span></li>
+                        <li class="mb-1"><span class="text-muted">• Napęd:</span> <span class="fw-semibold">@cfg.Drivetrain?.Name</span></li>
+
+                        <li class="mt-2">
+                            <span class="text-muted">• Dodatkowe wyposażenie:</span>
+                            <span class="fw-semibold">@(!string.IsNullOrWhiteSpace(cfg.AdditionalEquipment) ? cfg.AdditionalEquipment : "brak")</span>
+                            @if ((cfg.AdditionalPrice ?? 0) > 0)
+                            {
+                                <span class="text-muted"> — dopłata:</span>
+                                <span class="fw-semibold">@cfg.AdditionalPrice</span>
+                            }
+                        </li>
+
+                        <li class="mt-2 pt-2 border-top">
+                            <span class="text-muted">• Mnożnik bonusu:</span>
+                            <span class="fw-semibold">@cfg.BonusMultiplier</span>
+                            <span class="mx-2 text-muted">|</span>
+                            <span class="text-muted">Bonus:</span>
+                            <span class="fw-semibold">@cfg.Bonus</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        }
 
-        @* Jeśli w VM masz pojazdy: Vehicles *@
-        @if (Model.OfferVehicleConfigurations is not null && Model.OfferVehicleConfigurations.Count > 0)
-        {
-            <hr class="my-3" />
-            <div class="fw-semibold mb-2">Konfiguracje pojazdów w ofercie</div>
-
-            <div class="table-responsive">
-                <table class="table table-sm align-middle mb-0">
-                    <thead class="table-light">
-                    <tr>
-                        <th>Kabina</th>
-                        <th>Silnik</th>
-                        <th>Skrzynia biegów</th>
-                        <th>Wnętrze</th>
-                        <th>Napęd</th>
-                        <th>Dodatkowe wyposażenie</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var configuration in Model.OfferVehicleConfigurations)
-                    {
-                        <tr>
-                            <td class="text-muted">@configuration.Size</td>
-                            <td class="text-muted">@configuration.Engine</td>
-                            <td class="text-muted">@configuration.Gearbox</td>
-                            <td class="text-muted">@configuration.Interior</td>
-                            <td class="text-muted">@configuration.Drivetrain</td>
-                            <td class="text-muted">@configuration.AdditonalEquipment : @configuration.AdditionalPrice</td>
-                        </tr>
-                        
-                    }
-                    </tbody>
-                </table>
-            </div>
+            idx++;
         }
-        else
-        {
-            <hr class="my-3" />
-            <div class="text-muted">Brak pojazdów / konfiguracji do wyświetlenia.</div>
-        }
+    </div>
+}
+else
+{
+    <hr class="my-3" />
+    <div class="text-muted">Brak pojazdów / konfiguracji do wyświetlenia.</div>
+}
     </div>
 </div>

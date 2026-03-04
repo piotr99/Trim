@@ -39,7 +39,6 @@ public class CustomerOffers : PageModel
         IQueryable<Offer> q = _db.Offers
             .AsNoTracking()
             .Where(o => o.CustomerId == customerId)
-            .Include(o => o.Versions)
             .Include(v => v.OfferVehicleConfigurations);
             
 
@@ -55,24 +54,36 @@ public class CustomerOffers : PageModel
 
     public async Task<PartialViewResult> OnPostOfferDetailsPartialAsync([FromForm] int offerId)
     {
-        var offer = await _db.Offers.AsNoTracking()
-            .Include(o => o.Versions)
-            .Include(v => v.OfferVehicleConfigurations)
+        var offer = await _db.Offers
+            .AsNoTracking()
+            .Include(o => o.OfferVehicleConfigurations)
+            .ThenInclude(vc => vc.Size)
+            .Include(o => o.OfferVehicleConfigurations)
+            .ThenInclude(vc => vc.Engine)
+            .Include(o => o.OfferVehicleConfigurations)
+            .ThenInclude(vc => vc.Gearbox)
+            .Include(o => o.OfferVehicleConfigurations)
+            .ThenInclude(vc => vc.Interior)
+            .Include(o => o.OfferVehicleConfigurations)
+            .ThenInclude(vc => vc.Drivetrain)
             .FirstOrDefaultAsync(o => o.Id == offerId);
+
+        if (offer is null)
+        {
+            // możesz też zwrócić pusty partial z komunikatem
+            return Partial("Salesperson/Partial/_OfferDetails", new OfferDetailsVm
+            {
+                Offer = null,
+                OfferVehicleConfigurations = new List<OfferVehicleConfiguration>()
+            });
+        }
 
         var vm = new OfferDetailsVm
         {
             Offer = offer,
-
-            OfferVersions = offer.Versions
-                .OrderByDescending(v => v.CreatedAt)
-                .ToList(),
-
-            OfferVehicleConfigurations = offer.OfferVehicleConfigurations
-                .ToList()
+            OfferVehicleConfigurations = offer.OfferVehicleConfigurations?.ToList()
+                                         ?? new List<OfferVehicleConfiguration>()
         };
-
-
 
         return Partial("Salesperson/Partial/_OfferDetails", vm);
     }
