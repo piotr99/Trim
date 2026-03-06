@@ -118,8 +118,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZXNwZXJzb25cUGFydGlhbFxfQ3VzdG9tZXJEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/A/RiderProjects/Trim/Trim/Pages/Salesperson/Partial/_EditOffer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZXNwZXJzb25cUGFydGlhbFxfRWRpdE9mZmVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/A/RiderProjects/Trim/Trim/Pages/Salesperson/Partial/_OfferDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZXNwZXJzb25cUGFydGlhbFxfT2ZmZXJEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/A/RiderProjects/Trim/Trim/Pages/Salesperson/Partial/_OffersList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2FsZXNwZXJzb25cUGFydGlhbFxfT2ZmZXJzTGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/A/RiderProjects/Trim/Trim/Pages/Salesperson/Partial/_OrderDetails.cshtml]

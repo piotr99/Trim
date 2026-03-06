@@ -1,0 +1,21 @@
+﻿@using Microsoft.IdentityModel.Tokens
+@model List<Trim.Models.ViewModels.OffersVm>
+
+@if (@Model.IsNullOrEmpty())
+{
+    <h3>Brak ofert</h3>
+}
+else
+{
+    @foreach (var offer in Model)
+    {
+        <button type="button"
+                class="item-button d-block text-decoration-none js-offer"
+                data-id="@offer.OfferId">
+            <div class="item-button-main">
+                <span class="item-name">@offer.OfferFriendlyName </span>
+                <p>@offer.Status</p>
+            </div>
+        </button>
+    }
+}

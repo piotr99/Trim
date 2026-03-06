@@ -15,44 +15,45 @@
             Dodaj Ofertę
         </a>
         
-        <form method="get" class="mb-3">
+        <form id="offersFilterForm" class="mb-3">
             <input type="hidden" name="customerId" value="@Model.customerId" />
 
             <div class="form-group mb-2">
-                <label asp-for="Filter">Filter</label>
-                <input asp-for="Filter" class="form-control" />
+                <label>Filter</label>
+                <input class="form-control" id="Filter" />
             </div>
 
             <button type="submit" class="btn btn-primary">Filtruj</button>
 
-            <a class="btn btn-outline-secondary"
-               asp-page="/Salesperson/CustomerOffers"
-               asp-route-customerId="@Model.customerId">
+            <button type="button" class="btn btn-outline-secondary" id="ClearFilterBtn">
                 Wyczyść
-            </a>
+            </button>
         </form>
 
         Liczba ofert: @Model.Offers.Count()
         klinet ID: @Model.customerId
-        @if (Model.Offers.IsNullOrEmpty())
-        {
-            <h3>Brak ofert</h3>
-        }
-        else
-        {
-            @foreach (var offer in Model.Offers)
+        <div id="offersListHost">
+            @if (@Model.OffersVm.IsNullOrEmpty())
             {
-                <button type="button"
-                        class="item-button d-block text-decoration-none js-offer"
-                        data-id="@offer.Id">
-                    <div class="item-button-main">
-                        <span class="item-name">@offer.OfferFriendlyName </span>
-                        <p>@offer.Status</p>
-                    </div>
-                </button>
+                <h3>Brak ofert</h3>
             }
-        }
-        
+            else
+            {
+                @foreach (var offer in @Model.OffersVm)
+                {
+                    <button type="button"
+                            class="item-button d-block text-decoration-none js-offer"
+                            data-id="@offer.OfferId">
+                        <div class="item-button-main">
+                            <span class="item-name">@offer.OfferFriendlyName </span>
+                            <p>@offer.Status</p>
+                        </div>
+                    </button>
+                }
+            }
+
+            
+        </div>
         
         
         @Html.AntiForgeryToken()
@@ -65,15 +66,464 @@
 
 @section Scripts {
     <script>
-document.querySelectorAll('.js-offer').forEach(b => b.onclick = async () => {
-  const t = document.querySelector('input[name="__RequestVerificationToken"]').value;
-  const id = b.dataset.id;
-  const r = await fetch('?handler=OfferDetailsPartial', {
-    method: 'POST',
-    headers: {'Content-Type':'application/x-www-form-urlencoded'},
-    body: `offerId=${encodeURIComponent(id)}&__RequestVerificationToken=${encodeURIComponent(t)}`
-  });
-  document.getElementById('rightPanel').innerHTML = await r.text();
+        document.addEventListener('click', async (e) => {
+            const offerBtn = e.target.closest('.js-offer');
+            if (!offerBtn) return;
+
+            const id = offerBtn.dataset.id;
+            const t = document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+            if (!id || !t) return;
+
+            const r = await fetch('?handler=OfferDetailsPartial', {
+                method: 'POST',
+                headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+                body: `offerId=${encodeURIComponent(id)}&__RequestVerificationToken=${encodeURIComponent(t)}`,
+                credentials: 'same-origin'
+            });
+
+            const host = document.getElementById('rightPanel');
+            if (!host) return;
+
+            if (!r.ok) {
+                host.innerHTML = `<div class="text-danger">Błąd ładowania: ${await r.text()}</div>`;
+                return;
+            }
+
+            host.innerHTML = await r.text();
+        });
+//edit
+function antiforgeryToken() {
+    return document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+}
+
+async function refreshOffersList(customerId, filter) {
+    const body = new URLSearchParams();
+    body.append('__RequestVerificationToken', token());
+    body.append('customerId', String(customerId));
+    body.append('filter', String(filter).trim());
+
+    const r = await fetch('?handler=OffersListPartial', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+        credentials: 'same-origin'
+    });
+
+    if (!r.ok) {
+        console.error(await r.text());
+        return;
+    }
+
+    document.getElementById('offersListHost').innerHTML = await r.text();
+}
+
+function getHiddenValue(name) {
+    return document.querySelector(`input[name="${name}"]`)?.value ?? "";
+}
+
+function getStatusValue() {
+    // w partialu masz dwa selecty Status - bierz pierwszy znaleziony
+    return document.querySelector('select[name="Status"]')?.value
+        ?? document.querySelector('#Status')?.value
+        ?? "0";
+}
+
+function collectEditOfferVmFromUi() {
+    const blocks = document.querySelectorAll('.vehicle-block');
+
+    const vm = {
+        offerId: Number(getHiddenValue('OfferId') || 0),
+        customerId: Number(getHiddenValue('CustomerId') || 0),
+        offerFriendlyName: document.querySelector('input[name="OfferFriendlyName"]')?.value ?? "",
+        status: Number(getStatusValue() || 0),
+        discount: Number(getDiscount() || 0),
+        vehicles: Array.from(blocks).map(block => {
+            const readInt = (sel) => Number(block.querySelector(sel)?.value ?? 0);
+            const readDec = (sel) => Number(block.querySelector(sel)?.value ?? 0);
+
+            return {
+                id: Number(block.querySelector('input[name$=".Id"]')?.value ?? 0),
+                sizeId: readInt('.js-size'),
+                engineId: readInt('.js-engine'),
+                gearboxId: readInt('.js-gearbox'),
+                interiorId: readInt('.js-interior'),
+                drivetrainId: readInt('.js-drivetrain'),
+                additionalPrice: readDec('.js-additional-price'),
+                additionalEquipment: block.querySelector('input[name$=".AdditionalEquipment"]')?.value ?? ""
+            };
+        })
+    };
+
+    return vm;
+}
+
+function buildFormFromEditVm(vm) {
+    const body = new URLSearchParams();
+    body.append('__RequestVerificationToken', token());
+
+    body.append('OfferId', vm.offerId.toString());
+    body.append('CustomerId', vm.customerId.toString());
+    body.append('OfferFriendlyName', vm.offerFriendlyName);
+    body.append('Status', vm.status.toString());
+    body.append('Discount', vm.discount.toString());
+
+    vm.vehicles.forEach((v, i) => {
+        body.append(`Vehicles[${i}].Id`, v.id.toString());
+        body.append(`Vehicles[${i}].SizeId`, v.sizeId.toString());
+        body.append(`Vehicles[${i}].EngineId`, v.engineId.toString());
+        body.append(`Vehicles[${i}].GearboxId`, v.gearboxId.toString());
+        body.append(`Vehicles[${i}].InteriorId`, v.interiorId.toString());
+        body.append(`Vehicles[${i}].DrivetrainId`, v.drivetrainId.toString());
+        body.append(`Vehicles[${i}].AdditionalPrice`, (v.additionalPrice ?? 0).toString());
+        body.append(`Vehicles[${i}].AdditionalEquipment`, v.additionalEquipment ?? "");
+    });
+
+    return body;
+}
+
+async function postUpdateOfferPartial() {
+    const host = document.getElementById('rightPanel');
+    if (!host) return;
+
+    const vm = collectEditOfferVmFromUi();
+    if (!vm.offerId || !vm.customerId) {
+        console.error("Brak OfferId/CustomerId w edycji.");
+        return;
+    }
+
+    const body = buildFormFromEditVm(vm);
+
+    const r = await fetch('?handler=UpdateOfferPartial', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+        credentials: 'same-origin'
+    });
+
+    if (!r.ok) {
+        host.innerHTML = `<div class="text-danger">Błąd zapisu: ${await r.text()}</div>`;
+        return;
+    }
+
+    host.innerHTML = await r.text();
+}
+
+document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.js-edit-offer');
+    console.log(btn)
+    if (!btn) return;
+
+    const offerId = btn.dataset.offerId;
+    const host = document.getElementById('rightPanel');
+    if (!offerId || !host) return;
+
+    const body = new URLSearchParams();
+    body.append('__RequestVerificationToken', antiforgeryToken());
+    body.append('offerId', offerId);
+
+    const r = await fetch('?handler=EditOfferPartial', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+        credentials: 'same-origin'
+    });
+
+    if (!r.ok) {
+        host.innerHTML = `<div class="text-danger">Błąd ładowania edycji: ${await r.text()}</div>`;
+        return;
+    }
+
+    host.innerHTML = await r.text();
 });
+function token() {
+    return document.querySelector('input[name="__RequestVerificationToken"]')?.value ?? '';
+}
+
+function fmt(n) {
+    return Number(n ?? 0).toFixed(2);
+}
+
+function getDiscount() {
+    // obsłuż różne warianty bindowania
+    const byId = document.querySelector('#Offer_Discount');
+    if (byId) return byId.value ?? "0";
+
+    const byName = document.querySelector('input[name="Offer.Discount"]');
+    if (byName) return byName.value ?? "0";
+
+    // fallback jeśli masz inaczej
+    return "0";
+}
+
+function collectVmFromUi() {
+    const blocks = document.querySelectorAll('.vehicle-block');
+
+    const offer = {
+        // backend potrzebuje Offer nie-null, a używa Offer.Discount
+        discount: Number(getDiscount() || 0)
+    };
+
+    const offerVehicleConfigurations = Array.from(blocks).map(block => {
+        const readInt = (sel) => {
+            const v = block.querySelector(sel)?.value;
+            return v ? Number(v) : 0;
+        };
+        const readDec = (sel) => {
+            const v = block.querySelector(sel)?.value;
+            return v ? Number(v) : 0;
+        };
+
+        return {
+            // Id nie jest potrzebne do samego liczenia cen, ale nie szkodzi
+            id: Number(block.querySelector('input[name$=".Id"]')?.value ?? 0),
+
+            sizeId: readInt('.js-size'),
+            engineId: readInt('.js-engine'),
+            gearboxId: readInt('.js-gearbox'),
+            interiorId: readInt('.js-interior'),
+            drivetrainId: readInt('.js-drivetrain'),
+            additionalPrice: readDec('.js-additional-price')
+        };
+    });
+
+    return { offer, offerVehicleConfigurations };
+}
+
+function applyCalcToUi(data) {
+    if (!data) return;
+
+    const blocks = document.querySelectorAll('.vehicle-block');
+
+    if (Array.isArray(data.vehicles)) {
+        data.vehicles.forEach((v, i) => {
+            const block = blocks[i];
+            if (!block) return;
+
+            const priceEl = block.querySelector('.js-veh-price');
+            const multEl = block.querySelector('.js-veh-bonus-mult');
+            const bonusEl = block.querySelector('.js-veh-bonus');
+
+            if (priceEl) priceEl.value = fmt(v.price);
+            if (multEl) multEl.value = fmt(v.bonusMultiplier);
+            if (bonusEl) bonusEl.value = fmt(v.bonus);
+        });
+    }
+
+    if (data.total) {
+        const tp = document.querySelector('.js-total-price');
+        const tf = document.querySelector('.js-total-final');
+        const tb = document.querySelector('.js-total-bonus');
+
+        if (tp) tp.value = fmt(data.total.price);
+        if (tf) tf.value = fmt(data.total.finalPrice);
+        if (tb) tb.value = fmt(data.total.bonus);
+    }
+}
+
+let recalcTimer = null;
+
+function scheduleRecalc() {
+    if (recalcTimer) clearTimeout(recalcTimer);
+    recalcTimer = setTimeout(recalcAjax, 250);
+}
+
+async function recalcAjax() {
+    const host = document.getElementById('rightPanel') || document; // fallback
+    const vm = collectVmFromUi();
+
+    const body = new URLSearchParams();
+    body.append('__RequestVerificationToken', token());
+    // Binder [FromForm] złoży obiekt, jeśli przekażesz pola Offer.Discount i OfferVehicleConfigurations[i].X
+    body.append('Offer.Discount', vm.offer.discount.toString());
+
+    vm.offerVehicleConfigurations.forEach((c, i) => {
+        body.append(`OfferVehicleConfigurations[${i}].SizeId`, c.sizeId.toString());
+        body.append(`OfferVehicleConfigurations[${i}].EngineId`, c.engineId.toString());
+        body.append(`OfferVehicleConfigurations[${i}].GearboxId`, c.gearboxId.toString());
+        body.append(`OfferVehicleConfigurations[${i}].InteriorId`, c.interiorId.toString());
+        body.append(`OfferVehicleConfigurations[${i}].DrivetrainId`, c.drivetrainId.toString());
+        body.append(`OfferVehicleConfigurations[${i}].AdditionalPrice`, (c.additionalPrice ?? 0).toString());
+    });
+
+    const r = await fetch('?handler=UpdatePricesPartial', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+        credentials: 'same-origin'
+    });
+
+    if (!r.ok) {
+        console.error("UpdatePricesPartial failed:", await r.text());
+        return;
+    }
+
+    const data = await r.json();
+    if (data?.error) {
+        console.error("UpdatePricesPartial error:", data.error);
+        return;
+    }
+
+    applyCalcToUi(data);
+}
+
+// === TRIGGERY: każda zmiana w panelu edycji ===
+document.addEventListener('change', (e) => {
+    // reaguj na selecty i dopłatę
+    if (
+        e.target.closest('.vehicle-block') &&
+        (e.target.matches('select') || e.target.classList.contains('js-additional-price'))
+    ) {
+        scheduleRecalc();
+    }
+});
+
+document.addEventListener('input', (e) => {
+    // rabat (jeśli input)
+    if (e.target.matches('#Offer_Discount') || e.target.matches('input[name="Offer.Discount"]')) {
+        scheduleRecalc();
+    }
+    // dopłata wpisywana ręcznie
+    if (e.target.classList.contains('js-additional-price')) {
+        scheduleRecalc();
+    }
+});
+
+function getHiddenValue(name) {
+    return document.querySelector(`input[name="${name}"]`)?.value ?? "";
+}
+
+function getStatusValue() {
+    // w partialu masz dwa selecty Status - bierz pierwszy znaleziony
+    return document.querySelector('select[name="Status"]')?.value
+        ?? document.querySelector('#Status')?.value
+        ?? "0";
+}
+
+function collectEditOfferVmFromUi() {
+    const blocks = document.querySelectorAll('.vehicle-block');
+
+    const vm = {
+        offerId: Number(getHiddenValue('OfferId') || 0),
+        customerId: Number(getHiddenValue('CustomerId') || 0),
+        offerFriendlyName: document.querySelector('input[name="OfferFriendlyName"]')?.value ?? "",
+        status: Number(getStatusValue() || 0),
+        discount: Number(getDiscount() || 0),
+        vehicles: Array.from(blocks).map(block => {
+            const readInt = (sel) => Number(block.querySelector(sel)?.value ?? 0);
+            const readDec = (sel) => Number(block.querySelector(sel)?.value ?? 0);
+
+            return {
+                id: Number(block.querySelector('input[name$=".Id"]')?.value ?? 0),
+                sizeId: readInt('.js-size'),
+                engineId: readInt('.js-engine'),
+                gearboxId: readInt('.js-gearbox'),
+                interiorId: readInt('.js-interior'),
+                drivetrainId: readInt('.js-drivetrain'),
+                additionalPrice: readDec('.js-additional-price'),
+                additionalEquipment: block.querySelector('input[name$=".AdditionalEquipment"]')?.value ?? ""
+            };
+        })
+    };
+
+    return vm;
+}
+
+function buildFormFromEditVm(vm) {
+    const body = new URLSearchParams();
+    body.append('__RequestVerificationToken', token());
+
+    body.append('OfferId', vm.offerId.toString());
+    body.append('CustomerId', vm.customerId.toString());
+    body.append('OfferFriendlyName', vm.offerFriendlyName);
+    body.append('Status', vm.status.toString());
+    body.append('Discount', vm.discount.toString());
+
+    vm.vehicles.forEach((v, i) => {
+        body.append(`Vehicles[${i}].Id`, v.id.toString());
+        body.append(`Vehicles[${i}].SizeId`, v.sizeId.toString());
+        body.append(`Vehicles[${i}].EngineId`, v.engineId.toString());
+        body.append(`Vehicles[${i}].GearboxId`, v.gearboxId.toString());
+        body.append(`Vehicles[${i}].InteriorId`, v.interiorId.toString());
+        body.append(`Vehicles[${i}].DrivetrainId`, v.drivetrainId.toString());
+        body.append(`Vehicles[${i}].AdditionalPrice`, (v.additionalPrice ?? 0).toString());
+        body.append(`Vehicles[${i}].AdditionalEquipment`, v.additionalEquipment ?? "");
+    });
+
+    return body;
+}
+
+async function postUpdateOfferPartial() {
+    const host = document.getElementById('rightPanel');
+    if (!host) return;
+
+    const vm = collectEditOfferVmFromUi();
+    if (!vm.offerId || !vm.customerId) {
+        console.error("Brak OfferId/CustomerId w edycji.");
+        return;
+    }
+
+    const body = buildFormFromEditVm(vm);
+
+    const r = await fetch('?handler=UpdateOfferPartial', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+        credentials: 'same-origin'
+    });
+
+    if (!r.ok) {
+        host.innerHTML = `<div class="text-danger">Błąd zapisu: ${await r.text()}</div>`;
+        return;
+    }
+
+    host.innerHTML = await r.text();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('offersFilterForm');
+    const clearBtn = document.getElementById('ClearFilterBtn');
+    const filterEl = document.getElementById('Filter');
+
+    if (!form || !filterEl) return;
+
+    function getCustomerId() {
+        return Number(form.querySelector('input[name="customerId"]')?.value ?? 0);
+    }
+
+    // Filtruj (submit formularza)
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const customerId = getCustomerId();
+        if (!customerId) return;
+
+        await refreshOffersList(customerId, filterEl.value);
+    });
+
+    // Wyczyść
+    if (clearBtn) {
+        clearBtn.addEventListener('click', async () => {
+            filterEl.value = "";
+            const customerId = getCustomerId();
+            if (!customerId) return;
+
+            await refreshOffersList(customerId, "");
+        });
+    }
+});
+
+document.addEventListener('click', async (e) => {
+    const save = e.target.closest('.js-save-offer');
+    if (!save) return;
+
+    e.preventDefault();
+    await postUpdateOfferPartial();
+    const customerId = Number(getHiddenValue('customerId') || 0)
+    const filterEl = document.getElementById('Filter');
+    const filter = filterEl ? (filterEl.value ?? "") : "";
+    await refreshOffersList(customerId, filter);
+});
+
+// Start – policz od razu po załadowaniu partiala (opcjonalnie)
+scheduleRecalc();
 </script>
 }

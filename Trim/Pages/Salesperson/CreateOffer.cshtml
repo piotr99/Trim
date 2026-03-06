@@ -214,11 +214,25 @@
                     <input class="form-control js-total-bonus" type="number" step="0.01" readonly/>
                 </div>
             </div>
+            
+            <div class="grid grid-2">
+                <label class="form-label">Zapisz jako</label>
+                <select class="form-control"
+                        asp-for="offerStatus"
+                        asp-items="@(Enum.GetValues<OfferStatusEnum>()
+                                       .Where(s => s == OfferStatusEnum.DRAFT || s == OfferStatusEnum.SENT)
+                                       .Select(s => new SelectListItem
+                                       {
+                                           Value = ((int)s).ToString(),
+                                           Text = s.ToString()
+                                       }))">
+                </select>
+            </div>
+            
         </fieldset>
 
         <footer class="form-actions">
-            <button type="button" class="btn btn-outline-primary js-save-draft">Zapisz szkic</button>
-            <span class="muted js-save-status" style="margin-left: .5rem;"></span>
+            offerStatus
 
             <button type="submit" class="btn btn-primary">Zapisz ofertę</button>
             <a class="btn btn-secondary" asp-page="/Salesperson/CustomerOffers" asp-route-customerId="@Model.customerId">Anuluj</a>

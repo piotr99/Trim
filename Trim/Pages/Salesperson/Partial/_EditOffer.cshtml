@@ -1,0 +1,208 @@
+﻿@using Trim.Models
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model Trim.Models.ViewModels.EditOfferVm
+
+<input type="hidden" name="OfferId" value="@Model.OfferId" />
+<input type="hidden" name="CustomerId" value="@Model.CustomerId" />
+
+<!-- ważne: binduj nazwę -->
+<div class="form-group mb-3">
+    <label class="form-label">Nazwa/Numer oferty</label>
+    <input class="form-control" asp-for="OfferFriendlyName" />
+    <span class="text-danger" asp-validation-for="OfferFriendlyName"></span>
+</div>
+
+<!-- status (u góry) -->
+<div class="form-group mb-3">
+    <label class="form-label">Status</label>
+    <select class="form-control"
+            asp-for="Status"
+            asp-items="@(Enum.GetValues<OfferStatusEnum>()
+                .Where(s => s == OfferStatusEnum.DRAFT || s == OfferStatusEnum.SENT)
+                .Select(s => new SelectListItem
+                {
+                    Value = ((int)s).ToString(),
+                    Text = s.ToString()
+                }))">
+    </select>
+</div>
+
+<div id="vehiclesContainer">
+    @for (var i = 0; i < Model.Vehicles.Count; i++)
+    {
+        <div class="vehicle-block card mb-3 p-3">
+            <!-- KLUCZ: Id żeby backend wiedział co update/delete -->
+            <input type="hidden" asp-for="@Model.Vehicles[@i].Id" />
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <strong>Pojazd @(i + 1)</strong>
+                <button type="button" class="btn btn-outline-danger btn-sm remove-vehicle"
+                        @(Model.Vehicles.Count == 1 ? "disabled" : "")>
+                    Usuń
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Rozmiar kabiny</label>
+                <select class="form-control js-size"
+                        asp-for="@Model.Vehicles[@i].SizeId"
+                        asp-items="@(Model.VehicleCabSizes.Select(opt => new SelectListItem
+                        {
+                            Value = opt.Id.ToString(),
+                            Text = opt.BonusMultiplier != 0
+                                ? $"{opt.Name} | Mnożnik bonusu: {opt.BonusMultiplier:0.##}"
+                                : opt.Name
+                        }))">
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Silnik</label>
+                <select class="form-control js-engine"
+                        asp-for="@Model.Vehicles[@i].EngineId"
+                        asp-items="@(Model.VehicleEngines.Select(opt => new SelectListItem
+                        {
+                            Value = opt.Id.ToString(),
+                            Text = opt.BonusMultiplier != 0
+                                ? $"{opt.Name} | Mnożnik bonusu: {opt.BonusMultiplier:0.##}"
+                                : opt.Name
+                        }))">
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Skrzynia biegów</label>
+                <select class="form-control js-gearbox"
+                        asp-for="@Model.Vehicles[@i].GearboxId"
+                        asp-items="@(Model.VehicleGearboxes.Select(opt => new SelectListItem
+                        {
+                            Value = opt.Id.ToString(),
+                            Text = opt.BonusMultiplier != 0
+                                ? $"{opt.Name} | Mnożnik bonusu: {opt.BonusMultiplier:0.##}"
+                                : opt.Name
+                        }))">
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Wnętrze</label>
+                <select class="form-control js-interior"
+                        asp-for="@Model.Vehicles[@i].InteriorId"
+                        asp-items="@(Model.VehicleInteriors.Select(opt => new SelectListItem
+                        {
+                            Value = opt.Id.ToString(),
+                            Text = opt.BonusMultiplier != 0
+                                ? $"{opt.Name} | Mnożnik bonusu: {opt.BonusMultiplier:0.##}"
+                                : opt.Name
+                        }))">
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Napęd</label>
+                <select class="form-control js-drivetrain"
+                        asp-for="@Model.Vehicles[@i].DrivetrainId"
+                        asp-items="@(Model.VehicleDrivetrains.Select(opt => new SelectListItem
+                        {
+                            Value = opt.Id.ToString(),
+                            Text = opt.BonusMultiplier != 0
+                                ? $"{opt.Name} | Mnożnik bonusu: {opt.BonusMultiplier:0.##}"
+                                : opt.Name
+                        }))">
+                </select>
+            </div>
+
+            <!-- Extra: MUSI być asp-for do Vehicles[i] -->
+            <div class="grid grid-2">
+                <div class="form-group">
+                    <label class="form-label">Dodatkowe wyposażenie</label>
+                    <input class="form-control" asp-for="@Model.Vehicles[@i].AdditionalEquipment" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Dopłata</label>
+                    <input class="form-control js-additional-price"
+                           asp-for="@Model.Vehicles[@i].AdditionalPrice"
+                           type="number" step="0.01" />
+                </div>
+            </div>
+
+            <!-- Pola wynikowe: display-only (bez asp-for) -->
+            <div class="vehicle-pricing mt-3 p-2 border rounded">
+                <div class="muted mb-1"><strong>Cena pojazdu</strong></div>
+                <div class="form-group">
+                    <label class="form-label">Cena</label>
+                    <input class="form-control js-veh-price" type="number" step="0.01"
+                           value="@Model.Vehicles[i].Price.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)"
+                           readonly />
+                </div>
+            </div>
+
+            <div class="vehicle-bonus mt-2 p-2 border rounded">
+                <div class="muted mb-1"><strong>Bonus</strong></div>
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Mnożnik bonusu</label>
+                        <input class="form-control js-veh-bonus-mult" type="number" step="0.01"
+                               value="@Model.Vehicles[i].BonusMultiplier.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)"
+                               readonly />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Bonus</label>
+                        <input class="form-control js-veh-bonus" type="number" step="0.01"
+                               value="@Model.Vehicles[i].Bonus.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)"
+                               readonly />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<fieldset class="fieldset">
+    <legend>Suma</legend>
+
+    <div class="grid grid-3">
+        <div class="form-group">
+            <label class="form-label">Cena łączna</label>
+            <input class="form-control js-total-price" type="number" step="0.01" value="@Model.Price.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)" readonly />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" asp-for="Discount">Rabat</label>
+            <input class="form-control" asp-for="Discount" type="number" step="0.01" />
+            <span class="text-danger" asp-validation-for="Discount"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Cena łączna ostateczna</label>
+            <input class="form-control js-total-final" type="number" step="0.01" value="@Model.FinalPrice.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)" readonly />
+        </div>
+    </div>
+
+    <div class="grid grid-2">
+        <div class="form-group">
+            <label class="form-label">Bonus łączny</label>
+            <input class="form-control js-total-bonus" type="number" step="0.01" value="@Model.Bonus.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)" readonly />
+        </div>
+    </div>
+
+    <!-- Zapisz jako = Status -->
+    <div class="grid grid-2">
+        <label class="form-label">Zapisz jako</label>
+        <select class="form-control"
+                asp-for="Status"
+                asp-items="@(Enum.GetValues<OfferStatusEnum>()
+                    .Where(s => s == OfferStatusEnum.DRAFT || s == OfferStatusEnum.SENT)
+                    .Select(s => new SelectListItem
+                    {
+                        Value = ((int)s).ToString(),
+                        Text = s.ToString()
+                    }))">
+        </select>
+    </div>
+</fieldset>
+
+<footer class="form-actions">
+    <button type="button" class="btn btn-primary js-save-offer">Zapisz ofertę</button>
+</footer>

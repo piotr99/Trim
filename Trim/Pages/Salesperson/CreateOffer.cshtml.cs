@@ -5,6 +5,8 @@ using Trim.DbContext;
 using Trim.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Text.Json;
+using Trim.Helpers;
+using Trim.Models.BussinesCalculactions;
 
 namespace Trim.Pages.Salesperson.Partial;
 
@@ -12,11 +14,13 @@ public class CreateOffer : PageModel
 {
     private readonly ApplicationDbContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IOfferCalculator _calc;
 
-    public CreateOffer(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+    public CreateOffer(ApplicationDbContext db, UserManager<ApplicationUser> userManager,  IOfferCalculator calc)
     {
         _db = db;
         _userManager = userManager;
+        _calc = calc;
     }
 
     [BindProperty(SupportsGet = true)]
@@ -27,7 +31,7 @@ public class CreateOffer : PageModel
 
     [BindProperty]
     public List<OfferVehicleConfiguration> NewVehicleConfigurations { get; set; } = new();
-
+    public OfferStatusEnum offerStatus { get; set; } = OfferStatusEnum.DRAFT; 
     // Listy pomocnicze do UI
     public List<VehicleCabSize> VehicleCabSizes { get; private set; } = new();
     public List<VehicleEngine> VehicleEngines { get; private set; } = new();
@@ -94,7 +98,7 @@ public class CreateOffer : PageModel
         // 1. Logika przypisania handlowca (skrócona dla czytelności)
         NewOffer.SalespersonId = await DetermineSalespersonId(user);
         NewOffer.CustomerId = customerId;
-        NewOffer.Status = OfferStatusEnum.SENT;
+        NewOffer.Status = offerStatus;
 
         // 2. PRZYGOTOWANIE DANYCH DO OBLICZEŃ
         // Mapujemy konfiguracje z formularza na DTO, które akceptuje metoda licząca
@@ -109,7 +113,7 @@ public class CreateOffer : PageModel
         }).ToList();
 
         // 3. WYWOŁANIE WSPÓLNEJ METODY LICZĄCEJ
-        var calculations = CalculateComponentsAndFinal(configsForCalc, NewOffer.Discount);
+        var calculations = await _calc.GetCalculationsAsync(configsForCalc, NewOffer.Discount);
 
         // 4. PRZYPISANIE WYNIKÓW DO OFERTY I JEJ ELEMENTÓW
         NewOffer.Price = calculations.Price;
@@ -147,103 +151,21 @@ public class CreateOffer : PageModel
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
         ) ?? new List<VehicleConfigDto>();
 
-        var calc = CalculateComponentsAndFinal(configs, discount);
-
+        var calcResult = _calc.GetCalculationsAsync(configs, discount);
+        
         return new JsonResult(new
         {
-            vehicles = calc.Vehicles.Select(v => new {
+            vehicles = calcResult.Result.Vehicles.Select(v => new {
                 price = v.Price,
                 bonus = v.Bonus,
                 bonusMultiplier = v.BonusMultiplier
             }),
             total = new
             {
-                price = calc.Price,
-                finalPrice = calc.FinalPrice,
-                bonus = calc.Bonus
+                price = calcResult.Result.Price,
+                finalPrice = calcResult.Result.FinalPrice,
+                bonus = calcResult.Result.Bonus
             }
         });
     }
-
-    private Calculations CalculateComponentsAndFinal(List<VehicleConfigDto> configs, decimal discount)
-    {
-        var vehicles = new List<VehiclesTemp>();
-        decimal totalPrice = 0m;
-        decimal totalBonus = 0m;
-
-        foreach (var c in configs)
-        {
-            decimal price = 0m;
-            decimal bonusMultiplier = 1m;
-
-            var size = VehicleCabSizes.FirstOrDefault(x => x.Id == c.size);
-            var eng  = VehicleEngines.FirstOrDefault(x => x.Id == c.engine);
-            var gbx  = VehicleGearboxes.FirstOrDefault(x => x.Id == c.gearbox);
-            var intr = VehicleInteriors.FirstOrDefault(x => x.Id == c.interior);
-            var drv  = VehicleDrivetrains.FirstOrDefault(x => x.Id == c.drivetrain);
-
-            price += (size?.Price ?? 0) + (eng?.Price ?? 0) + (gbx?.Price ?? 0) + (intr?.Price ?? 0) + (drv?.Price ?? 0);
-            price += (c.additionalPrice ?? 0m); // <-- dopłata
-
-            bonusMultiplier += (size?.BonusMultiplier ?? 0) + (eng?.BonusMultiplier ?? 0) + (gbx?.BonusMultiplier ?? 0) + (intr?.BonusMultiplier ?? 0) + (drv?.BonusMultiplier ?? 0);
-
-            var vehicleBonus = price * 0.02m * bonusMultiplier;
-
-            totalPrice += price;
-            totalBonus += vehicleBonus;
-
-            vehicles.Add(new VehiclesTemp
-            {
-                Price = price,
-                Bonus = vehicleBonus,
-                BonusMultiplier = bonusMultiplier
-            });
-        }
-
-        var finalPrice = Math.Max(0, totalPrice - discount);
-
-        // Bonus łączny – zostawiam jako suma bonusów (rabat NIE odejmuje bonusu)
-        return new Calculations(vehicles, totalPrice, finalPrice, totalBonus);
-    }
-
-// --- MODELE POMOCNICZE ---
-
-public class CalculationRequest 
-{
-    public List<VehicleConfigDto> Configs { get; set; } = new();
-    public decimal Discount { get; set; }
-}
-
-public class VehicleConfigDto
-{
-    public int? size { get; set; }
-    public int? engine { get; set; }
-    public int? gearbox { get; set; }
-    public int? interior { get; set; }
-    public int? drivetrain { get; set; }
-    public decimal? additionalPrice { get; set; } // <-- NOWE
-}
-
-public class VehiclesTemp
-{
-    public decimal Price { get; set; }
-    public decimal Bonus { get; set; }
-    public decimal BonusMultiplier { get; set; }
-}
-
-public class Calculations
-{
-    public List<VehiclesTemp> Vehicles { get; set; }
-    public decimal Price { get; set; }
-    public decimal FinalPrice { get; set; }
-    public decimal Bonus { get; set; }
-
-    public Calculations(List<VehiclesTemp> vehicles, decimal price, decimal finalPrice, decimal bonus)
-    {
-        Vehicles = vehicles;
-        Price = price;
-        FinalPrice = finalPrice;
-        Bonus = bonus;
-    }
-}
 }

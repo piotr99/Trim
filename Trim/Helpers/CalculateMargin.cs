@@ -1,14 +1,13 @@
-﻿using System.Text.Json;
+﻿using Microsoft.EntityFrameworkCore;
 using Trim.DbContext;
 using Trim.Models;
-using Microsoft.EntityFrameworkCore;
+using Trim.Models.BussinesCalculactions;
+
 namespace Trim.Helpers;
-
-
 
 public interface IOfferCalculator
 {
-    Task<(decimal Price, decimal FinalPrice, decimal Margin)> GetCalculationsAsync(string payload, int discount);
+    Task<Calculations> GetCalculationsAsync(List<VehicleConfigDto> configs, decimal discount);
 }
 
 public class OfferCalculator : IOfferCalculator
@@ -20,75 +19,71 @@ public class OfferCalculator : IOfferCalculator
         _db = db;
     }
 
-    public async Task<(decimal Price, decimal FinalPrice, decimal Margin)> GetCalculationsAsync(string payload, int discount)
+    private async Task LoadVehicleComponentsAsync()
     {
-        
-        
-        var configs = JsonSerializer.Deserialize<List<VehicleConfigDto>>(payload)
-                      ?? new List<VehicleConfigDto>();
+        // AsNoTracking, bo tylko czytamy słowniki
+        VehicleCabSizes   = await _db.VehicleCabSizes.AsNoTracking().ToListAsync();
+        VehicleEngines    = await _db.VehicleEngines.AsNoTracking().ToListAsync();
+        VehicleGearboxes  = await _db.VehicleGearboxes.AsNoTracking().ToListAsync();
+        VehicleInteriors  = await _db.VehicleInteriors.AsNoTracking().ToListAsync();
+        VehicleDrivetrains= await _db.VehicleDrivetrains.AsNoTracking().ToListAsync();
+    }
 
-        // Bezpieczne parsowanie string -> int
-        static int ToInt(string? s, int def = 0) => int.TryParse(s, out var v) ? v : def;
+    public List<VehicleCabSize> VehicleCabSizes { get; private set; } = new();
+    public List<VehicleEngine> VehicleEngines { get; private set; } = new();
+    public List<VehicleGearbox> VehicleGearboxes { get; private set; } = new();
+    public List<VehicleInterior> VehicleInteriors { get; private set; } = new();
+    public List<VehicleDrivetrain> VehicleDrivetrains { get; private set; } = new();
 
-        var keys = new HashSet<(string Group, int EnumValue)>();
+    public async Task<Calculations> GetCalculationsAsync(List<VehicleConfigDto> configs, decimal discount)
+    {
+        await LoadVehicleComponentsAsync();
+
+        var vehicles = new List<VehiclesTemp>();
+        decimal totalPrice = 0m;
+        decimal totalBonus = 0m;
+
         foreach (var c in configs)
         {
-            int sizeInt = ToInt(c.size);
-            var cabSize = await _db.VehicleCabSizes.FirstAsync(x => x.Id == sizeInt);
-            int engineInt = ToInt(c.engine);
-            var engineSize = await _db.VehicleEngines.FirstAsync(x => x.Id == engineInt);
-            int drivetrainInt = ToInt(c.drivetrain);
-            var drivetrain = await _db.VehicleDrivetrains.FirstAsync(x => x.Id == drivetrainInt);
-            int gearboxInt = ToInt(c.gearbox);
-            var gearbox  = await _db.VehicleGearboxes.FirstAsync(x => x.Id == gearboxInt);
-            int interiorInt = ToInt(c.interior);
-            var interior = await _db.VehicleInteriors.FirstAsync(x => x.Id == interiorInt);
-        }
+            decimal price = 0m;
+            decimal bonusMultiplier = 1m;
 
-        
-        foreach (var c in configs)
-        {
-            keys.Add(("CabSize", ToInt(c.size)));
-            keys.Add(("Engine", ToInt(c.engine)));
-            keys.Add(("Gearbox", ToInt(c.gearbox)));
-            keys.Add(("Interior", ToInt(c.interior)));
-            keys.Add(("Drivetrain", ToInt(c.drivetrain)));
-        }
-        
-        var groups = keys.Select(k => k.Group).Distinct().ToList();
+            var size = VehicleCabSizes.FirstOrDefault(x => x.Id == c.size);
+            var eng  = VehicleEngines.FirstOrDefault(x => x.Id == c.engine);
+            var gbx  = VehicleGearboxes.FirstOrDefault(x => x.Id == c.gearbox);
+            var intr = VehicleInteriors.FirstOrDefault(x => x.Id == c.interior);
+            var drv  = VehicleDrivetrains.FirstOrDefault(x => x.Id == c.drivetrain);
 
-        var prices = await _db.OptionPrices.AsNoTracking()
-            .Where(p => groups.Contains(p.Group))
-            .Select(p => new { p.Group, p.EnumValue, p.Price })
-            .ToListAsync();
+            price += (size?.Price ?? 0)
+                  +  (eng?.Price ?? 0)
+                  +  (gbx?.Price ?? 0)
+                  +  (intr?.Price ?? 0)
+                  +  (drv?.Price ?? 0);
 
-        var dict = prices.ToDictionary(x => (x.Group, x.EnumValue), x => x.Price);
+            price += (c.additionalPrice ?? 0m);
 
-        decimal price = 0m;
-        foreach (var key in keys)
-        {
-            foreach (var item in dict)
+            bonusMultiplier += (size?.BonusMultiplier ?? 0)
+                            +  (eng?.BonusMultiplier ?? 0)
+                            +  (gbx?.BonusMultiplier ?? 0)
+                            +  (intr?.BonusMultiplier ?? 0)
+                            +  (drv?.BonusMultiplier ?? 0);
+
+            var vehicleBonus = price * 0.02m * bonusMultiplier;
+
+            totalPrice += price;
+            totalBonus += vehicleBonus;
+
+            vehicles.Add(new VehiclesTemp
             {
-                if (key.Group == item.Key.Group && key.EnumValue == item.Key.EnumValue)
-                {
-                    price += item.Value;
-                }
-            }
+                Price = price,
+                Bonus = vehicleBonus,
+                BonusMultiplier = bonusMultiplier
+            });
         }
-        decimal finalPrice = price - discount;
-        decimal margin = price * 0.01m;
+        var finalPrice = Math.Max(0, totalPrice - discount);
+        totalBonus -= discount;
 
-        return (price, finalPrice, margin);
+        // Bonus łączny – zostawiam jako suma bonusów (rabat NIE odejmuje bonusu)
+        return new Calculations(vehicles, totalPrice, finalPrice, totalBonus);
     }
 }
-
-
-
-    public class VehicleConfigDto
-    {
-        public string? size { get; set; }
-        public string? engine { get; set; }
-        public string? gearbox { get; set; }
-        public string? interior { get; set; }
-        public string? drivetrain { get; set; }
-    }
