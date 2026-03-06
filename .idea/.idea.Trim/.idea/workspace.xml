@@ -9,68 +9,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49c91541-32e2-4c6c-a349-e1e6cfbf2828" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Trim/Helpers/CalculateMargin.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Trim/Models/OptionPrices.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Trim/Models/VehicleComponents.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Trim/Models/ViewModels/NegotiateOfferVm.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Trim/Models/ViewModels/OfferDetailsVm.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Trim/.idea/data_source_mapping.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Trim/.idea/data_source_mapping.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Trim/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Trim/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Trim/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Trim/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Trim.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/Trim.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/DbContext/DataSeeder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/DbContext/DataSeeder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/DbContext/DbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/DbContext/DbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Migrations/20260118175822_idk1.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Migrations/20260118175822_idk1.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Migrations/20260118180052_Initial.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Migrations/20260118180052_Initial.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Models/Clinet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/Models/Clinet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Models/Entities.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/Models/Entities.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Models/Enums.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/Models/Enums.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Models/Offer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/Models/Offer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Pages/Salesperson/CreateOffer.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/Pages/Salesperson/CreateOffer.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Pages/Salesperson/CreateOffer.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/Pages/Salesperson/CreateOffer.cshtml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Pages/Salesperson/CustomerOffers.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/Pages/Salesperson/CustomerOffers.cshtml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Pages/Salesperson/ManageCustomers.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/Pages/Salesperson/ManageCustomers.cshtml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Pages/Salesperson/Partial/_CustomerCreateForm.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/Pages/Salesperson/Partial/_CustomerCreateForm.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Pages/Salesperson/Partial/_OfferDetails.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/Pages/Salesperson/Partial/_OfferDetails.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Pages/Salesperson/VehicleConfigurator.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/Pages/Salesperson/VehicleConfigurator.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Pages/Salesperson/VehicleConfigurator.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/Pages/Salesperson/VehicleConfigurator.cshtml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/Trim.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/Trim.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/bin/Debug/net10.0/Trim.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/bin/Debug/net10.0/Trim.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/bin/Debug/net10.0/Trim.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/bin/Debug/net10.0/Trim.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/bin/Debug/net10.0/Trim.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/bin/Debug/net10.0/Trim.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/bin/Debug/net10.0/Trim.staticwebassets.endpoints.json" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/bin/Debug/net10.0/Trim.staticwebassets.endpoints.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/bin/Debug/net10.0/Trim.staticwebassets.runtime.json" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/bin/Debug/net10.0/Trim.staticwebassets.runtime.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.genruntimeconfig.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/Trim.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/apphost.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/rbcswa.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/rbcswa.dswa.cache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/ref/Trim.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/ref/Trim.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/refint/Trim.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/refint/Trim.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/rjimswa.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/rjimswa.dswa.cache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/rpswa.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/rpswa.dswa.cache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/staticwebassets.build.endpoints.json" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/staticwebassets.build.endpoints.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/staticwebassets.build.json" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/staticwebassets.build.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/staticwebassets.build.json.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/staticwebassets.build.json.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/staticwebassets.development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Debug/net10.0/staticwebassets.development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Trim.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Trim.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Trim.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Trim.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/Trim.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/Trim.csproj.nuget.g.targets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/rider.project.model.nuget.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trim/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Trim/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,19 +38,28 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bb7b06734dde412ab7a17876ecec5dc22b0e20/09/a2639994/IIncludableQueryable`2.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1694e2bb8653898e7f253f2d3c1afbf49ebc323d9e555ed15e1168b2c/ConsoleLoggerProcessor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9686563c8cfaba18d2b4168911121dc6b15c2cf11cd52d883a17175f7c6c96/AffectedCountModificationCommandBatch.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d94f8311e6161d575c5eafbd01cf3f1ff4c15c19e8e9e6af7d37dc171e51623/AddressBinder.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Trim/Helpers/CalculateMargin.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Trim/Models/OptionPrices.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Trim/Models/VehicleComponents.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Trim/Models/ViewModels/EditOfferVM.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Trim/Models/ViewModels/NegotiateOfferVm.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Trim/Models/ViewModels/OfferDetailsVm.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Trim/Models/ViewModels/OffersVm.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Trim/Pages/Salesperson/Partial/_EditOffer.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Trim/Pages/Salesperson/Partial/_OffersList.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
   </component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -183,7 +134,8 @@
       <updated>1769619152679</updated>
       <workItem from="1769619153131" duration="7106000" />
       <workItem from="1769685149174" duration="25556000" />
-      <workItem from="1772466775738" duration="9940000" />
+      <workItem from="1772466775738" duration="34649000" />
+      <workItem from="1772727053535" duration="22430000" />
     </task>
     <servers />
   </component>
@@ -211,19 +163,30 @@
           <option name="timeStamp" value="3" />
         </breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Trim/Pages/Salesperson/CreateOffer.cshtml.cs</url>
-          <line>129</line>
-          <properties documentPath="C:\Users\A\RiderProjects\Trim\Trim\Pages\Salesperson\CreateOffer.cshtml.cs" containingFunctionPresentation="Method 'OnPostCalculateMargin'">
+          <url>file://$PROJECT_DIR$/Trim/Pages/Salesperson/CreateOffer.cshtml</url>
+          <line>48</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Trim/Pages/Salesperson/CustomerOffers.cshtml.cs</url>
+          <line>56</line>
+          <properties documentPath="C:\Users\A\RiderProjects\Trim\Trim\Pages\Salesperson\CustomerOffers.cshtml.cs" containingFunctionPresentation="Method 'OnPostOffersListPartialAsync'">
             <startOffsets>
-              <option value="4683" />
+              <option value="1704" />
             </startOffsets>
             <endOffsets>
-              <option value="4684" />
+              <option value="1764" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="5" />
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Type#Trim.Models.VehicleConfiguration" memberName="DrivetrainId" />
+        <PinnedItemInfo parentTag="Type#Trim.Models.VehicleConfiguration" memberName="BonusMultiplier" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>
