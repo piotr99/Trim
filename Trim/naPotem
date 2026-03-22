@@ -1,1 +1,0 @@
-Buduję aplikację asp.net razor z entityframework i entityframework.identity pages i na ten moment mam projekt z budową: DbContext>DataSeeder,Helpers,Migrations,Models,Pages>...,Repos,ViewModels. to jest mój uml dla którego stworzysz modele: 
