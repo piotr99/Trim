@@ -11,3 +11,7 @@ docker run --name "Trim" `
     -d mcr.microsoft.com/mssql/server:latest
 ```
 
+## Seeded admin credentials
+
+Login admin@test.pl
+Password Admin1!
