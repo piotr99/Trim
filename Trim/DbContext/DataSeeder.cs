@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -16,10 +17,9 @@ public static class DataSeeder
         var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+
         // Migracje
         await db.Database.MigrateAsync();
-        await db.Database.EnsureCreatedAsync();
-
 
         // ===== Roles =====
         var roles = new[] { "Salesperson", "SalesAdministrator", "Administrator" };
@@ -69,6 +69,7 @@ public static class DataSeeder
                 LastName = "admin"
             },
             "Admin1!", "Administrator");
+
         var salesperson1 = (Salesperson)await EnsureUserAsync(
             new Salesperson
             {
@@ -117,7 +118,6 @@ public static class DataSeeder
             "Demo!12345",
             "SalesAdministrator");
 
-
         // ===== Customer (2) =====
         var customer1 = new Customer
         {
@@ -142,165 +142,201 @@ public static class DataSeeder
             SalespersonId = salesperson2.Id,
             TaxId = "456asd"
         };
+        db.Customers.AddRange(customer1, customer2);
+        await db.SaveChangesAsync();
 
-        // ===== Leads (2) =====
-        var lead1 = new Lead
+        // ===== Sales Cases (Zgłoszenia) =====
+        var case1 = new SalesCase
         {
-            CompanyName = "New Company 1",
-            TaxId = "1111111111",
-            ContactEmail = "kontakt1@demo.local",
-            ContactPhone = "+48777777777",
-            Status = LeadStatusEnum.NEW,
+            CaseNumber = "CASE-2026-0001",
+            Title = "Zapytanie o Scanię S600 z silnikiem 13L",
+            Description = "Klient pytał o możliwość szybkiej dostawy i finansowanie leasingowe.",
+            Status = SalesCaseStatusEnum.NEGOTIATION,
+            CustomerId = customer1.Id,
+            AssignedSalespersonId = salesperson1.Id,
         };
 
-        var lead2 = new Lead
+        var case2 = new SalesCase
         {
-            CompanyName = "New Company 2",
-            TaxId = "2222222222",
-            ContactEmail = "kontakt2@demo.local",
-            ContactPhone = "+48888888888",
-            Status = LeadStatusEnum.IN_PROGRESS,
+            CaseNumber = "CASE-2026-0002",
+            Title = "Rozbudowa floty - model R480",
+            Description = "Wymiana starych aut na nowe. Potrzebne podwozie 6x2.",
+            Status = SalesCaseStatusEnum.NEW,
+            CustomerId = customer2.Id,
+            AssignedSalespersonId = salesperson2.Id
         };
+
+        var case3 = new SalesCase
+        {
+            CaseNumber = "CASE-2026-0003",
+            Title = "Rozbudowa floty - model R420",
+            Description = "Potrzebne podwozie 60x12",
+            Status = SalesCaseStatusEnum.NEW,
+            CustomerId = customer1.Id,
+            AssignedSalespersonId = salesperson1.Id
+        };
+
+        db.SalesCases.AddRange(case1, case2, case3);
+
+        await db.SaveChangesAsync();
         // ===== Vehicle Components =====
-        
+
         //Cab
         if (!db.VehicleCabSizes.Any())
         {
             db.VehicleCabSizes.AddRange(
-                new VehicleCabSize {Name = "P - niska (P-cab)", Price = 44000m, BonusMultiplier = 0.4m},
-                new VehicleCabSize {Name = "G - normalna (G-cab)", Price = 40000m, BonusMultiplier = 0.3m},
-                new VehicleCabSize {Name = "R - wysoka (R-cab)", Price = 48000m },
-                new VehicleCabSize {Name = "S - najwyższa (S-cab)", Price = 60000m },
-                new VehicleCabSize {Name = "L - długa (L-cab)", Price = 42000m }
+                new VehicleCabSize { Name = "P - niska (P-cab)", Price = 44000m, BonusMultiplier = 0.4m },
+                new VehicleCabSize { Name = "G - normalna (G-cab)", Price = 40000m, BonusMultiplier = 0.3m },
+                new VehicleCabSize { Name = "R - wysoka (R-cab)", Price = 48000m },
+                new VehicleCabSize { Name = "S - najwyższa (S-cab)", Price = 60000m },
+                new VehicleCabSize { Name = "L - długa (L-cab)", Price = 42000m }
             );
         }
         // ENGINE
         if (!db.VehicleEngines.Any())
         {
             db.VehicleEngines.AddRange(
-                new VehicleEngine {Name = "9L 360 KM", Price = 38000m, BonusMultiplier = 2.5m },
-                new VehicleEngine {Name = "13L 560 KM", Price = 40000m },
-                new VehicleEngine {Name = "16L V8 770 KM", Price = 60000m }
+                new VehicleEngine { Name = "9L 360 KM", Price = 38000m, BonusMultiplier = 2.5m },
+                new VehicleEngine { Name = "13L 560 KM", Price = 40000m },
+                new VehicleEngine { Name = "16L V8 770 KM", Price = 60000m }
             );
         }
         // GEARBOX
         if (!db.VehicleGearboxes.Any())
         {
             db.VehicleGearboxes.AddRange(
-                    new VehicleGearbox {Name = "Manual (G-series)",Price = 60000m },
-                    new VehicleGearbox {Name = "Opticruise / Automated (AMT)",Price = 100000m, BonusMultiplier = 0.1m },
-                    new VehicleGearbox {Name = "Allison (automat - zastosowania specjalne)", Price = 100000m }
+                    new VehicleGearbox { Name = "Manual (G-series)", Price = 60000m },
+                    new VehicleGearbox { Name = "Opticruise / Automated (AMT)", Price = 100000m, BonusMultiplier = 0.1m },
+                    new VehicleGearbox { Name = "Allison (automat - zastosowania specjalne)", Price = 100000m }
             );
         }
         // INTERIOR
         if (!db.VehicleInteriors.Any())
         {
             db.VehicleInteriors.AddRange(
-                    new VehicleInterior {Name = "Standard",              Price = 60000m },
-                    new VehicleInterior {Name = "Comfort",               Price = 100000m, BonusMultiplier = 0.8m },
-                    new VehicleInterior {Name = "Premium / Highline",    Price = 160000m },
-                    new VehicleInterior {Name = "Luxury / Topline",      Price = 260000m }
+                    new VehicleInterior { Name = "Standard", Price = 60000m },
+                    new VehicleInterior { Name = "Comfort", Price = 100000m, BonusMultiplier = 0.8m },
+                    new VehicleInterior { Name = "Premium / Highline", Price = 160000m },
+                    new VehicleInterior { Name = "Luxury / Topline", Price = 260000m }
                 );
         }
         // DRIVETRAIN
         if (!db.VehicleDrivetrains.Any())
         {
             db.VehicleDrivetrains.AddRange(
-                new VehicleDrivetrain {Name = "4x2", Price = 80000m },
-                new VehicleDrivetrain {Name = "6x2", Price = 90000m },
-                new VehicleDrivetrain {Name = "6x4", Price = 100000m} ,
-                new VehicleDrivetrain {Name = "8x2", Price = 100000m, BonusMultiplier = 0.5m },
-                new VehicleDrivetrain {Name = "8x4", Price = 160000m }
+                new VehicleDrivetrain { Name = "4x2", Price = 80000m },
+                new VehicleDrivetrain { Name = "6x2", Price = 90000m },
+                new VehicleDrivetrain { Name = "6x4", Price = 100000m },
+                new VehicleDrivetrain { Name = "8x2", Price = 100000m, BonusMultiplier = 0.5m },
+                new VehicleDrivetrain { Name = "8x4", Price = 160000m }
                 );
         }
-        
+
+        // Zapisujemy komponenty, aby pobrać ich wygenerowane ID dla ofert.
+        // Usunięto db.ChangeTracker.Clear(); aby nie gubić referencji.
         await db.SaveChangesAsync();
-        db.ChangeTracker.Clear();
-        
-        // ===== Vehicles (2) =====
-        
+
+        var gCab = await db.VehicleCabSizes.FirstOrDefaultAsync(x => x.Name.Contains("G - normalna"));
+        var eng13 = await db.VehicleEngines.FirstOrDefaultAsync(x => x.Name.Contains("13L 560"));
+        var gbAllison = await db.VehicleGearboxes.FirstOrDefaultAsync(x => x.Name.Contains("Allison"));
+        var intrComfort = await db.VehicleInteriors.FirstOrDefaultAsync(x => x.Name.Contains("Comfort"));
+        var drv6x2 = await db.VehicleDrivetrains.FirstOrDefaultAsync(x => x.Name == "6x2");
+
+        var config1 = new VehicleConfiguration
+        {
+            SizeId = gCab.Id,
+            EngineId = eng13.Id,
+            GearboxId = gbAllison.Id,
+            InteriorId = intrComfort.Id,
+            DrivetrainId = drv6x2.Id
+        };
+
+        var config2 = new VehicleConfiguration
+        {
+            SizeId = gCab.Id,
+            EngineId = eng13.Id,
+            GearboxId = gbAllison.Id,
+            InteriorId = intrComfort.Id,
+            DrivetrainId = drv6x2.Id
+        };
+
+        var config3 = new VehicleConfiguration
+        {
+            SizeId = gCab.Id,
+            EngineId = eng13.Id,
+            GearboxId = gbAllison.Id,
+            InteriorId = intrComfort.Id,
+            DrivetrainId = drv6x2.Id
+        };
+
+        // ===== POJAZDY =====
         var vehicle1 = new Vehicle
         {
             Name = "Scania S600",
             Vin = "VINDEMO00000000001",
-            Status = VehicleStatusEnum.AVAILABLE
+            Status = VehicleStatusEnum.AVAILABLE,
+            CustomerId = customer1.Id, // Pojazd wie, do kogo należy
+            Configuration = config1    // Przypinamy konfigurację prosto do auta
         };
 
         var vehicle2 = new Vehicle
         {
             Name = "Scania R480",
             Vin = "VINDEMO00000000002",
-            Status = VehicleStatusEnum.ORDERED
+            Status = VehicleStatusEnum.ORDERED,
+            CustomerId = customer2.Id,
+            Configuration = config2
         };
 
-        // Podepnij pojazdy do klientów
-        customer1.Vehicles ??= new List<Vehicle>();
-        customer2.Vehicles ??= new List<Vehicle>();
-        customer1.Vehicles.Add(vehicle1);
-        customer2.Vehicles.Add(vehicle2);
+        var vehicle3 = new Vehicle
+        {
+            Name = "Scania R420",
+            Vin = "VINDEMO00000000003",
+            Status = VehicleStatusEnum.DRAFT,
+            CustomerId = customer1.Id,
+            Configuration = config3
+        };
 
-        // Dodaj do contextu
-        db.Customers.AddRange(customer1, customer2);
-        db.Leads.AddRange(lead1, lead2);
-        
-        // ===== Offers (2) =====
-        
-        var gCab = await db.VehicleCabSizes.AsNoTracking().SingleAsync(x => x.Name.Contains("G - normalna"));
-        var eng13 = await db.VehicleEngines.AsNoTracking().SingleAsync(x => x.Name.Contains("13L 560"));
-        var gbAllison = await db.VehicleGearboxes.AsNoTracking().SingleAsync(x => x.Name.Contains("Allison"));
-        var intrComfort = await db.VehicleInteriors.AsNoTracking().SingleAsync(x => x.Name.Contains("Comfort"));
-        var drv6x2 = await db.VehicleDrivetrains.AsNoTracking().SingleAsync(x => x.Name == "6x2");
+        // Zapiszmy je najpierw, aby EF poprawnie śledził graf obiektów
+        db.Vehicles.AddRange(vehicle1, vehicle2, vehicle3);
+        await db.SaveChangesAsync();
 
-        
+        // ===== OFERTY (Offers) =====
         var offer1 = new Offer
         {
             OfferFriendlyName = "OFF-2026-0001",
             Status = OfferStatusEnum.IN_NEGOTIATION,
-            Customer = customer1,
-            Salesperson = salesperson1,
-            OfferVehicleConfigurations = new List<OfferVehicleConfiguration>
-            {
-                new OfferVehicleConfiguration
-                {
-                    SizeId = gCab.Id,
-                    EngineId = eng13.Id,
-                    GearboxId = gbAllison.Id,
-                    InteriorId = intrComfort.Id,
-                    DrivetrainId = drv6x2.Id
-                }
-            }
+            SalesCaseId = case1.Id, // To automatycznie daje dostęp do Klienta i Handlowca
+            Vehicles = new List<Vehicle> { vehicle1 }
         };
 
         var offer2 = new Offer
         {
             OfferFriendlyName = "OFF-2026-0002",
             Status = OfferStatusEnum.DRAFT,
-            Customer = customer2,
-            Salesperson = salesperson2,
-            OfferVehicleConfigurations = new List<OfferVehicleConfiguration>
-            {
-                new OfferVehicleConfiguration
-                {
-                    SizeId = gCab.Id,
-                    EngineId = eng13.Id,
-                    GearboxId = gbAllison.Id,
-                    InteriorId = intrComfort.Id,
-                    DrivetrainId = drv6x2.Id
-                }
-            }
+            SalesCaseId = case2.Id,
+            Vehicles = new List<Vehicle> { vehicle2 }
         };
 
-        db.Offers.AddRange(offer1, offer2);
+        var offer3 = new Offer
+        {
+            OfferFriendlyName = "OFF-2026-0003",
+            Status = OfferStatusEnum.IN_NEGOTIATION,
+            SalesCaseId = case3.Id,
+            Vehicles = new List<Vehicle> { vehicle3 }
+        };
 
-        // ===== Orders (2) =====
+        db.Offers.AddRange(offer1, offer2, offer3);
+        await db.SaveChangesAsync();
+
+        // ===== ZAMÓWIENIA (Orders) =====
         var order1 = new Order
         {
             OrderNumber = "ORD-2026-0001",
             Status = OrderStatusEnum.IN_PROGRESS,
             FinalPrice = 505000m,
-            Customer = customer1,
-            Vehicle = vehicle1,
-            SalespersonId = salesperson1.Id
+            SalesCaseId = case1.Id,
+            Vehicles = new List<Vehicle> { vehicle1 } // To samo auto ląduje w zamówieniu
         };
 
         var order2 = new Order
@@ -308,72 +344,30 @@ public static class DataSeeder
             OrderNumber = "ORD-2026-0002",
             Status = OrderStatusEnum.NEW,
             FinalPrice = 470000m,
-            Customer = customer2,
-            Vehicle = vehicle2,
-            SalespersonId = salesperson2.Id
+            SalesCaseId = case2.Id,
+            Vehicles = new List<Vehicle> { vehicle2 }
         };
 
         db.Orders.AddRange(order1, order2);
-
-        // Link offers -> orders (0..1)
-        offer1.Order = order1;
-        offer2.Order = order2;
-
-        // ===== Invoices (2) =====
-        db.Invoices.AddRange(
-            new Invoice
-            {
-                InvoiceNumber = "INV-2026-0001",
-                SaleDate = DateTime.UtcNow.AddDays(-1),
-                DueDate = DateTime.UtcNow.AddDays(13),
-                GrossAmount = 621150m,
-                Status = InvoiceStatusEnum.UNPAID,
-                Order = order1
-            },
-            new Invoice
-            {
-                InvoiceNumber = "INV-2026-0002",
-                SaleDate = DateTime.UtcNow,
-                DueDate = DateTime.UtcNow.AddDays(14),
-                GrossAmount = 578100m,
-                Status = InvoiceStatusEnum.PARTIALLY_PAID,
-                Order = order2
-            }
-        );
-
-        // ===== PdfDocuments (2) =====
-        db.PdfDocuments.AddRange(
-            new PdfDocument
-            {
-                Offer = offer1,
-                FilePath = "pdf/offers/OFF-2026-0001.pdf",
-                CreatedAt = DateTime.UtcNow.AddDays(-2)
-            },
-            new PdfDocument
-            {
-                Offer = offer2,
-                FilePath = "pdf/offers/OFF-2026-0002.pdf",
-                CreatedAt = DateTime.UtcNow.AddDays(-1)
-            }
-        );
+        await db.SaveChangesAsync();
 
         // ===== CustomerCommunications (2) =====
         db.CustomerCommunications.AddRange(
             new CustomerCommunication
             {
-                Type = MessageTypeEnum.OFFER_SENT,
+                IsPrivateMessage = false,
+                MessageContent = "cokolwiek",
                 SentAt = DateTime.UtcNow.AddDays(-2),
                 DeliveryStatus = "DELIVERED",
-                Offer = offer1,
-                Customer = customer1
+                SalesCase = case1
             },
             new CustomerCommunication
             {
-                Type = MessageTypeEnum.PAYMENT_REMINDER,
+                IsPrivateMessage = false,
+                MessageContent = "cokolwiek ale 2",
                 SentAt = DateTime.UtcNow.AddDays(-1),
                 DeliveryStatus = "SENT",
-                Invoice = db.Invoices.Local.First(i => i.InvoiceNumber == "INV-2026-0001"),
-                Customer = customer1
+                SalesCase = case2
             }
         );
 
@@ -409,7 +403,7 @@ public static class DataSeeder
         // ===== SalesBonuses (2) =====
         db.SalesBonuses.AddRange(
             new SalesBonus
-                { Name = "Quarterly bonus", Percent = 1.50m, Conditions = "Min. 3 vehicles sold per quarter" },
+            { Name = "Quarterly bonus", Percent = 1.50m, Conditions = "Min. 3 vehicles sold per quarter" },
             new SalesBonus { Name = "Premium bonus", Percent = 2.50m, Conditions = "Average margin > 4%" }
         );
 
@@ -418,6 +412,8 @@ public static class DataSeeder
             new SalespersonSales { SalespersonId = salesperson1.Id, Vehicle = vehicle1, Quantity = 1 },
             new SalespersonSales { SalespersonId = salesperson2.Id, Vehicle = vehicle2, Quantity = 2 }
         );
-    
-}
+
+        // Zapis końcowy całego grafu obiektów
+        await db.SaveChangesAsync();
+    }
 }

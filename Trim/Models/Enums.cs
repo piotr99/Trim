@@ -35,21 +35,6 @@ public enum OrderStatusEnum
     COMPLETED = 3,
     CANCELLED = 4
 }
-
-public enum InvoiceStatusEnum
-{
-    UNPAID = 0,
-    PARTIALLY_PAID = 1,
-    PAID = 2,
-    OVERDUE = 3
-}
-
-public enum MessageTypeEnum
-{
-    OFFER_SENT = 0,
-    PAYMENT_REMINDER = 1,
-    ORDER_STATUS_CHANGED = 2
-}
 public enum VehicleCabSizeEnum
 {
     [Display(Name = "P - niska (P-cab)")]

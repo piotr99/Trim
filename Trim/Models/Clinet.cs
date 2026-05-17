@@ -30,27 +30,5 @@ public class Customer
 
         public ICollection<Offer> Offers { get; set; } = new List<Offer>();
         public ICollection<Order> Orders { get; set; } = new List<Order>();
-        public ICollection<CustomerCommunication> Communications { get; set; } = new List<CustomerCommunication>();
         public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
     }
-
-public class Lead
-{
-    public int Id { get; set; }
-
-    [Required, MaxLength(200)]
-    public string CompanyName { get; set; } = default!;
-
-    [MaxLength(20)]
-    public string? TaxId { get; set; } // NIP
-
-    [MaxLength(200)]
-    public string? ContactEmail { get; set; }
-
-    [MaxLength(30)]
-    public string? ContactPhone { get; set; }
-
-    public LeadStatusEnum Status { get; set; } = LeadStatusEnum.NEW;
-
-    public int? TransportCompanyId { get; set; }
-}

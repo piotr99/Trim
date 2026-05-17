@@ -12,8 +12,6 @@ public class EditOfferVm
     public decimal Price { get; set; }
     public decimal Discount { get; set; }
     public decimal Bonus { get; set; }
-
-    public List<OfferVehicleConfiguration> Vehicles { get; set; } = new();
     public List<VehicleCabSize> VehicleCabSizes { get; set; } = new();
     public List<VehicleDrivetrain> VehicleDrivetrains { get; set; } = new();
     public List<VehicleEngine> VehicleEngines { get; set; } = new();

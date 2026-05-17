@@ -8,20 +8,29 @@ namespace Trim.Models;
 public class Vehicle
 {
     public int Id { get; set; }
+
     [Required, MaxLength(50)]
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
 
     [Required, MaxLength(50)]
     public string Vin { get; set; } = default!;
 
     public VehicleStatusEnum Status { get; set; } = VehicleStatusEnum.AVAILABLE;
 
+    public int? ConfigurationId { get; set; }
     public VehicleConfiguration? Configuration { get; set; }
 
-    public ICollection<OfferVehicle> OfferVehicles { get; set; } = new List<OfferVehicle>();
-    public ICollection<Order> Orders { get; set; } = new List<Order>();
-    public Customer? Customer { get; set; }
+    // Klient
     public int? CustomerId { get; set; }
+    public Customer? Customer { get; set; }
+
+    // Pojazd należy do JEDNEJ oferty (NIE kolekcji)
+    public int? OfferId { get; set; }
+    public Offer? Offer { get; set; }
+
+    // Pojazd należy do JEDNEGO zamówienia (NIE kolekcji)
+    public int? OrderId { get; set; }
+    public Order? Order { get; set; }
 }
 
 public class VehicleConfiguration
@@ -44,16 +53,4 @@ public class VehicleConfiguration
     [BindNever] public decimal BonusMultiplier { get; set; }
     public decimal? AdditionalPrice { get; set; }
     public string? AdditionalEquipment { get; set; }
-}
-
-public class OfferVehicleConfiguration : VehicleConfiguration
-{
-    public int OfferId { get; set; }
-    [ValidateNever, BindNever] public Offer Offer { get; set; }
-}
-
-public class OrderVehicleConfiguration : VehicleConfiguration
-{
-    public int VehicleId { get; set; }
-    public Vehicle Vehicle { get; set; }
 }

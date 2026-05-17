@@ -6,81 +6,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Trim</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/Trim.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Trim.styles.css" asp-append-version="true" />
+    <!-- Dodane: Bootstrap Icons dla ładniejszego menu -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-<body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-page="/Index">Trim</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                    </li>
-                </ul>
+<body class="bg-light">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-4">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand fw-bold text-primary" asp-area="" asp-page="/Index">Trim CRM</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <!-- Zostawiłem puste miejsce, górne linki można ewentualnie usunąć skoro masz lewe menu -->
+                    </ul>
 
-                <ul class="navbar-nav">
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <li class="nav-item d-flex align-items-center">
-                            <span class="nav-link text-dark">@UserManager.GetUserName(User)</span>
-                        </li>
-                        @if (User.IsInRole("Admin"))
+                    <ul class="navbar-nav">
+                        @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item d-flex align-items-center">
-                                <a class="nav-link text-dark" asp-page="/Admin/Home">Panel administratora</a>
+                                <span class="nav-link text-dark fw-medium">
+                                    <i class="bi bi-person-circle me-1"></i> @UserManager.GetUserName(User)
+                                </span>
+                            </li>
+                            <li class="nav-item">
+                                <form class="form-inline" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                                    <button type="submit" class="nav-link btn btn-link text-danger border-0 shadow-none">
+                                        Wyloguj
+                                    </button>
+                                </form>
                             </li>
                         }
-                        
-                        <li class="nav-item">
-                            @* Wylogowanie MUSI być przez formularz POST ze względów bezpieczeństwa *@
-                            <form class="form-inline" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                                <button type="submit" class="nav-link btn btn-link text-dark border-0 shadow-none">
-                                    Wyloguj
-                                </button>
-                            </form>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Account/Login">Zaloguj</a>
-                        </li>
-                    }
-                </ul>
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Account/Login">Zaloguj</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
             </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid px-4">
+        <div class="row">
+
+            <!-- LEWE MENU -->
+            <div class="col-md-3 col-lg-2 mb-4">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <div class="list-group shadow-sm border-0">
+                        <a asp-page="/NewUI/home" class="list-group-item list-group-item-action py-3 border-0 border-bottom">
+                            <i class="bi bi-house-door text-primary me-2"></i> Strona główna
+                        </a>
+                        <a asp-page="/NewUI/home" class="list-group-item list-group-item-action py-3 border-0 border-bottom">
+                            <i class="bi bi-file-earmark-plus text-primary me-2"></i> Utwórz nowe zadanie
+                        </a>
+                        <a asp-page="/Messages/Index" class="list-group-item list-group-item-action py-3 border-0 border-bottom">
+                            <i class="bi bi-envelope text-primary me-2"></i> Wiadomości
+                        </a>
+                        <a asp-page="/Offers/Index" class="list-group-item list-group-item-action py-3 border-0 border-bottom">
+                            <i class="bi bi-file-earmark-text text-primary me-2"></i> Oferty
+                        </a>
+                        <a asp-page="/Orders/Index" class="list-group-item list-group-item-action py-3 border-0 border-bottom">
+                            <i class="bi bi-cart3 text-primary me-2"></i> Zamówienia
+                        </a>
+                        <a asp-page="/Customers/Index" class="list-group-item list-group-item-action py-3 border-0 border-bottom">
+                            <i class="bi bi-people text-primary me-2"></i> Klienci
+                        </a>
+                        <a asp-page="/Account/Manage/Index" class="list-group-item list-group-item-action py-3 border-0 border-bottom">
+                            <i class="bi bi-gear text-primary me-2"></i> Konto
+                        </a>
+
+                        @* Wyświetlamy Panel Administratora tylko dla roli Admin / Administrator *@
+                        @if (User.IsInRole("Admin") || User.IsInRole("Administrator"))
+                        {
+                            <a asp-page="/Admin/Home" class="list-group-item list-group-item-action py-3 border-0 text-danger fw-medium">
+                                <i class="bi bi-shield-lock me-2"></i> Panel administratora
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <!-- Ukryte menu dla wylogowanych (opcjonalny zachęcacz) -->
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body text-center text-muted py-4">
+                            <i class="bi bi-lock fs-1 d-block mb-3"></i>
+                            Zaloguj się, aby uzyskać dostęp do CRM.
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- GŁÓWNA ZAWARTOŚĆ -->
+            <main role="main" class="col-md-9 col-lg-10 pb-3">
+                @RenderBody()
+            </main>
+
         </div>
-    </nav>
-</header>
-<div class="container">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
-
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2025 - Trim - <a asp-area="" asp-page="/Privacy">Privacy</a>
     </div>
-</footer>
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+    <footer class="border-top footer text-muted mt-5 bg-white">
+        <div class="container-fluid px-4 py-3">
+            &copy; 2026 - Trim - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
 
-@await RenderSectionAsync("Scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

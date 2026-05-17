@@ -1,0 +1,302 @@
+﻿@page
+@model Trim.Pages.NewUI.HomeModel
+@{
+}
+
+<!-- Własne style dla estetycznego paska przewijania (Scrollbara) -->
+<style>
+    .scrollable-column {
+        height: 400px; /* Stała wysokość - możesz dostosować do potrzeb */
+        overflow-y: auto;
+    }
+
+        /* Wygląd scrollbara dla przeglądarek opartych na WebKit (Chrome, Edge, Safari) */
+        .scrollable-column::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollable-column::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .scrollable-column::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+            .scrollable-column::-webkit-scrollbar-thumb:hover {
+                background: #a8a8a8;
+            }
+</style>
+
+<div class="container-fluid mt-4">
+    <!-- Nagłówek -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="h4 text-gray-800 fw-bold">Panel startowy - Sprzedaż Pojazdów</h2>
+            <p class="text-muted">Przegląd bieżących działań, wiadomości i statusów sprzedaży.</p>
+        </div>
+    </div>
+
+    <!-- Sekcja 3 kolumn -->
+    <div class="row">
+
+        <!-- Kolumna 1: Maile od klientów -->
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow-sm border-0 border-start border-primary border-4">
+                <div class="card-header bg-white py-3">
+                    <h6 class="m-0 fw-bold text-primary">Wiadomości od klientów</h6>
+                </div>
+                <!-- Dodana klasa scrollable-column -->
+                <div class="card-body p-0 scrollable-column">
+                    <div class="list-group list-group-flush" id="customer-messages">
+                        <a href="#" class="list-group-item list-group-item-action p-3">
+                            <div class="d-flex w-100 justify-content-between align-items-center mb-1">
+                                <h6 class="mb-0 fw-bold">Marek Nowicki</h6>
+                                <small class="text-muted">15 min temu</small>
+                            </div>
+                            <small class="d-block text-muted mb-2">Transport Demo Sp. z o.o.</small>
+                            <p class="mb-1 small">Pytanie o specyfikację Scania S600. Czy na tym etapie możemy jeszcze zmienić kabinę na wariant G?</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action p-3 bg-light">
+                            <div class="d-flex w-100 justify-content-between align-items-center mb-1">
+                                <h6 class="mb-0 fw-bold">Karolina Mazur</h6>
+                                <small class="text-muted">2 godz. temu</small>
+                            </div>
+                            <small class="d-block text-muted mb-2">Logistyka Test S.A.</small>
+                            <p class="mb-1 small">Dzień dobry, proszę o przesłanie proformy do zamówienia na model R480, abyśmy mogli uruchomić procedurę leasingową.</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action p-3">
+                            <div class="d-flex w-100 justify-content-between align-items-center mb-1">
+                                <h6 class="mb-0 fw-bold">Jan Kowalski (Leasing)</h6>
+                                <small class="text-muted">Wczoraj</small>
+                            </div>
+                            <small class="d-block text-muted mb-2">Finansowanie Zewnętrzne</small>
+                            <p class="mb-1 small">Decyzja kredytowa dla klienta "New Company 1" została wydana pozytywnie. Czekamy na draft umowy.</p>
+                        </a>
+                        <!-- Dodatkowe maile dla efektu scrolla -->
+                        <a href="#" class="list-group-item list-group-item-action p-3">
+                            <div class="d-flex w-100 justify-content-between align-items-center mb-1">
+                                <h6 class="mb-0 fw-bold">Piotr Zieliński</h6>
+                                <small class="text-muted">Wczoraj</small>
+                            </div>
+                            <small class="d-block text-muted mb-2">Trans-Max</small>
+                            <p class="mb-1 small">Czy są jakieś rabaty flotowe przy zakupie 5 sztuk z silnikiem 13L?</p>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action p-3">
+                            <div class="d-flex w-100 justify-content-between align-items-center mb-1">
+                                <h6 class="mb-0 fw-bold">Ewa Wiśniewska</h6>
+                                <small class="text-muted">2 dni temu</small>
+                            </div>
+                            <small class="d-block text-muted mb-2">Bud-Pol S.A.</small>
+                            <p class="mb-1 small">Proszę o kontakt telefoniczny w sprawie wywrotki 8x4.</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kolumna 2: Oferty -->
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow-sm border-0 border-start border-success border-4">
+                <div class="card-header bg-white py-3">
+                    <h6 class="m-0 fw-bold text-success">Aktywne Oferty</h6>
+                </div>
+                <!-- Dodana klasa scrollable-column -->
+                <div class="card-body p-0 scrollable-column">
+                    <ul class="list-group list-group-flush" id="offers-container">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kolumna 3: Zamówienia -->
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow-sm border-0 border-start border-info border-4">
+                <div class="card-header bg-white py-3">
+                    <h6 class="m-0 fw-bold text-info">Ostatnie Zamówienia</h6>
+                </div>
+                <!-- Dodana klasa scrollable-column -->
+                <div class="card-body p-0 scrollable-column">
+                    <ul class="list-group list-group-flush" id="orders-container">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sekcja na wykres (Puste pole) -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm mb-4 border-0">
+                <div class="card-header bg-white py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 fw-bold text-dark">Analiza sprzedaży i przychodów (Kwartalnie)</h6>
+                    <div class="dropdown no-arrow">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            Filtruj
+                        </button>
+                        <ul class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Ostatnie 30 dni</a></li>
+                            <li><a class="dropdown-item" href="#">Bieżący rok</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Placeholder na wykres (np. Chart.js) -->
+                    <div class="d-flex align-items-center justify-content-center bg-light rounded" style="height: 350px; border: 2px dashed #dee2e6;">
+                        <div class="text-center text-muted">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-bar-chart-line mb-2 text-secondary" viewBox="0 0 16 16">
+                                <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z" />
+                            </svg>
+                            <p class="mb-0">Tutaj wygeneruj wykres za pomocą <strong>Chart.js</strong> lub <strong>ApexCharts</strong></p>
+                            <small>Zainicjuj skrypt na elemencie <code>&lt;canvas id="salesChart"&gt;&lt;/canvas&gt;</code></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function LoadOffers(){
+            $.ajax({
+    url: '/NewUI/home?handler=GetOffers',
+    type: 'GET',
+    dataType: 'json',
+    success: function(data) {
+        console.log("Otrzymane dane:", data);
+        const container = $('#offers-container');
+        let htmlContent = '';
+        
+        if (data && data.length > 0) {
+            // Zmieniono 'data' na 'item' w parametrze pętli
+            $.each(data, function(index, item) {
+
+                // Dobranie koloru badge'a 
+                // Uwaga: ponieważ C# zwraca sc.Status (Zgłoszenia), mogą tu wpadać np. NEGOTIATION, NEW
+                let badgeClass = "bg-secondary";
+                if (item.status === "NEGOTIATION" || item.status === "IN_NEGOTIATION") badgeClass = "bg-warning text-dark";
+                if (item.status === "NEW") badgeClass = "bg-primary";
+
+                // Płaskie odwołania do item zamiast data.offer
+                // Zaktualizowano link do podstrony Case przekazując ID w parametrze
+                htmlContent += `
+                    <li class="list-group-item p-3">            
+                        <a href='/NewUI/Case?id=${item.id}' class="text-decoration-none text-dark">                
+                            <div class="d-flex justify-content-between align-items-center">                    
+                                <div>                        
+                                    <h6 class="mb-0 fw-bold">${item.offerFriendlyName}</h6>                        
+                                    <small class="text-muted">${item.customerName}</small>                    
+                                </div>                    
+                                <span class="badge ${badgeClass} rounded-pill">${item.status}</span>                
+                            </div>                
+                            <div class="mt-2 small text-secondary">                    
+                                <i class="bi bi-truck me-1"></i> Ilość pojazdów: ${item.vehicles}                
+                            </div>                
+                        </a>            
+                    </li>`;
+            });
+            
+            // Wrzucamy zbudowany HTML do kontenera
+            container.html(htmlContent);
+        } else {
+            container.html('<li class="list-group-item p-3 text-muted">Brak powiązanych ofert.</li>');
+        }
+    },
+    error: function(xhr, status, error) {
+        console.error("Błąd pobierania ofert:", error);
+        $('#offers-container').html('<li class="list-group-item p-3 text-danger">Wystąpił błąd podczas ładowania danych.</li>');
+    }
+});
+}
+
+
+
+
+                function LoadOrders() {
+            $.ajax({
+                url: '/NewUI/home?handler=GetOrders', // Endpoint zwracający listę zamówień
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+
+                    // 1. Pobieramy element docelowy
+                    const container = $('#orders-container');
+
+                    // 2. Czyścimy kontener
+                    container.empty();
+
+                    let htmlContent = '';
+
+                    // 3. Sprawdzamy, czy mamy dane
+                    if (data && data.length > 0) {
+
+                        // 4. Generujemy HTML dla każdego zamówienia
+                        $.each(data, function(index, order) {
+
+                            // Dobranie koloru badge'a na podstawie statusu zamówienia
+                            let badgeClass = "bg-primary"; // domyślnie "W realizacji"
+                            if (order.status === "NEW") badgeClass = "bg-info text-dark";
+                            if (order.status === "COMPLETED") badgeClass = "bg-success";
+
+                            htmlContent += `
+                                <li class="list-group-item p-3">
+                                    <a href='/NewUI/Case?id=${order.id}' class="text-decoration-none text-dark">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-0 fw-bold">${order.orderNumber}</h6>
+                                                <small class="text-muted">${order.customerName}</small>
+                                            </div>
+                                            <span class="badge ${badgeClass} rounded-pill">${order.statusDisplay || order.status}</span>
+                                        </div>
+                                        <div class="mt-2 small">
+                                            <span class="text-success fw-bold">Faktura:</span> ${order.invoiceNumber} (${order.invoiceStatus})<br />
+                                            <span class="text-muted">${order.deliveryInfo || 'Brak dodatkowych informacji o dostawie.'}</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            `;
+                        });
+                    } else {
+                        htmlContent = '<li class="list-group-item p-3 text-center text-muted">Brak zamówień do wyświetlenia.</li>';
+                    }
+
+                    // 5. Wstawiamy gotowy HTML do kontenera
+                    container.html(htmlContent);
+
+                },
+                error: function(xhr, status, error) {
+                    console.error("Błąd AJAX (Zamówienia):", error);
+                    const container = $('#orders-container');
+                            container.html(`
+                            <li class="list-group-item p-4 text-center text-danger">
+                                <i class="bi bi-exclamation-triangle-fill fs-4 d-block mb-2"></i>
+                                <strong>Wystąpił błąd!</strong> <br/>
+                                Nie udało się pobrać listy. Spróbuj ponownie później.
+                            </li>
+                        `);
+                }
+            });
+        }
+        function LoadMessages(){
+            $.ajax({
+                    url: '/GetMessages' + offerId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+        }
+                $(document).ready(function() {
+            LoadOffers();
+            LoadOrders();
+        });
+
+
+    </script>}
