@@ -16,6 +16,18 @@ namespace Trim.Pages.Account
             _signInManager = signInManager;
         }
 
+        public async Task<IActionResult> OnGet(string returnUrl = null)
+        {
+            await _signInManager.SignOutAsync();
+
+            if (returnUrl != null)
+            {
+                return LocalRedirect(returnUrl);
+            }
+
+            return RedirectToPage("/Index");
+        }
+
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();

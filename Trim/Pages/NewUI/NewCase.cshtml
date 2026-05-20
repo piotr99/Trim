@@ -1,0 +1,176 @@
+﻿@page
+@model Trim.Pages.NewUI.NewCaseModel
+@{
+    ViewData["Title"] = "Nowe zgłoszenie";
+}
+
+<!-- Token bezpieczeństwa dla zapytań POST -->
+@Html.AntiForgeryToken()
+
+<div class="container-fluid py-4 max-w-75">
+    <div class="d-flex justify-content-between align-items-center mb-4 mt-2 pb-3 border-bottom">
+        <div>
+            <h2 class="mb-0 fw-bold text-dark">
+                <i class="bi bi-briefcase-fill me-2 text-primary"></i>Utwórz nowe zgłoszenie
+            </h2>
+            <p class="text-muted fs-5 mb-0">Wprowadź dane początkowe nowej sprawy handlowej</p>
+        </div>
+        <a href="/NewUI/Cases" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="bi bi-arrow-left me-2"></i>Wróć do listy
+        </a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white fw-bold py-3">
+                    <i class="bi bi-pencil-square me-2"></i> Formularz rejestracji zgłoszenia
+                </div>
+                <div class="card-body p-4">
+
+                    <form id="create-case-form">
+
+                        <!-- Wybór klienta -->
+                        <div class="mb-4">
+                            <label for="customerId" class="form-label fw-medium">
+                                <i class="bi bi-person-badge me-1 text-secondary"></i> Klient <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <select class="form-select" id="customerId" name="CustomerId" required>
+                                    <option value="" selected disabled>Ładowanie listy klientów...</option>
+                                    <!-- Opcje zostaną załadowane przez AJAX -->
+                                </select>
+                                <button class="btn btn-outline-secondary" type="button" title="Odśwież listę klientów" id="btn-refresh-customers">
+                                    <i class="bi bi-arrow-clockwise"></i>
+                                </button>
+                            </div>
+                            <div class="form-text">Wybierz klienta z bazy. Jeśli to nowy klient, dodaj go najpierw w module Klienci.</div>
+                        </div>
+
+                        <!-- Tytuł sprawy -->
+                        <div class="mb-4">
+                            <label for="title" class="form-label fw-medium">Tytuł sprawy <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="title" name="Title" placeholder="np. Zakup floty 5 pojazdów Scania R500" required>
+                        </div>
+
+                        <!-- Opis -->
+                        <div class="mb-4">
+                            <label for="description" class="form-label fw-medium">Opis początkowy / Notatki</label>
+                            <textarea class="form-control bg-light" id="description" name="Description" rows="5" placeholder="Wprowadź szczegóły zgłoszenia, wymagania klienta..."></textarea>
+                        </div>
+
+                        <hr class="text-muted opacity-25 my-4">
+
+                        <!-- Przyciski akcji -->
+                        <div class="d-flex justify-content-end">
+                            <button type="button" id="btn-submit" class="btn btn-primary btn-lg px-5 shadow-sm">
+                                <i class="bi bi-check2-circle me-2"></i> Utwórz zgłoszenie
+                            </button>
+                        </div>
+
+                        <!-- Kontener na komunikaty błędów -->
+                        <div id="error-message" class="alert alert-danger mt-3 d-none"></div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            // 1. ŁADOWANIE KLIENTÓW DO SELECTA
+            function loadCustomers() {
+                const $select = $('#customerId');
+                $select.html('<option value="" selected disabled>Ładowanie...</option>');
+
+                $.ajax({
+                    url: '?handler=LoadCustomers',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        $select.empty();
+                        $select.append('<option value="" selected disabled>-- Wybierz klienta --</option>');
+
+                        $.each(data, function (index, customer) {
+                            $select.append($('<option>', {
+                                value: customer.id,
+                                text: customer.displayName
+                            }));
+                        });
+                    },
+                    error: function () {
+                        $select.html('<option value="" disabled>Błąd podczas ładowania klientów</option>');
+                    }
+                });
+            }
+
+            // Uruchomienie ładowania po wejściu na stronę
+            loadCustomers();
+
+            // Obsługa przycisku odświeżania (opcjonalnie)
+            $('#btn-refresh-customers').click(function() {
+                loadCustomers();
+            });
+
+            // 2. WYSYŁANIE FORMULARZA (TWORZENIE ZGŁOSZENIA)
+            $('#btn-submit').click(function () {
+                const $form = $('#create-case-form');
+                const $btn = $(this);
+                const $errorDiv = $('#error-message');
+
+                // Natywna walidacja HTML5
+                if (!$form[0].checkValidity()) {
+                    $form[0].reportValidity();
+                    return;
+                }
+
+                // Zabezpieczenie przed wielokrotnym kliknięciem
+                const originalBtnText = $btn.html();
+                $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Zapisywanie...');
+                $errorDiv.addClass('d-none').text('');
+
+                // Zbieranie danych
+                const requestData = {
+                    CustomerId: $('#customerId').val(),
+                    Title: $('#title').val(),
+                    Description: $('#description').val()
+                };
+
+                // Pobranie tokenu Anty-Forgery
+                const csrfToken = $('input[name="__RequestVerificationToken"]').val();
+
+                $.ajax({
+                    url: '?handler=SaveCase',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(requestData),
+                    headers: {
+                        "RequestVerificationToken": csrfToken
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Sukces -> Przekierowanie do nowo utworzonego zgłoszenia
+                            window.location.href = `/NewUI/Case/${response.newCaseId}`;
+                        } else {
+                            $errorDiv.removeClass('d-none').text(response.error || 'Wystąpił nieznany błąd.');
+                            $btn.prop('disabled', false).html(originalBtnText);
+                        }
+                    },
+                    error: function (xhr) {
+                        let errorMsg = 'Błąd komunikacji z serwerem.';
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            errorMsg = xhr.responseJSON.error;
+                        }
+                        $errorDiv.removeClass('d-none').text(errorMsg);
+                        $btn.prop('disabled', false).html(originalBtnText);
+                    }
+                });
+            });
+        });
+    </script>
+}

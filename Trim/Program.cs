@@ -36,6 +36,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Administrator", p => p.RequireRole("Administrator"));
     options.AddPolicy("AdminOrSalesperson",
         p => p.RequireRole("Administrator", "Salesperson"));
+    options.AddPolicy("Customer", p => p.RequireRole("Customer"));
 });
 
 // 4) Cookie paths – przed Build()
@@ -45,20 +46,28 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
 builder.Services.AddScoped<IOfferCalculator, OfferCalculator>();
+builder.Services.AddScoped<ICallFactoryForVinHelper, CallFactoryForVinHelper>();
+builder.Services.AddScoped<IUpdateOfferPricing, UpdateOfferPricing>();
+builder.Services.AddScoped<ISalespeopleHelper, SalespeopleHelper>();
+builder.Services.AddScoped<IOrderHelper, OrderHelper>();
+
+
 // 5) Razor Pages + konwencje (tylko raz)
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/");
 
+    options.Conventions.AuthorizeFolder("/Customer/", "Customer");
+
     options.Conventions.AuthorizeFolder("/Admin/", "Administrator");
-    options.Conventions.AuthorizeFolder("/Salesperson", "AdminOrSalesperson");
+    options.Conventions.AuthorizeFolder("/NewUI", "AdminOrSalesperson");
     options.Conventions.AuthorizeFolder("/SalesAdministrator/", "SalesAdministrator");
 
     options.Conventions.AllowAnonymousToPage("/Account/Login");
     options.Conventions.AllowAnonymousToPage("/Account/AccessDenied");
 });
 
-
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -73,5 +82,6 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapControllers();
 app.MapRazorPages();
 app.Run();

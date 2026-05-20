@@ -17,10 +17,6 @@ public class ApplicationUser : IdentityUser<int>
 
 public class Salesperson : ApplicationUser
 {
-    public ICollection<Offer> CreatedOffers { get; set; } = new List<Offer>();
-    public ICollection<Order> ManagedOrders { get; set; } = new List<Order>();
-
-    public ICollection<SalespersonSales> SoldVehicles { get; set; } = new List<SalespersonSales>();
 }
 
 public class SalesAdministrator : ApplicationUser

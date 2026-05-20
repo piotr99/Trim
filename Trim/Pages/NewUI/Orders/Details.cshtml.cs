@@ -18,51 +18,27 @@ namespace Trim.Pages.NewUI.Orders
             _db = db;
             _userManager = userManager;
         }
-
-        public SalesCase CurrentCase { get; set; }
+        public Order CurrentOrder { get; set; } = default!;
         [BindProperty(SupportsGet = true)]
         public int Id { get; set; }
 
-        public async Task<IActionResult> OnGetLoadOffersAsync()
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            var orderData = await _db.SalesCases
+            CurrentOrder = await _db.Orders
                 .AsNoTracking()
-                .Where(sc => sc.Id == Id)
-                .Select(sc => new {
-                    id = sc.Id,
-                    createdAt = sc.Order.CreatedAt,
-                    orderNumber = sc.Order.OrderNumber,
-                    status = sc.Order.Status.ToString(),
-                    finalPrice = sc.Order.FinalPrice,
-                    customer = new
-                    {
-                        id = sc.CustomerId,
-                        name = sc.Customer.CompanyName ?? (sc.Customer.FirstName + " " + sc.Customer.LastName)
-                    },
-                    salesperson = sc.AssignedSalesperson != null
-                        ? sc.AssignedSalesperson.FirstName + " " + sc.AssignedSalesperson.LastName
-                        : "Brak",
-                    vehicles = sc.Offer.Vehicles.Select(v => new
-                    {
-                        id = v.Configuration.Id,
-                        cabSize = v.Configuration.Size.Name, // Zakładam, że pole ze słownika to Name
-                        engine = v.Configuration.Engine.Name,
-                        gearbox = v.Configuration.Gearbox.Name,
-                        interior = v.Configuration.Interior.Name,
-                        drivetrain = v.Configuration.Drivetrain.Name,
+                .Include(o => o.SalesCase)
+                .Where(o => o.SalesCaseId == id)
+                .Include(o => o.Vehicles)
+                    .ThenInclude(v => v.Configuration)
+                .FirstOrDefaultAsync();
 
-                        price = v.Configuration.Price,
-                        additionalPrice = v.Configuration.AdditionalPrice,
-                        additionalEquipment = v.Configuration.AdditionalEquipment
-                    }).ToList()
-                }).FirstOrDefaultAsync();
-
-            if (orderData == null)
+            if (CurrentOrder == null)
             {
-                return new JsonResult(new { error = "Nie znaleziono oferty o podanym ID." }) { StatusCode = 404 };
+                return NotFound();
             }
 
-            return new JsonResult(orderData);
-        } 
-    }
+            return Page();
+        }
+    } 
+    
 }

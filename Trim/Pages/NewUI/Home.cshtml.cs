@@ -36,11 +36,11 @@ namespace Trim.Pages.NewUI
                 .AsNoTracking()
                 .Where(sc => sc.AssignedSalespersonId == currentUser.Id)
                 .Where(sc => sc.Order == null)
-                .Where(sc => sc.Offer != null)
+                //.Where(sc => sc.Offer != null)
                 .Select(sc => new
                 {
                     id = sc.Id,
-                    offerFriendlyName = sc.Offer.OfferFriendlyName,
+                    offerFriendlyName = sc.Offer.OfferFriendlyName ?? sc.CaseNumber,
                     customerName = sc.Customer.CompanyName ?? (sc.Customer.FirstName + " " + sc.Customer.LastName),
                     status = sc.Status.ToString(),
                     vehicles = sc.Offer.Vehicles.Count

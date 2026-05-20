@@ -1,43 +1,44 @@
 ﻿# ===== .NET / ASP.NET =====
-bin/
-obj/
-[Bb]in/
-[Oo]bj/
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
-*.rsuser
-*.userprefs
+    bin/
+    obj/
+    [Bb]in/
+    [Oo]bj/
+    *.user
+    *.suo
+    *.userosscache
+    *.sln.docstates
+    *.rsuser
+    *.userprefs
 
-# ===== Rider / IntelliJ =====
-.idea/
-*.sln.iml
+    # ===== Rider / IntelliJ =====
+    .idea/
+    *.sln.iml
 
-# ===== Visual Studio =====
-.vs/
-*.vscode/
-.vscode/
+    # ===== Visual Studio =====
+    .vs/
+    *.vscode/
+    .vscode/
+    .vsidx
 
-# ===== OS =====
-.DS_Store
-Thumbs.db
+    # ===== OS =====
+    .DS_Store
+    Thumbs.db
 
-# ===== Logs =====
-*.log
+    # ===== Logs =====
+    *.log
 
-# ===== EF / local DB artifacts (jeśli używasz) =====
-*.mdf
-*.ldf
+    # ===== EF / local DB artifacts (jeśli używasz) =====
+    *.mdf
+    *.ldf
 
-# ===== Secrets =====
-appsettings.*.json
-!appsettings.json
-!appsettings.Development.json.example
-secrets.json
-*.pfx
-*.snk
+    # ===== Secrets =====
+    appsettings.*.json
+    !appsettings.json
+    !appsettings.Development.json.example
+    secrets.json
+    *.pfx
+    *.snk
 
-# ===== Publish =====
-publish/
-wwwroot/lib/
+    # ===== Publish =====
+    publish/
+    wwwroot/lib/

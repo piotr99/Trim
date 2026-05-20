@@ -1,0 +1,317 @@
+﻿@page
+@model Trim.Pages.NewUI.Vehicles.ConfiguratorModel
+@{
+    ViewData["Title"] = "Konfigurator Pojazdu";
+}
+@Html.AntiForgeryToken()
+<style>
+    /* Stylowanie interaktywnych kafelków opcji */
+    .config-option-label {
+        transition: all 0.2s ease-in-out;
+        border-width: 2px;
+    }
+
+    .btn-check:checked + .config-option-label {
+        border-color: #0d6efd;
+        background-color: rgba(13, 110, 253, 0.05);
+        transform: translateY(-2px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+    }
+
+    .config-section {
+        background: #fff;
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+    }
+
+    .sticky-summary {
+        top: 20px;
+        z-index: 1020;
+    }
+</style>
+
+<!-- Zabezpieczenie dla późniejszego wysyłania formularza -->
+@Html.AntiForgeryToken()
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0"><i class="bi bi-tools text-primary me-2"></i>Konfigurator nowego pojazdu</h2>
+    </div>
+
+    <!-- Wskaźnik ładowania -->
+    <div id="loading-spinner" class="text-center my-5 py-5">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
+        <h5 class="mt-3 text-muted">Ładowanie opcji konfiguracji...</h5>
+    </div>
+
+    <div id="configurator-content" class="row g-4 d-none">
+
+        <!-- LEWA KOLUMNA: Opcje Konfiguracji -->
+        <div class="col-lg-8">
+            <form id="configurator-form">
+                <input type="hidden" name="OfferId" value="@Model.Id" />
+                <!-- 1. DANE PODSTAWOWE -->
+                <div class="config-section border">
+                    <h4 class="fw-bold mb-4"><i class="bi bi-info-circle me-2 text-secondary"></i>Dane identyfikacyjne</h4>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium">Nazwa wewnętrzna (np. Scania R500)</label>
+                            <input type="text" class="form-control form-control-lg" name="VehicleName" required placeholder="Wpisz nazwę...">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-medium">Spodziewana data dostawy</label>
+                            <input type="date" class="form-control form-control-lg" id="delivery-date" name="ExpectedDeliveryDate" required readonly>
+                            <small id="delivery-help" class="text-warning fw-medium">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Łączenie z bazą dostawcy...
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEKCJE GENEROWANE DYNAMICZNIE PRZEZ AJAX -->
+                <div class="config-section border">
+                    <h4 class="fw-bold mb-3"><i class="bi bi-truck-front me-2 text-secondary"></i>Kabina</h4>
+                    <div class="row g-3" id="container-cab"></div>
+                </div>
+
+                <div class="config-section border">
+                    <h4 class="fw-bold mb-3"><i class="bi bi-ev-front me-2 text-secondary"></i>Silnik</h4>
+                    <div class="row g-3" id="container-engine"></div>
+                </div>
+
+                <div class="config-section border">
+                    <h4 class="fw-bold mb-3"><i class="bi bi-gear me-2 text-secondary"></i>Skrzynia biegów</h4>
+                    <div class="row g-3" id="container-gearbox"></div>
+                </div>
+
+                <div class="config-section border">
+                    <h4 class="fw-bold mb-3"><i class="bi bi-pip me-2 text-secondary"></i>Wnętrze</h4>
+                    <div class="row g-3" id="container-interior"></div>
+                </div>
+
+                <div class="config-section border">
+                    <h4 class="fw-bold mb-3"><i class="bi bi-car-front-fill me-2 text-secondary"></i>Układ napędowy</h4>
+                    <div class="row g-3" id="container-drivetrain"></div>
+                </div>
+
+                <!-- DODATKI (Wpisywane ręcznie) -->
+                <div class="config-section border">
+                    <h4 class="fw-bold mb-3"><i class="bi bi-plus-circle me-2 text-secondary"></i>Opcje dodatkowe</h4>
+                    <div class="row g-3">
+                        <div class="col-md-8">
+                            <label class="form-label fw-medium">Opis wyposażenia niestandardowego</label>
+                            <textarea class="form-control" name="AdditionalEquipment" rows="2" placeholder="np. Orurowanie dachu, dodatkowe oświetlenie..."></textarea>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-medium">Cena dodatków (PLN netto)</label>
+                            <input type="number" step="0.01" min="0" class="form-control form-control-lg price-input" id="additional-price" name="AdditionalPrice" value="0">
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- PRAWA KOLUMNA: Podsumowanie (Sticky) -->
+        <div class="col-lg-4">
+            <div class="card border-primary shadow-sm position-sticky sticky-summary">
+                <div class="card-header bg-primary text-white py-3">
+                    <h5 class="card-title mb-0 fw-bold"><i class="bi bi-receipt me-2"></i>Podsumowanie</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush" id="summary-list">
+                        <!-- Elementy wstrzykiwane przez JS -->
+                    </ul>
+                </div>
+                <div class="card-footer bg-light p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted fw-bold">Cena całkowita netto:</span>
+                        <h3 class="fw-bold text-success mb-0" id="total-price">0,00 zł</h3>
+                    </div>
+                    <button type="button" id="btn-save" class="btn btn-primary w-100 btn-lg shadow-sm">
+                        <i class="bi bi-check2-circle me-2"></i>Zapisz konfigurację
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            const formatPLN = (amount) => {
+                return new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(amount);
+            };
+
+            // 1. Pobieranie danych słownikowych z backendu
+            $.ajax({
+                url: '?handler=GetConfiguration',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+
+                    // Renderowanie opcji w kontenerach
+                    renderOptions('#container-cab', 'SizeId', data.cabSizes);
+                    renderOptions('#container-engine', 'EngineId', data.engines);
+                    renderOptions('#container-gearbox', 'GearboxId', data.gearboxes);
+                    renderOptions('#container-interior', 'InteriorId', data.interiors);
+                    renderOptions('#container-drivetrain', 'DrivetrainId', data.drivetrains);
+
+                    // Ukrycie spinnera, pokazanie formularza
+                    $('#loading-spinner').fadeOut(200, function() {
+                        $('#configurator-content').removeClass('d-none').hide().fadeIn(400);
+                        updateSummary(); // Pierwsze przeliczenie
+                    });
+                },
+                error: function () {
+                    $('#loading-spinner').html('<div class="alert alert-danger">Błąd połączenia z serwerem. Nie można pobrać słowników.</div>');
+                }
+            });
+
+            // 2. Funkcja generująca karty (Radio buttons)
+            function renderOptions(containerId, inputName, items) {
+                let html = '';
+                if(items && items.length > 0) {
+                    $.each(items, function (index, item) {
+                        // Zaznacz pierwszy element domyślnie
+                        const isChecked = index === 0 ? 'checked' : '';
+
+                        html += `
+                            <div class="col-md-6 col-xxl-4">
+                                <input type="radio" class="btn-check config-radio" name="${inputName}" id="${inputName}_${item.id}" value="${item.id}" data-name="${item.name}" data-price="${item.price}" ${isChecked} required>
+                                <label class="btn btn-outline-secondary w-100 text-start p-3 config-option-label h-100 d-flex flex-column justify-content-between" for="${inputName}_${item.id}">
+                                    <div class="fw-bold fs-6 text-dark mb-2">${item.name}</div>
+                                    <div class="text-primary fw-medium">${formatPLN(item.price)}</div>
+                                </label>
+                            </div>
+                        `;
+                    });
+                } else {
+                    html = '<div class="col-12"><span class="text-muted small">Brak danych w słowniku.</span></div>';
+                }
+                $(containerId).html(html);
+            }
+
+            // 3. Nasłuchiwanie zmian dla przeliczenia na żywo
+            $(document).on('change', '.config-radio', function () {
+                updateSummary();
+            });
+
+            $('#additional-price').on('input', function() {
+                updateSummary();
+            });
+
+            // 4. Logika aktualizacji panelu bocznego
+            function updateSummary() {
+                let total = 0;
+                let summaryHtml = '';
+
+                // Pobranie zaznaczonych radio buttonów
+                $('.config-radio:checked').each(function () {
+                    const name = $(this).data('name');
+                    const price = parseFloat($(this).data('price')) || 0;
+
+                    total += price;
+                    summaryHtml += `
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                            <span class="small fw-medium text-dark">${name}</span>
+                            <span class="small text-muted">${formatPLN(price)}</span>
+                        </li>
+                    `;
+                });
+
+                // Dodatki ręczne
+                const additionalPrice = parseFloat($('#additional-price').val()) || 0;
+                if (additionalPrice > 0) {
+                    total += additionalPrice;
+                    summaryHtml += `
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-3 bg-light">
+                            <span class="small fw-bold text-dark">Wyposażenie dodatkowe</span>
+                            <span class="small text-muted">${formatPLN(additionalPrice)}</span>
+                        </li>
+                    `;
+                }
+
+                $('#summary-list').html(summaryHtml);
+
+                // Animacja zmiany ceny
+                const priceElement = $('#total-price');
+                priceElement.fadeOut(100, function() {
+                    $(this).text(formatPLN(total)).fadeIn(100);
+                });
+            }
+
+            // 5. Obsługa zapisu (Wysyłka formularza)
+            $('#btn-save').click(function () {
+                const form = $('#configurator-form');
+                if (!form[0].checkValidity()) {
+                    form[0].reportValidity();
+                    return;
+                }
+                const formData = form.serialize();
+                // Dodajemy anty-forgery token do nagłówka
+                const csrfToken = $('input[name="__RequestVerificationToken"]').val();
+
+                const btn = $(this);
+                const originalText = btn.html();
+                btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Zapisywanie...');
+
+                $.ajax({
+                    url: '/NewUI/Vehicles/Configurator?handler=SaveConfiguration',
+                    type: 'POST',
+                    data: formData,
+                    headers: { "RequestVerificationToken": csrfToken },
+                    success: function (response) {
+                        alert('Konfiguracja została zapisana!');
+                        window.location.href = '/NewUI/Offers/Details?id=@Model.Id'; // Przekierowanie do szczegółów oferty
+                    },
+                    error: function () {
+                        alert('Wystąpił błąd podczas zapisywania.');
+                        btn.prop('disabled', false).html(originalText);
+                    }
+                });
+            });
+
+        });
+                        function updateDeliveryDate() {
+            setTimeout(function() {
+                // 1. Pobierz dzisiejszą datę
+                let deliveryDate = new Date();
+
+                // 2. Losowe wahania (od 0 do 10 dni)
+                let fluctuations = Math.floor(Math.random() * 11);
+
+                // 3. Dodaj wylosowane dni do dzisiejszej daty
+                deliveryDate.setDate(deliveryDate.getDate() + fluctuations);
+
+                // 4. Formatowanie do standardu ISO (YYYY-MM-DD) wymaganego przez input="date"
+                let year = deliveryDate.getFullYear();
+                let month = String(deliveryDate.getMonth() + 1).padStart(2, '0');
+                let day = String(deliveryDate.getDate()).padStart(2, '0');
+
+                let formattedDate = `${year}-${month}-${day}`; // np. 2026-05-25
+
+                // 5. Zaktualizuj input za pomocą jQuery, wstaw wartość i odblokuj pole do edycji
+                $('#delivery-date')
+                    .val(formattedDate)
+                    .prop('readonly', false);
+
+                // 6. Zmień komunikat pod polem na zielony sukces
+                $('#delivery-help')
+                    .text('Termin dostawy został pomyślnie zsynchronizowany.')
+                    .removeClass('text-warning')
+                    .addClass('text-success');
+
+            }, 10000); // 10000 milisekund = 10 sekund
+        }
+
+        // Uruchomienie funkcji natychmiast po załadowaniu dokumentu (jeśli jest wewnątrz $(document).ready)
+        updateDeliveryDate();
+    </script>
+}

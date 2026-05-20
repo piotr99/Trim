@@ -1,5 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11806.211
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trim", "Trim\Trim.csproj", "{69EF2F6E-3081-466E-9285-646B418D1B20}"
 EndProject
 Global
@@ -12,5 +15,11 @@ Global
 		{69EF2F6E-3081-466E-9285-646B418D1B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69EF2F6E-3081-466E-9285-646B418D1B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69EF2F6E-3081-466E-9285-646B418D1B20}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F54B74E-AE54-4727-B3A1-2287DF57A434}
 	EndGlobalSection
 EndGlobal

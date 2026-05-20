@@ -7,8 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Repos\" />
-      <Folder Include="ViewModels\" />
+      <Compile Remove="Repos\**" />
+      <Compile Remove="ViewModels\**" />
+      <Content Remove="Repos\**" />
+      <Content Remove="ViewModels\**" />
+      <EmbeddedResource Remove="Repos\**" />
+      <EmbeddedResource Remove="ViewModels\**" />
+      <None Remove="Repos\**" />
+      <None Remove="ViewModels\**" />
     </ItemGroup>
 
     <ItemGroup>

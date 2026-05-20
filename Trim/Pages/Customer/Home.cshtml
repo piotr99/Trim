@@ -1,0 +1,243 @@
+﻿@page
+@model Trim.Pages.User.HomeModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel Klienta - Trim CRM</title>
+
+    <!-- Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+            body {
+                background-color: #f4f6f9;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            .navbar-custom {
+                background-color: #ffffff;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            }
+
+            .stat-card {
+                border: none;
+                border-radius: 0.75rem;
+                transition: transform 0.2s;
+            }
+
+                .stat-card:hover {
+                    transform: translateY(-5px);
+                }
+
+            .icon-box {
+                width: 48px;
+                height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 0.5rem;
+                font-size: 1.5rem;
+            }
+
+            .table-custom th {
+                font-weight: 600;
+                color: #6c757d;
+                border-bottom-width: 1px;
+            }
+    </style>
+</head>
+<body>
+
+    <!-- NAGŁÓWEK (NAVBAR) -->
+    <nav class="navbar navbar-expand-lg navbar-custom py-3 mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="#">
+                <i class="bi bi-hexagon-fill me-2"></i>Trim
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#userNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="userNavbar">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item me-3">
+                        <a class="nav-link text-secondary" href="#"><i class="bi bi-bell fs-5"></i></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center text-dark" href="#" role="button" data-bs-toggle="dropdown">
+                            <div class="bg-primary text-white rounded-circle me-2 d-flex justify-content-center align-items-center" style="width: 35px; height: 35px;">
+                                M
+                            </div>
+                            <span class="fw-medium">@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Mój profil</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Ustawienia</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="/Account/Logout"><i class="bi bi-box-arrow-right me-2"></i>Wyloguj się</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- GŁÓWNA ZAWARTOŚĆ -->
+    <main class="container pb-5">
+
+        <!-- POWITANIE -->
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <h2 class="fw-bold mb-1">Witaj, @Model.CurrentUser.FirstName @Model.CurrentUser.LastName 👋</h2>
+                <p class="text-muted mb-0">Oto podsumowanie Twojego konta na dzień dzisiejszy.</p>
+            </div>
+            <div>
+                <button class="btn btn-primary shadow-sm">
+                    <i class="bi bi-plus-lg me-1"></i> Twoje sprawy
+                </button>
+            </div>
+        </div>
+
+        <!-- KAFELKI ZE STATYSTYKAMI -->
+        <div class="row g-4 mb-5">
+            <!-- Zgłoszenia -->
+            <div class="col-md-4">
+                <div class="card stat-card shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted fw-bold text-uppercase mb-2">Twoje Zgłoszenia</h6>
+                                <h3 class="fw-bold mb-0">@Model.SaleCases.Count()</h3>
+                            </div>
+                            <div class="icon-box bg-primary bg-opacity-10 text-primary">
+                                <i class="bi bi-briefcase"></i>
+                            </div>
+                        </div>
+                        <div class="mt-3 small text-muted">
+                            <span class="text-success fw-medium"><i class="bi bi-arrow-up-short"></i> 1 nowe</span> od ostatniego logowania
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Oferty -->
+            <div class="col-md-4">
+                <div class="card stat-card shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted fw-bold text-uppercase mb-2">Oczekujące Oferty</h6>
+                                <h3 class="fw-bold mb-0">@Model.RequiresAttention</h3>
+                            </div>
+                            <div class="icon-box bg-warning bg-opacity-10 text-warning">
+                                <i class="bi bi-file-earmark-text"></i>
+                            </div>
+                        </div>
+                        <div class="mt-3 small text-muted">
+                            Wymaga Twojej akceptacji
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pojazdy/Zamówienia -->
+            <div class="col-md-4">
+                <div class="card stat-card shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted fw-bold text-uppercase mb-2">Twoje Pojazdy</h6>
+                                <h3 class="fw-bold mb-0">@Model.CustomerVehicles</h3>
+                            </div>
+                            <div class="icon-box bg-success bg-opacity-10 text-success">
+                                <i class="bi bi-truck"></i>
+                            </div>
+                        </div>
+                        <div class="mt-3 small text-muted">
+                            <a href="#" class="text-decoration-none">Przejdź do floty <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- OSTATNIA AKTYWNOŚĆ (TABELA) -->
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-clock-history me-2 text-primary"></i>Ostatnie zgłoszenia</h5>
+                <a href="#" class="btn btn-sm btn-outline-secondary">Zobacz wszystkie</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-custom mb-0 align-middle">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="px-4 py-3">Numer</th>
+                                <th class="py-3">Nowe wiadomości</th>
+                                <th class="py-3">Status</th>
+                                <th class="py-3">Data utworzenia</th>
+                                <th class="px-4 py-3 text-end">Akcja</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.SaleCases != null && Model.SaleCases.Any())
+                            {
+                                <!-- Sortujemy zgłoszenia malejąco po dacie utworzenia, aby najnowsze były na górze -->
+                                foreach (var caseItem in Model.SaleCases.OrderByDescending(c => c.CreatedAt))
+                                {
+                                    // Dobieramy kolor statusu w zależności od jego wartości
+                                    string badgeClass = caseItem.Status.ToString() switch
+                                    {
+                                        "NEW" => "bg-primary",
+                                        "NEGOTIATION" => "bg-warning text-dark",
+                                        "CLOSED_WON" => "bg-success",
+                                        "CLOSED_LOST" => "bg-danger",
+                                        _ => "bg-secondary"
+                                    };
+
+                                    <tr>
+                                        <td class="px-4">
+                                            <span class="fw-medium text-primary">@caseItem.CaseNumber</span>
+                                        </td>
+                                        <td>@caseItem.ActivityLogs.Count(c => c.ReadByCustomerAt == null)</td>
+                                        <td>
+                                            <span class="badge @badgeClass rounded-pill px-3">@caseItem.Status</span>
+                                        </td>
+                                        <td class="text-muted small">@caseItem.CreatedAt.ToString("dd.MM.yyyy")</td>
+                                        <td class="px-4 text-end">
+                                            <!-- Pamiętaj o dostosowaniu ścieżki href do Twojego widoku szczegółów zgłoszenia dla klienta -->
+                                            <a href="/Customer/Case?id=@caseItem.Id" class="btn btn-sm btn-light border" title="Zobacz szczegóły">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center py-4 text-muted">
+                                        <i class="bi bi-inbox fs-4 d-block mb-2 text-secondary"></i>
+                                        Brak zgłoszeń do wyświetlenia.
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Skrypty Bootstrapa (niezbędne do działania np. dropdownów) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

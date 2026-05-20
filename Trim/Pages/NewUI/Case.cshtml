@@ -49,30 +49,75 @@ else
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
+                        <!-- Zmodyfikowana sekcja: Klient (dodano NIP i Adres) -->
                         <div class="col-md-6">
                             <label class="form-label text-muted small mb-0">Klient</label>
-                            <p class="fw-medium mb-0">
+                            <p class="fw-medium mb-1">
                                 @(Model.CurrentCase.Customer.CompanyName ?? $"{Model.CurrentCase.Customer.FirstName} {Model.CurrentCase.Customer.LastName}")
                             </p>
+
+                            @if (!string.IsNullOrEmpty(Model.CurrentCase.Customer.TaxId))
+                            {
+                                <p class="small text-muted mb-0">
+                                    <i class="bi bi-building me-1"></i>NIP: @Model.CurrentCase.Customer.TaxId
+                                </p>
+                            }
+
+                            @if (!string.IsNullOrEmpty(Model.CurrentCase.Customer.Address))
+                            {
+                                <p class="small text-muted mb-0">
+                                    <i class="bi bi-geo-alt me-1"></i>@Model.CurrentCase.Customer.Address
+                                </p>
+                            }
                         </div>
+
+                        <!-- Zmodyfikowana sekcja: Osoba kontaktowa (dodano Telefon) -->
                         <div class="col-md-6">
                             <label class="form-label text-muted small mb-0">Osoba kontaktowa</label>
-                            <p class="mb-0">@Model.CurrentCase.Customer.FirstName @Model.CurrentCase.Customer.LastName</p>
-                            <p class="small text-muted mb-0"><i class="bi bi-envelope me-1"></i>@Model.CurrentCase.Customer.Email</p>
+                            <p class="mb-1">@Model.CurrentCase.Customer.FirstName @Model.CurrentCase.Customer.LastName</p>
+                            <p class="small text-muted mb-0">
+                                <i class="bi bi-envelope me-1"></i>@Model.CurrentCase.Customer.Email
+                            </p>
+
+                            @if (!string.IsNullOrEmpty(Model.CurrentCase.Customer.PhoneNumber))
+                            {
+                                <p class="small text-muted mb-0">
+                                    <i class="bi bi-telephone me-1"></i>@Model.CurrentCase.Customer.PhoneNumber
+                                </p>
+                            }
                         </div>
                     </div>
 
+                    <!-- Przypisany Handlowiec (Pozostaje bez zmian) -->
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label text-muted small mb-0">Przypisany Handlowiec</label>
-                            <!-- Jeśli ładujesz Salesperson, upewnij się, że masz .Include w OnGet -->
-                            <p class="mb-0">
-                                <i class="bi bi-person-badge me-1 text-secondary"></i>
-                                @(Model.CurrentCase.AssignedSalesperson?.FirstName ?? "Brak") @(Model.CurrentCase.AssignedSalesperson?.LastName ?? "")
-                            </p>
+
+                            <!-- TRYB WYŚWIETLANIA -->
+                            <div id="salesman-display-container" class="d-flex align-items-center mt-1">
+                                <i class="bi bi-person-badge me-2 text-secondary"></i>
+                                <span id="salesman-name" class="fw-medium">
+                                    @(Model.CurrentCase.AssignedSalesperson?.FirstName ?? "Brak") @(Model.CurrentCase.AssignedSalesperson?.LastName ?? "")
+                                </span>
+                                <button id="change-salesman" class="btn btn-sm btn-link text-primary p-0 ms-2" title="Zmień handlowca">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </div>
+
+                            <!-- TRYB EDYCJI (Domyślnie ukryty) -->
+                            <div id="salesman-edit-container" class="d-none mt-1">
+                                <div class="input-group input-group-sm">
+                                    <select id="salesman-select" class="form-select">
+                                        <option value="">Ładowanie...</option>
+                                    </select>
+                                    <button id="save-salesman" class="btn btn-success" title="Zapisz"><i class="bi bi-check2"></i></button>
+                                    <button id="cancel-salesman" class="btn btn-outline-secondary" title="Anuluj"><i class="bi bi-x"></i></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
+                    <!-- Opis zgłoszenia (Pozostaje bez zmian) -->
                     <div>
                         <label class="form-label text-muted small mb-0">Opis (Description)</label>
                         <div class="p-3 bg-light rounded text-dark" style="white-space: pre-wrap;">@Model.CurrentCase.Description</div>
@@ -97,6 +142,7 @@ else
                             <div>
                                 @if (Model.CurrentCase.Offer != null)
                                 {
+                                   
                                     <a href="/NewUI/Offers/Details?id=@Model.Id" class="text-decoration-none">
                                         @Model.CurrentCase.Offer.OfferFriendlyName
                                         <i class="bi bi-box-arrow-up-right ms-1 small"></i>
@@ -104,7 +150,7 @@ else
                                 }
                                 else
                                 {
-                                    <button class="btn btn-sm btn-outline-primary">Generuj Ofertę</button>
+                                    <button class="btn btn-sm btn-outline-primary" id="create-offer">Generuj Ofertę</button>
                                 }
                             </div>
                         </li>
@@ -180,6 +226,7 @@ else
         </div>
 
     </div>
+
 }
 @section Scripts {
     <script>
@@ -273,7 +320,7 @@ else
 
             // Uruchomienie odświeżania osi czasu
             fetchComments();
-            setInterval(fetchComments, 3000);
+            setInterval(fetchComments, 5000);
 
             // Obsługa formularza: Notatka Wewnętrzna
             $('#add-private-message').on('click', function(e) {
@@ -293,6 +340,111 @@ else
                 sendComment(content, false, '#public-textarea', $(this));
             });
 
+
+                    // ==========================================
+        // OBSŁUGA ZMIANY HANDLOWCA
+        // ==========================================
+
+        // 1. Otwarcie trybu edycji i pobranie listy
+        $('#change-salesman').on('click', function(e) {
+            e.preventDefault();
+            const $btn = $(this);
+            const originalIcon = $btn.html();
+
+            // Pokaż spinner na przycisku podczas pobierania
+            $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+
+            $.ajax({
+                // UWAGA: Używam nazwy z Twojego kodu C#.
+                // Warto rozważyć zmianę nazwy w C# z OnGetLoadCustomersAsync na OnGetLoadSalespeopleAsync dla spójności.
+                url: `/NewUI/Case?handler=LoadSalespeople`,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    let options = '<option value="">-- Wybierz handlowca --</option>';
+
+                    // Generowanie opcji dla <select>
+                    $.each(data, function(index, sp) {
+                        options += `<option value="${sp.id}">${sp.firstName} ${sp.lastName}</option>`;
+                    });
+
+                    $('#salesman-select').html(options);
+
+                    // Przełączenie widoczności kontenerów
+                    $('#salesman-display-container').addClass('d-none');
+                    $('#salesman-edit-container').removeClass('d-none').hide().fadeIn(200);
+                },
+                error: () => alert("Wystąpił błąd podczas wczytywania listy handlowców."),
+                complete: () => $btn.prop('disabled', false).html(originalIcon)
+            });
+        });
+
+        // 2. Anulowanie edycji
+        $('#cancel-salesman').on('click', function() {
+            $('#salesman-edit-container').addClass('d-none');
+            $('#salesman-display-container').removeClass('d-none').hide().fadeIn(200);
+        });
+
+        // 3. Zapisanie nowego handlowca
+        $('#save-salesman').on('click', function() {
+            const selectedId = $('#salesman-select').val();
+            const selectedText = $('#salesman-select option:selected').text();
+
+            if (!selectedId) {
+                alert('Proszę wybrać handlowca z listy.');
+                return;
+            }
+
+            const $btn = $(this);
+            $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+
+            $.ajax({
+                url: `/NewUI/Case?handler=ChangeSalesman&id=${caseId}`,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ SalespersonId: selectedId }),
+                headers: { "RequestVerificationToken": token },
+                success: function() {
+                    // Aktualizacja tekstu w UI
+                    $('#salesman-name').text(selectedText);
+
+                    // Powrót do trybu wyświetlania
+                    $('#salesman-edit-container').addClass('d-none');
+                    $('#salesman-display-container').removeClass('d-none').hide().fadeIn(200);
+
+                    // Opcjonalnie: dodanie wpisu do Activity Stream o zmianie handlowca
+                    fetchComments();
+                },
+                error: () => alert("Wystąpił błąd podczas przypisywania handlowca."),
+                complete: () => $btn.prop('disabled', false).html('<i class="bi bi-check2"></i>')
+            });
+        });
+
+                $(document).ready(function () {
+            // Zakładam, że caseId jest zdefiniowane wyżej w Twoim skrypcie, np.:
+            // const caseId = @Model.Id;
+            // const token = $('input[name="__RequestVerificationToken"]').val();
+
+            // 1. Obsługa tworzenia oferty
+            $('#create-offer').on('click', function() {
+                if (confirm('Czy na pewno chcesz wygenerować nową ofertę dla tego zgłoszenia?')) {
+                    $.ajax({
+                        url: `/NewUI/Case?handler=CreateOffer&id=${caseId}`, // Dodano id zgłoszenia
+                        type: 'POST', // Zmiana z GET na POST z powodu modyfikacji danych
+                        dataType: 'json',
+                        headers: { "RequestVerificationToken": token },
+                        success: function(response) {
+                            // Po udanym stworzeniu oferty przeładowujemy stronę, aby pokazać powiązany rekord
+                            location.reload();
+                        },
+                        error: function(xhr) {
+                            console.error("Błąd tworzenia oferty:", xhr.responseText);
+                            alert("Wystąpił błąd podczas tworzenia oferty.");
+                        }
+                    });
+                }
+            });
+        });
         });
     </script>
 }

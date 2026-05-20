@@ -2,21 +2,8 @@
 
 namespace Trim.Models;
 
-public class Customer
+public class Customer : ApplicationUser
     {
-        public int Id { get; set; }
-
-        [Required, MaxLength(100)]
-        public string FirstName { get; set; } = default!;
-
-        [Required, MaxLength(100)]
-        public string LastName { get; set; } = default!;
-
-        [MaxLength(200)]
-        public string? Email { get; set; }
-
-        [MaxLength(30)]
-        public string? Phone { get; set; }
 
         [MaxLength(200)]
         public string? CompanyName { get; set; }
@@ -28,7 +15,6 @@ public class Customer
         public int? SalespersonId { get; set; }
         public Salesperson? Salesperson { get; set; }
 
-        public ICollection<Offer> Offers { get; set; } = new List<Offer>();
-        public ICollection<Order> Orders { get; set; } = new List<Order>();
+        public ICollection<SalesCase> SalesCases { get; set; } = new List<SalesCase>();
         public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
     }

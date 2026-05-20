@@ -1,0 +1,269 @@
+﻿@page
+@model Trim.Pages.Customer.OfferModel
+@{
+    Layout = null;
+}
+@Html.AntiForgeryToken()
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oferta dla zgłoszenia @Model.CurrentCase.CaseNumber</title>
+
+    <!-- Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+            body {
+                background-color: #f4f6f9;
+                font-family: 'Segoe UI', Tahoma, sans-serif;
+            }
+
+            .navbar-custom {
+                background-color: #ffffff;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            }
+
+            .price-tag {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #198754;
+            }
+
+            .vehicle-card {
+                border: none;
+                border-radius: 0.75rem;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+                transition: transform 0.2s;
+                margin-bottom: 1.5rem;
+            }
+
+                .vehicle-card:hover {
+                    transform: translateY(-3px);
+                }
+
+            .spec-list {
+                padding-left: 0;
+                list-style: none;
+                margin-bottom: 0;
+            }
+
+                .spec-list li {
+                    padding: 8px 0;
+                    border-bottom: 1px dashed #e9ecef;
+                    display: flex;
+                    justify-content: space-between;
+                }
+
+                    .spec-list li:last-child {
+                        border-bottom: none;
+                    }
+
+            .spec-label {
+                color: #6c757d;
+                font-weight: 500;
+                font-size: 0.9rem;
+            }
+
+            .spec-value {
+                font-weight: 600;
+                text-align: right;
+            }
+    </style>
+</head>
+<body>
+
+    <!-- Prosty Navbar z przyciskiem powrotu -->
+    <nav class="navbar navbar-expand-lg navbar-custom py-3 mb-4">
+        <div class="container">
+            <!-- Wraca do widoku szczegółów Zgłoszenia (Case) -->
+            <a class="navbar-brand fw-bold text-primary" href="/Customer/Case?id=@Model.CurrentCase.Id">
+                <i class="bi bi-arrow-left me-2 text-dark"></i> <i class="bi bi-hexagon-fill me-1"></i> Wróć do Zgłoszenia
+            </a>
+            <span class="text-muted ms-auto"><i class="bi bi-file-earmark-text me-1"></i> Szczegóły Oferty</span>
+        </div>
+    </nav>
+
+    <main class="container pb-5">
+
+        <!-- HEADER OFERTY -->
+        <div class="card shadow-sm border-0 mb-5 border-top border-primary border-4">
+            <div class="card-body p-4 p-md-5">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <span class="badge bg-success mb-2 px-3 py-2 rounded-pill">Status: @Model.CurrentCase.Offer.Status</span>
+                        <h1 class="fw-bold mb-3">Oferta Handlowa</h1>
+                        <p class="text-muted mb-1">
+                            Powiązana sprawa: <a href="/Customer/Case?id=@Model.CurrentCase.Id" class="fw-bold text-decoration-none">@Model.CurrentCase.CaseNumber</a>
+                        </p>
+                    </div>
+
+                    <div class="col-md-4 text-md-end mt-4 mt-md-0">
+                        <!-- Załóżmy, że w Offer masz pole TotalPrice, jeśli nie - usuń to -->
+                        <div class="text-muted small text-uppercase fw-bold mb-1">Wartość oferty (Netto)</div>
+                        <div class="price-tag mb-3">
+                            @Model.CurrentCase.Offer.FinalPrice.ToString("C")
+                            @if (Model.CurrentCase.Offer.Status != Trim.Models.OfferStatusEnum.ACCEPTED)
+                                {<p>Do negocjacji</p> }
+                                
+                        </div>
+                        @if (Model.CurrentCase.Offer.Status == Trim.Models.OfferStatusEnum.SENT)
+                            {
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <!-- Ponieważ nie mamy tu formularza, musimy ręcznie wygenerować token dla AJAXa -->
+                                <button class="btn btn-outline-danger px-4" id="decline-offer">Odrzuć</button>
+                                <button class="btn btn-success px-4" id="accept-offer"><i class="bi bi-check2-circle me-1"></i> Akceptuj ofertę</button>
+                            </div>
+                            }
+                            else
+                            {
+                            <button class="btn btn-info px-4"><i class="bi bi-check2-circle me-1"></i> Wysłano</button>
+                            }
+                            <!-- Przyciski akcji - do wdrożenia w przyszłości -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEKCJA POJAZDÓW -->
+        <h4 class="fw-bold mb-4"><i class="bi bi-truck me-2 text-primary"></i> Zaproponowane pojazdy (@Model.CurrentCase.Offer.Vehicles.Count)</h4>
+
+        <div class="row">
+            @foreach (var vehicle in Model.CurrentCase.Offer.Vehicles)
+            {
+                <div class="col-lg-6">
+                    <div class="card vehicle-card h-100">
+                        <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <!-- Wykorzystujemy pole Name z Twojego modelu Vehicle -->
+                                    <h4 class="fw-bold text-dark mb-0">@vehicle.Name</h4>
+                                    <!-- Wykorzystujemy pole VIN -->
+                                    <span class="text-muted small">VIN: <span class="font-monospace">@vehicle.Vin</span></span>
+                                </div>
+                                <div class="bg-light p-2 rounded text-center">
+                                    <i class="bi bi-truck fs-3 text-secondary"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <hr class="text-muted opacity-25">
+                            <h6 class="fw-bold text-primary mb-3">Specyfikacja techniczna</h6>
+
+                            @if (vehicle.Configuration != null)
+                            {
+                                <ul class="spec-list">
+                                    <li>
+                                        <span class="spec-label"><i class="bi bi-gear-wide-connected me-1"></i> Silnik</span>
+                                        <!-- Wyciągamy dane ze słownika Engine -->
+                                        <span class="spec-value">@(vehicle.Configuration.Engine?.Name ?? "-")</span>
+                                    </li>
+                                    <li>
+                                        <span class="spec-label"><i class="bi bi-bezier2 me-1"></i> Skrzynia biegów</span>
+                                        <span class="spec-value">@(vehicle.Configuration.Gearbox?.Name ?? "-")</span>
+                                    </li>
+                                    <li>
+                                        <span class="spec-label"><i class="bi bi-aspect-ratio me-1"></i> Kabina</span>
+                                        <span class="spec-value">@(vehicle.Configuration.Size?.Name ?? "-")</span>
+                                    </li>
+                                    <li>
+                                        <span class="spec-label"><i class="bi bi-palette me-1"></i> Wnętrze</span>
+                                        <span class="spec-value">@(vehicle.Configuration.Interior?.Name ?? "-")</span>
+                                    </li>
+                                    <li>
+                                        <span class="spec-label"><i class="bi bi-truck-front me-1"></i> Napęd</span>
+                                        <span class="spec-value">@(vehicle.Configuration.Drivetrain?.Name ?? "-")</span>
+                                    </li>
+                                </ul>
+                            }
+                            else
+                            {
+                                <div class="alert alert-light text-muted small py-2 mb-0 border">
+                                    <i class="bi bi-info-circle me-1"></i> Brak przypisanej szczegółowej konfiguracji.
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Zgodnie z modelem używamy AdditionalEquipment zamiast AdditionalInfo -->
+                        @if (vehicle.Configuration != null && !string.IsNullOrEmpty(vehicle.Configuration.AdditionalEquipment))
+                        {
+                            <div class="card-footer bg-light border-top-0 pt-0 pb-3">
+                                <div class="text-muted small">
+                                    <strong class="d-block mb-1">Wyposażenie dodatkowe:</strong>
+                                    @vehicle.Configuration.AdditionalEquipment
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+    </main>
+
+    <!-- Skrypty Bootstrapa -->
+    <!-- Usuwamy całkowicie link do jQuery, zostawiamy tylko skrypt z logiką: -->
+    <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Pobieramy ID z C#
+                const caseId = @Model.Id;
+
+                // Pobieramy token bezpieczeństwa z ukrytego pola
+                const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
+                const token = tokenElement ? tokenElement.value : '';
+
+                // Akcja: AKCEPTACJA OFERTY
+                document.getElementById('accept-offer').addEventListener('click', function () {
+                    if (!confirm("Czy na pewno chcesz zaakceptować tę ofertę?")) return;
+
+                    fetch(`/Customer/Offer?handler=AcceptOffer&id=${caseId}`, {
+                        method: 'POST',
+                        headers: {
+                            'RequestVerificationToken': token
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("Oferta została pomyślnie zaakceptowana!");
+                            location.reload();
+                        } else {
+                            alert("Wystąpił błąd. Oferta nie została zaakceptowana.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Błąd sieci:", error);
+                        alert("Wystąpił błąd. Sprawdź konsolę.");
+                    });
+                });
+
+                // Akcja: ODRZUCENIE OFERTY
+                document.getElementById('decline-offer').addEventListener('click', function () {
+                    if (!confirm("Czy na pewno chcesz odrzucić ofertę i przekazać ją do negocjacji?")) return;
+
+                    fetch(`/Customer/Offer?handler=DeclineOffer&id=${caseId}`, {
+                        method: 'POST',
+                        headers: {
+                            'RequestVerificationToken': token
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("Oferta została przekazana do negocjacji.");
+                            location.reload();
+                        } else {
+                            alert("Wystąpił błąd. Akcja nie powiodła się.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Błąd sieci:", error);
+                        alert("Wystąpił błąd. Sprawdź konsolę.");
+                    });
+                });
+            });
+    </script>
+</body>
+</html>

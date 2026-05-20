@@ -1,0 +1,318 @@
+﻿@page
+@model Trim.Pages.Customer.CaseModel
+@{
+    // Jeśli masz już plik _Layout.cshtml dla klienta, usuń poniższe Layout = null i sekcje <head>
+    Layout = null;
+}
+@Html.AntiForgeryToken()
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Szczegóły zgłoszenia @Model.SalesCase.CaseNumber</title>
+
+    <!-- Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+            body {
+                background-color: #f4f6f9;
+                font-family: 'Segoe UI', Tahoma, sans-serif;
+            }
+
+            .navbar-custom {
+                background-color: #ffffff;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            }
+
+            /* Style specjalnie dla modułu czatu */
+            .chat-container {
+                height: 500px;
+                overflow-y: auto;
+                display: flex;
+                flex-direction: column;
+                padding: 1rem;
+                background-color: #f8f9fa;
+            }
+
+            .chat-bubble {
+                padding: 10px 15px;
+                border-radius: 15px;
+                margin-bottom: 5px;
+                max-width: 85%;
+                position: relative;
+                font-size: 0.95rem;
+            }
+            /* Wiadomość od klienta (po prawej) */
+            .chat-customer {
+                background-color: #0d6efd;
+                color: white;
+                align-self: flex-end;
+                border-bottom-right-radius: 3px;
+            }
+            /* Wiadomość od handlowca (po lewej) */
+            .chat-salesperson {
+                background-color: #e9ecef;
+                color: #212529;
+                align-self: flex-start;
+                border-bottom-left-radius: 3px;
+            }
+
+            .chat-time {
+                font-size: 0.7rem;
+                opacity: 0.7;
+                margin-top: 4px;
+                display: block;
+                text-align: right;
+            }
+    </style>
+</head>
+<body>
+
+    @Html.AntiForgeryToken()
+
+    <!-- Prosty Navbar (Tylko powrót i logo) -->
+    <nav class="navbar navbar-expand-lg navbar-custom py-3 mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="/Customer/Home">
+                <i class="bi bi-arrow-left me-2 text-dark"></i> <i class="bi bi-hexagon-fill me-1"></i>Trim
+            </a>
+            <span class="text-muted ms-auto">Panel Klienta</span>
+        </div>
+    </nav>
+
+    <main class="container pb-5">
+
+        <!-- NAGŁÓWEK ZGŁOSZENIA -->
+        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+            <div>
+                <span class="text-muted small text-uppercase fw-bold">Zgłoszenie</span>
+                <h2 class="fw-bold mb-0">@Model.SalesCase.CaseNumber</h2>
+                <p class="fs-5 text-dark mb-0">@Model.SalesCase.Title</p>
+            </div>
+            <div class="text-end">
+                <span class="badge bg-primary fs-6 px-3 py-2 rounded-pill shadow-sm">
+                    @Model.SalesCase.Status
+                </span>
+                <div class="mt-2 text-muted small">
+                    Utworzono: @Model.SalesCase.CreatedAt.ToString("dd.MM.yyyy")
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- LEWA KOLUMNA: Szczegóły sprawy (7 kolumn) -->
+            <div class="col-lg-7">
+
+                <!-- Informacje o Handlowcu -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-white fw-bold py-3">
+                        <i class="bi bi-person-badge text-primary me-2"></i> Twój doradca
+                    </div>
+                    <div class="card-body">
+                        @if (Model.SalesCase.AssignedSalesperson != null)
+                        {
+                            <div class="d-flex align-items-center">
+                                <div class="bg-light text-primary rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                    @Model.SalesCase.AssignedSalesperson.FirstName.Substring(0, 1)@Model.SalesCase.AssignedSalesperson.LastName.Substring(0, 1)
+                                </div>
+                                <div>
+                                    <h5 class="mb-1">@Model.SalesCase.AssignedSalesperson.FirstName @Model.SalesCase.AssignedSalesperson.LastName</h5>
+                                    <div class="text-muted small">
+                                        <i class="bi bi-envelope me-1"></i> @Model.SalesCase.AssignedSalesperson.Email
+                                        <!-- Dodaj numer telefonu jeśli przechowujesz go w modelu -->
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-muted fst-italic">Zgłoszenie oczekuje na przypisanie doradcy.</div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Oferta (Jeśli istnieje i jest Wysłana/Akceptowana) -->
+                @if (Model.SalesCase.Offer != null)
+                {
+                    <div class="card shadow-sm border-0 mb-4 border-start border-warning border-4">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="fw-bold mb-1"><i class="bi bi-file-earmark-text text-warning me-2"></i>Oferta handlowa</h5>
+                                <p class="text-muted small mb-0">Handlowiec przygotował dla Ciebie ofertę do tego zgłoszenia.</p>
+                            </div>
+                            <!-- Pamiętaj o podmianie linku do właściwego widoku szczegółów oferty klienta -->
+                            <a href="/Customer/Offer?id=@Model.SalesCase.Offer.Id" class="btn btn-warning shadow-sm">
+                                Zobacz ofertę
+                            </a>
+                        </div>
+                    </div>
+                }
+
+                <!-- Opis Zgłoszenia -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white fw-bold py-3">
+                        <i class="bi bi-card-text text-primary me-2"></i> Opis zgłoszenia
+                    </div>
+                    <div class="card-body">
+                        <div class="bg-light p-3 rounded" style="white-space: pre-wrap;">@Model.SalesCase.Description</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRAWA KOLUMNA: Komunikator / Wiadomości (5 kolumn) -->
+            <div class="col-lg-5">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-header bg-white fw-bold py-3 d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-chat-dots text-primary me-2"></i> Wiadomości</span>
+                    </div>
+
+                    <!-- Okno czatu -->
+                    <div class="chat-container" id="chat-box">
+                    </div>
+
+                    <!-- Pole wprowadzania (AJAX) -->
+                    <div class="card-footer bg-white border-top-0 p-3">
+                        <form id="sendMessageForm">
+                            <div class="input-group">
+                                <textarea id="messageContent" class="form-control" rows="2" placeholder="Napisz wiadomość..." style="resize: none;" required></textarea>
+                                <button type="submit" class="btn btn-primary px-4" id="btn-send">
+                                    <i class="bi bi-send"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- jQuery & Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Skrypt AJAX do obsługi czatu -->
+    <script>
+        $(document).ready(function () {
+
+        // 1. POMOCNICZE FUNKCJE
+        function scrollToBottom() {
+        var chatBox = document.getElementById("chat-box");
+        chatBox.scrollTop = chatBox.scrollHeight;
+        }
+        scrollToBottom();
+
+        const token = $('input[name="__RequestVerificationToken"]').val();
+        const caseId = @Model.Id;
+
+        // 2. OBSŁUGA KLAWISZA ENTER (Zdefiniowana globalnie, poza formularzem)
+        $('#messageContent').keypress(function (e) {
+        if (e.which == 13 && !e.shiftKey) {
+        e.preventDefault();
+        $('#sendMessageForm').submit();
+        }
+        });
+
+        // 3. WYSYŁANIE WIADOMOŚCI (Natychniastowe)
+        $('#sendMessageForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const messageText = $('#messageContent').val().trim();
+        if (!messageText) return;
+
+        const $btn = $('#btn-send');
+        const originalHtml = $btn.html();
+
+        // Blokada przycisku i czyszczenie pola
+        $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+        $('#messageContent').val('');
+
+        // Optymistyczny UI z zabezpieczeniem XSS
+        const now = new Date();
+        const timeString = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
+        const $bubble = $('<div class="chat-bubble chat-customer"></div>').text(messageText + " ");
+        const $time = $('<span class="chat-time text-white-50"></span>').text(timeString);
+
+        $bubble.append($time);
+        $('#chat-box').append($bubble);
+        scrollToBottom();
+
+        // Natychmiastowe wysłanie danych do serwera
+        $.ajax({
+        url: `/Customer/Case?handler=SendMessage&id=${caseId}`,
+        type: 'POST',
+        data: { content: messageText },
+        headers: { "RequestVerificationToken": token },
+        success: function (response) {
+        $btn.prop('disabled', false).html(originalHtml);
+        },
+        error: function (xhr) {
+        console.error("Błąd wysyłania wiadomości:", xhr.responseText);
+        alert("Nie udało się wysłać wiadomości. Odśwież stronę.");
+        $btn.prop('disabled', false).html(originalHtml);
+        }
+        });
+        });
+
+
+        function LoadComments() {
+        $.ajax({
+        // Pamiętaj o dodaniu &id=${caseId}, inaczej backend nie będzie wiedział, o które zgłoszenie chodzi
+        url: `/Customer/Case?handler=LoadComments&id=${@Model.SalesCase.Id}`,
+        type: 'GET',
+        // Token do GET nie jest wymagany w standardowym mechanizmie, ale nie zaszkodzi
+        headers: { "RequestVerificationToken": token },
+        success: function (response) {
+        // ASP.NET Core domyślnie konwertuje nazwy właściwości na camelCase (ActivityLogs -> activityLogs)
+        if (response.success && response.activityLogs) {
+
+        const $chatBox = $("#chat-box");
+        $chatBox.empty(); // Czyścimy obecne okno, aby wczytać całą historię od nowa bez duplikatów
+
+        // Iterujemy po każdej wiadomości zwróconej z bazy
+        response.activityLogs.forEach(function (msg) {
+
+        // Formatowanie daty (C# zwraca format ISO, np. 2026-05-19T14:30:00)
+        const sentAt = new Date(msg.sentAt);
+        const timeString = sentAt.getHours().toString().padStart(2, '0') + ':' + sentAt.getMinutes().toString().padStart(2, '0');
+
+        // Sprawdzamy, czy to wiadomość od klienta (INBOUND) czy handlowca (OUTBOUND)
+        // ASP.NET Core domyślnie serializuje Enum jako int, więc 0 = OUTBOUND, 1 = INBOUND.
+        // Sprawdzamy oba przypadki dla bezpieczeństwa.
+        const isCustomer = msg.direction === 'INBOUND' || msg.direction === 1;
+
+        // Budujemy element bezpiecznie (zabezpieczenie przed XSS)
+        const bubbleClass = isCustomer ? "chat-customer" : "chat-salesperson";
+        const timeClass = isCustomer ? "text-white-50" : "text-muted";
+
+        const $bubble = $('<div>').addClass('chat-bubble ' + bubbleClass).text(msg.messageContent + " ");
+        const $time = $('<span>').addClass('chat-time ' + timeClass).text(timeString);
+
+        $bubble.append($time);
+        $chatBox.append($bubble);
+        });
+
+        // Przewinięcie w dół po załadowaniu
+        scrollToBottom();
+        }
+        },
+        error: function (xhr) {
+        console.error("Błąd pobierania wiadomości:", xhr.responseText);
+        // Usunięto alert, ponieważ w przypadku działania w tle (setInterval)
+        // błąd wyskakujący co 30 sekund zablokowałby przeglądarkę
+        }
+        });
+        }
+
+        // setInterval w przeciwieństwie do setTimeout wywołuje funkcję cyklicznie co wskazany czas
+        LoadComments();
+        setInterval(LoadComments, 5000);
+        });
+    </script>
+</body>
+</html>

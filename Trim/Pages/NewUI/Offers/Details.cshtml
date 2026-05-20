@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Szczegóły Oferty";
 }
-
+@Html.AntiForgeryToken()
 <!-- Wskaźnik ładowania widoczny na start -->
 <div id="loading-spinner" class="text-center my-5 py-5">
     <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="text-end">
-            <span id="offer-status" class="badge bg-secondary fs-6 rounded-pill px-3 py-2 shadow-sm mb-2">Ładowanie...</span>
+            <span id="offer-status" class="badge bg-secondary fs-6 rounded-pill px-3 py-2 shadow-sm mb-2"></span>
             <h3 class="fw-bold text-success mb-0" id="offer-final-price">0,00 zł</h3>
             <small class="text-muted">Cena końcowa brutto</small>
         </div>
@@ -75,11 +75,11 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-            
+                $(document).ready(function () {
+
             // Pobranie ID oferty z backendu C#
             const offerId = @Model.Id;
-            
+
             // Funkcja pomocnicza do formatowania waluty (PLN)
             const formatPLN = (amount) => {
                 if (amount === null || amount === undefined) return "0,00 zł";
@@ -92,18 +92,18 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    
+
                     // 1. Wypełnianie nagłówka
                     $('#offer-name').text(data.offerFriendlyName);
                     $('#offer-date').text(data.createdAt || 'Brak daty');
                     $('#offer-final-price').text(formatPLN(data.finalPrice));
-                    
+
                     // Dobranie koloru statusu
                     let statusClass = 'bg-secondary';
                     if (data.status === "DRAFT") statusClass = 'bg-secondary';
                     if (data.status === "SENT" || data.status === "NEGOTIATION") statusClass = 'bg-warning text-dark';
                     if (data.status === "ACCEPTED" || data.status === "WON") statusClass = 'bg-success';
-                    
+
                     $('#offer-status').text(data.status).removeClass('bg-secondary').addClass(statusClass);
 
                     // 2. Wypełnianie tabeli informacyjnej
@@ -120,19 +120,29 @@
 
                     if (data.vehicles && data.vehicles.length > 0) {
                         $.each(data.vehicles, function (index, v) {
-                            
+
                             // Bezpieczne sprawdzanie czy właściwość istnieje (fallback do "Brak")
                             const engine = v.engine || '<span class="text-muted">Brak</span>';
                             const cab = v.cabSize || '<span class="text-muted">Brak</span>';
                             const gearbox = v.gearbox || '<span class="text-muted">Brak</span>';
                             const drivetrain = v.drivetrain || '<span class="text-muted">Brak</span>';
-                            
+
                             vehiclesHtml += `
                                 <div class="col-xl-4 col-lg-6">
                                     <div class="card border-primary border-opacity-25 shadow-sm h-100">
                                         <div class="card-header bg-light d-flex justify-content-between align-items-center">
                                             <span class="fw-bold text-primary"><i class="bi bi-truck-front me-2"></i>Pojazd #${index + 1}</span>
-                                            <span class="badge bg-primary rounded-pill">${formatPLN(v.price + (v.additionalPrice || 0))}</span>
+                                            <div>
+                                                <span class="badge bg-primary rounded-pill me-2">${formatPLN(v.price + (v.additionalPrice || 0))}</span>`
+                            //usun pojazd kylko kiedy status jest draft
+                            if(data.status === "DRAFT" || data.status === "IN_NEGOTIATION")
+                                {
+                                    vehiclesHtml += `<button type="button" class="btn btn-sm btn-outline-danger delete-vehicle-btn" data-id="${v.id}" title="Usuń pojazd">`
+                                }
+                            vehiclesHtml +=`
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                         <div class="card-body">
                                             <ul class="list-group list-group-flush small">
@@ -155,9 +165,56 @@
                                 </div>
                             `;
                         });
+                        
+
+                        // Logika biznesowa: Sprawdzamy status bezpośrednio z obiektu 'data'.
+                        // UWAGA: Zmieniłem warunek na "DRAFT", ponieważ zazwyczaj przycisk wysyłania
+                        // ma sens tylko wtedy, gdy oferta jest jeszcze szkicem.
+                        // Jeśli faktycznie chciałeś wysyłać ponownie na statusie "SENT", po prostu zmień słowo.
+
+                        let actionButtons = ``
+                        if (data.status === "ACCEPTED"){
+                            
+                        }
+                        else if (data.status === "DRAFT" || data.status === "IN_NEGOTIATION") {
+                            actionButtons += `
+                            <div class="col-12 mt-3 d-flex gap-2">
+                                <a class="btn btn-outline-primary" href="/NewUI/Vehicles/Configurator?id=@Model.Id">
+                                    <i class="bi bi-plus-lg me-1"></i> Skonfiguruj nowy pojazd
+                                </a>
+                                <button class="btn btn-primary shadow-sm" id="send-offer">
+                                    <i class="bi bi-send me-1"></i> Wyślij ofertę klientowi
+                                </button>`;
+                        }
+                        // Przycisk "Wycofaj" pokazujemy, jeśli oferta "żyje" u klienta (jest wysłana lub negocjowana)
+                        else {
+                            actionButtons += `
+                                <button class="btn btn-danger shadow-sm" id="cancel-offer">
+                                    <i class="bi bi-x-circle me-1"></i> Wycofaj ofertę
+                                </button>`;
+                        }
+
+                        actionButtons += `</div>`;
+
+                        // Zamykamy kontener div
+                        actionButtons += `</div>`;
+
+                        // Doklejamy przyciski do głównego kodu HTML i wstawiamy na stronę
+                        vehiclesHtml += actionButtons;
                         vehiclesContainer.html(vehiclesHtml);
+
                     } else {
-                        vehiclesContainer.html('<div class="col-12"><div class="alert alert-light border">Brak skonfigurowanych pojazdów w tej ofercie.</div></div>');
+                        // Jeśli nie ma pojazdów, też możemy pokazać ładny przycisk
+                        vehiclesContainer.html(`
+                            <div class="col-12">
+                                <div class="alert alert-light border">Brak skonfigurowanych pojazdów w tej ofercie.</div>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <a class="btn btn-outline-primary" href="/NewUI/Vehicles/Configurator?id=@Model.Id">
+                                    <i class="bi bi-plus-lg me-1"></i> Skonfiguruj nowy pojazd
+                                </a>
+                            </div>
+                        `);
                     }
 
                     // 4. Ukrycie loadera i pokazanie kontentu z płynnym przejściem
@@ -176,7 +233,112 @@
                     `);
                 }
             });
-            
+
+            $('#vehicles-container').on('click', '.delete-vehicle-btn', function () {
+                const vehicleId = $(this).data('id');
+
+                if (confirm('Czy na pewno chcesz usunąć ten pojazd z oferty? Tej operacji nie można cofnąć.')) {
+
+                    const csrfToken = $('input[name="__RequestVerificationToken"]').val();
+
+                    const btn = $(this);
+                    const originalHtml = btn.html();
+                    btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+
+                    $.ajax({
+                        url: `/NewUI/Offers/Details?handler=DeleteVehicle&vehicleId=${vehicleId}`,
+                        type: 'POST', // Używamy POST, ponieważ usuwamy dane z bazy
+                        headers: {
+                            "RequestVerificationToken": csrfToken
+                        },
+                        success: function () {
+                            location.reload();
+                        },
+                        error: function (xhr) {
+                            console.error("Błąd usuwania pojazdu:", xhr.responseText);
+                            alert('Wystąpił błąd podczas usuwania pojazdu. Spróbuj ponownie.');
+                            btn.prop('disabled', false).html(originalHtml);
+                        }
+                    });
+                }
+            });
+
+        });
+
+            $(document).ready(function () {
+            const token = $('input[name="__RequestVerificationToken"]').val();
+
+            // Pobieramy ID oferty z modelu
+            const salesCaseId = @Model.Id;
+
+            // ZMIANA: Delegacja zdarzeń!
+            // Przypinamy nasłuchiwanie do elementu wyższego rzędu (np. body lub document)
+            $(document).on('click', '#send-offer', function(e) {
+                e.preventDefault();
+
+                if (confirm('Czy na pewno chcesz wysłać tę ofertę do klienta? Status zgłoszenia ulegnie zmianie.')) {
+
+                    const $btn = $(this);
+                    const originalText = $btn.html();
+
+                    // Blokujemy przycisk i pokazujemy ładowanie
+                    $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Wysyłanie...');
+
+                    $.ajax({
+                        // UWAGA: Upewnij się, że ten handler jest w odpowiednim pliku.
+                        // Zmieniłem zmienną na offerId, bo 'caseId' nie istniało w Twoim kodzie.
+                        url: `/NewUI/Offers/Details?handler=SendOffer&id=${salesCaseId}`,
+                        type: 'POST',
+                        dataType: 'json',
+                        headers: { "RequestVerificationToken": token },
+                        success: function(response) {
+                            location.reload();
+                        },
+                        error: function(xhr) {
+                            console.error("Błąd wysyłania oferty:", xhr.responseText);
+                            alert("Wystąpił błąd podczas wysyłania oferty.");
+
+                            // Odblokowanie przycisku
+                            $btn.prop('disabled', false).html(originalText);
+                        }
+                    });
+                }
+            });
+
+            // Obsługa wycofywania oferty
+            $(document).on('click', '#cancel-offer', function(e) {
+            e.preventDefault(); 
+
+            if (confirm('Czy na pewno chcesz wycofać tę ofertę? Proces ten zaktualizuje status zgłoszenia i oferty.')) {
+
+                const $btn = $(this);
+                const originalText = $btn.html();
+                const salesCaseId = @Model.Id;
+                console.log(salesCaseId);
+
+                // Blokujemy przycisk
+                $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Wycofywanie...');
+
+                $.ajax({
+                    // Pamiętaj o dostosowaniu ścieżki URL do tego, gdzie znajduje się Twój handler
+                    url: `/NewUI/Offers/Details?handler=CancelOffer&id=${salesCaseId}`,
+                    type: 'POST',
+                    dataType: 'json',
+                    headers: { "RequestVerificationToken": token },
+                    success: function(response) {
+                        // Po pomyślnym wycofaniu odświeżamy stronę, by zaktualizować statusy w UI
+                        location.reload();
+                    },
+                    error: function(xhr) {
+                        console.error("Błąd wycofywania oferty:", xhr.responseText);
+                        alert("Wystąpił błąd podczas wycofywania oferty.");
+
+                        // Odblokowanie przycisku w razie błędu
+                        $btn.prop('disabled', false).html(originalText);
+                    }
+                });
+            }
+        });
         });
     </script>
 }

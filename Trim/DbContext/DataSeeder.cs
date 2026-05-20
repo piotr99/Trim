@@ -22,7 +22,7 @@ public static class DataSeeder
         await db.Database.MigrateAsync();
 
         // ===== Roles =====
-        var roles = new[] { "Salesperson", "SalesAdministrator", "Administrator" };
+        var roles = new[] { "Salesperson", "SalesAdministrator", "Administrator" , "Customer" };
         foreach (var role in roles)
         {
             var roleExists = await roleManager.RoleExistsAsync(role);
@@ -119,30 +119,36 @@ public static class DataSeeder
             "SalesAdministrator");
 
         // ===== Customer (2) =====
-        var customer1 = new Customer
+        var customer1 = await EnsureUserAsync(new Customer
         {
+            UserName = "marek.nowicki@demo.local",
             FirstName = "Marek",
             LastName = "Nowicki",
             Email = "marek.nowicki@demo.local",
-            Phone = "+48555555555",
+            PhoneNumber = "+48555555555",
             CompanyName = "Transport Demo Sp. z o.o.",
             Address = "Warszawa, ul. Przykładowa 1",
             SalespersonId = salesperson1.Id,
             TaxId = "123qwe"
-        };
+        },
+        "Daemo!12345",
+        "Customer");
 
-        var customer2 = new Customer
+        var customer2 = await EnsureUserAsync(new Customer
         {
+            UserName = "karolina.mazur@demo.local",
             FirstName = "Karolina",
             LastName = "Mazur",
             Email = "karolina.mazur@demo.local",
-            Phone = "+48666666666",
+            PhoneNumber = "+48666666666",
             CompanyName = "Logistyka Test S.A.",
             Address = "Kraków, ul. Testowa 2",
             SalespersonId = salesperson2.Id,
             TaxId = "456asd"
-        };
-        db.Customers.AddRange(customer1, customer2);
+        },
+        "Daemo!12345",
+        "Customer");
+
         await db.SaveChangesAsync();
 
         // ===== Sales Cases (Zgłoszenia) =====
@@ -306,7 +312,7 @@ public static class DataSeeder
         {
             OfferFriendlyName = "OFF-2026-0001",
             Status = OfferStatusEnum.IN_NEGOTIATION,
-            SalesCaseId = case1.Id, // To automatycznie daje dostęp do Klienta i Handlowca
+            SalesCaseId = case1.Id,
             Vehicles = new List<Vehicle> { vehicle1 }
         };
 
