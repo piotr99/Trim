@@ -38,6 +38,7 @@ namespace Trim.Pages.Customer
                 .Include(sc => sc.AssignedSalesperson)
                 .Include(sc => sc.ActivityLogs)
                 .Include(sc => sc.Offer)
+                .Include(sc => sc.Order)
                 .FirstOrDefaultAsync(sc => sc.Id == Id);
 
             if (SalesCase == null)

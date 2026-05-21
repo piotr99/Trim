@@ -503,7 +503,8 @@ namespace Trim.Migrations
                     ConfigurationId = table.Column<int>(type: "int", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     OfferId = table.Column<int>(type: "int", nullable: true),
-                    OrderId = table.Column<int>(type: "int", nullable: true)
+                    OrderId = table.Column<int>(type: "int", nullable: true),
+                    ParkingLot = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

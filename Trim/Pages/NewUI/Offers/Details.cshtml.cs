@@ -104,7 +104,7 @@ namespace Trim.Pages.NewUI.Offers
             // 4. Zwracamy leciutki, optymalny JSON
             return new JsonResult(finalResult);
         }
-        public async Task<IActionResult> OnPostDeleteVehicleAsync(int vehicleId)
+        public async Task<IActionResult> OnPostDeleteVehicleAsync(int vehicleId, int Id)
         {
             // 1. Wstępna walidacja
             if (vehicleId <= 0)
@@ -115,7 +115,7 @@ namespace Trim.Pages.NewUI.Offers
             var statusCheck = await _db.SalesCases.AsNoTracking()
                 .Where(sc => sc.Id == Id)
                 .Select(sc => sc.Offer).FirstOrDefaultAsync();
-            if (statusCheck.Status != OfferStatusEnum.DRAFT || statusCheck.Status != OfferStatusEnum.IN_NEGOTIATION)
+            if (statusCheck.Status != OfferStatusEnum.DRAFT && statusCheck.Status != OfferStatusEnum.IN_NEGOTIATION)
             {
                 return new JsonResult(new { error = "Poj" }) { StatusCode = 400 };
             }
@@ -131,15 +131,33 @@ namespace Trim.Pages.NewUI.Offers
                 return new JsonResult(new { error = "Pojazd nie istnieje lub nie jest przypisany do żadnej oferty." }) { StatusCode = 404 };
             }
 
-            // 3. BEZPOŚREDNIE USUNIĘCIE POJAZDU W SQL
-            var deletedRows = await _db.Vehicles
+            bool isOnParkingLot = await _db.Vehicles
+                .Where(v => v.Id == vehicleId)
+                .Select(v => v.ParkingLot)
+                .FirstOrDefaultAsync();
+
+            if (isOnParkingLot)
+            {
+                var sentToParkingLot = await _db.Vehicles
+                .Where(v => v.Id == vehicleId)
+                .ExecuteUpdateAsync(setters => setters
+                    .SetProperty(o => o.OfferId, (int?)null)
+                    .SetProperty(o => o.CustomerId, (int?)null));
+            }
+            else
+            {
+                var deletedRows = await _db.Vehicles
                 .Where(v => v.Id == vehicleId)
                 .ExecuteDeleteAsync();
 
-            if (deletedRows == 0)
-            {
-                return new JsonResult(new { error = "Nie udało się usunąć pojazdu z bazy." }) { StatusCode = 500 };
+                if (deletedRows == 0)
+                {
+                    return new JsonResult(new { error = "Nie udało się usunąć pojazdu z bazy." }) { StatusCode = 500 };
+                }
             }
+            
+
+            
 
             // 4. POBRANIE POZOSTAŁYCH POJAZDÓW DLA TEJ SAMEJ OFERTY
             var remainingVehicles = await _db.Vehicles

@@ -1,0 +1,194 @@
+﻿@page 
+@model Trim.Pages.NewUI.Vehicles.ParkingLotVehiclesModel
+@{
+    ViewData["Title"] = "Pojazdy na placu";
+}
+
+<!-- WAŻNE: Ukryty token dla funkcji fetch -->
+@Html.AntiForgeryToken()
+
+<style>
+    .floating-action-bar {
+        position: fixed;
+        bottom: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #ffffff;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        border-radius: 50rem;
+        padding: 0.75rem 1.5rem;
+        transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1050;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        border: 1px solid #e9ecef;
+    }
+
+        .floating-action-bar.visible {
+            bottom: 30px;
+        }
+
+    .table-hover tbody tr:hover {
+        background-color: #f8f9fa;
+        cursor: pointer;
+    }
+</style>
+
+<div class="container-fluid py-4">
+    <!-- Usunąłem element <form>. Całość leży po prostu w divach. -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0"><i class="bi bi-p-square text-primary me-2"></i> Pojazdy na placu</h2>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="ps-4" style="width: 50px;">
+                                <input class="form-check-input" type="checkbox" id="selectAll">
+                            </th>
+                            <th scope="col">Pojazd</th>
+                            <th scope="col">VIN</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var vehicle in Model.Vehicles)
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <!-- Klasa vehicle-checkbox identyfikuje pojedynczy pojazd -->
+                                    <input class="form-check-input vehicle-checkbox" type="checkbox" value="@vehicle.Id">
+                                </td>
+                                <td>
+                                    <div class="fw-bold text-dark">@vehicle.Name</div>
+                                </td>
+                                <td><span class="font-monospace text-secondary">@vehicle.Vin</span></td>
+                                <td><span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1">Gotowy</span></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- PŁYWAJĄCY PASEK AKCJI -->
+    <div class="floating-action-bar" id="actionBar">
+        <div class="d-flex align-items-center">
+            <span class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 28px; height: 28px; font-weight: bold;" id="selectedCount">0</span>
+            <span class="fw-medium text-dark">Wybrane pojazdy</span>
+        </div>
+
+        <div class="vr mx-1"></div>
+
+        <div class="d-flex align-items-center gap-2">
+            <!-- Typ ustawiony na "button" żeby zapobiec klasycznemu przeładowaniu! -->
+            <button type="button" id="sendVehiclesBtn" class="btn btn-primary btn-sm rounded-pill px-4 shadow-sm">
+                <i class="bi bi-send me-1"></i> Przypisz do oferty
+            </button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const selectAllCheckbox = document.getElementById('selectAll');
+            const vehicleCheckboxes = document.querySelectorAll('.vehicle-checkbox');
+            const actionBar = document.getElementById('actionBar');
+            const selectedCountDisplay = document.getElementById('selectedCount');
+            const sendBtn = document.getElementById('sendVehiclesBtn');
+            const targetOfferInput = document.getElementById('targetOfferInput');
+            const caseId = @Model.Id;
+
+            // --- FUNKCJE RYSOWANIA INTERFEJSU ---
+            function updateActionBar() {
+                const count = document.querySelectorAll('.vehicle-checkbox:checked').length;
+                selectedCountDisplay.textContent = count;
+                count > 0 ? actionBar.classList.add('visible') : actionBar.classList.remove('visible');
+                selectAllCheckbox.checked = (count === vehicleCheckboxes.length && count > 0);
+            }
+
+            if (selectAllCheckbox) {
+                selectAllCheckbox.addEventListener('change', function () {
+                    vehicleCheckboxes.forEach(cb => cb.checked = this.checked);
+                    updateActionBar();
+                });
+            }
+
+            vehicleCheckboxes.forEach(cb => cb.addEventListener('change', updateActionBar));
+
+            document.querySelectorAll('tbody tr').forEach(row => {
+                row.addEventListener('click', function(e) {
+                    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'A' && e.target.tagName !== 'BUTTON') {
+                        const checkbox = this.querySelector('.vehicle-checkbox');
+                        if (checkbox) {
+                            checkbox.checked = !checkbox.checked;
+                            updateActionBar();
+                        }
+                    }
+                });
+            });
+
+            // --- NOWA LOGIKA FETCH API ---
+            sendBtn.addEventListener('click', function () {
+                // 1. Zbieramy zaznaczone ID pojazdów
+                const selectedCheckboxes = document.querySelectorAll('.vehicle-checkbox:checked');
+                const vehicleIds = Array.from(selectedCheckboxes).map(cb => parseInt(cb.value));
+
+                // 2. Prosta walidacja przed wysłaniem
+                if (vehicleIds.length === 0) {
+                    alert('Zaznacz co najmniej jeden pojazd.');
+                    return;
+                }
+
+                // 3. Pobranie tokenu autoryzacyjnego
+                const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
+                const token = tokenElement ? tokenElement.value : '';
+
+                // Zmiana przycisku w "kręcące się kółko"
+                sendBtn.disabled = true;
+                sendBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Wysyłanie...';
+
+                // 4. Żądanie na serwer
+                fetch('/NewUI/Vehicles/ParkingLotVehicles?handler=SendToOffer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': token
+                    },
+                    // Parujemy nazwy zmiennych z naszą klasą DTO w C#
+                    body: JSON.stringify({
+                        SelectedVehicleIds: vehicleIds,
+                        CaseId: caseId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // SUKCES: przekierowujemy użytkownika od razu do zmienionej oferty
+                        window.location.href = data.redirectUrl;
+                    } else {
+                        // BŁĄD LOGICZNY: zły wpis, nikt nie przerywa działania aplikacji
+                        alert(data.error);
+
+                        // Odbijamy przycisk z powrotem do normalnego stanu
+                        sendBtn.disabled = false;
+                        sendBtn.innerHTML = '<i class="bi bi-send me-1"></i> Przypisz do oferty';
+                    }
+                })
+                .catch(error => {
+                    console.error("Wystąpił problem:", error);
+                    alert("Wystąpił problem z połączeniem z serwerem.");
+                    sendBtn.disabled = false;
+                    sendBtn.innerHTML = '<i class="bi bi-send me-1"></i> Przypisz do oferty';
+                });
+            });
+        });
+    </script>
+}

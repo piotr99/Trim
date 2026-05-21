@@ -69,10 +69,8 @@ namespace Trim.Pages.NewUI.Vehicles
                 return new JsonResult(new { error = "Wybrano nieprawidłowe opcje konfiguracyjne." }) { StatusCode = 400 };
             }
 
-            // 2. BEZPIECZNE PRZELICZENIE CENY NA SERWERZE
             decimal calculatedPrice = cab.Price + engine.Price + gearbox.Price + interior.Price + drivetrain.Price;
 
-            // 3. TWORZENIE KONFIGURACJI
             var config = new VehicleConfiguration
             {
                 SizeId = cab.Id,

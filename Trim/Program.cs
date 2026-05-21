@@ -1,25 +1,27 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Trim.DbContext;
-using Trim.Models;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.AI;
+using OllamaSharp;
+using Serilog;
+using Serilog.Events;
+using Trim.DbContext;
 using Trim.Helpers;
+using Trim.Models;
+using Trim.Services;
+using Trim.Services.AI;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// builder.WebHost.ConfigureKestrel(options =>
-// {
-//     options.ListenAnyIP(5072, listenOptions =>
-//     {
-//         listenOptions.UseHttps();
-//     });
-// });
+//Logowanie
+builder.Host.UseSerilog((context, services, configuration) => configuration
+.ReadFrom.Configuration(context.Configuration)
+.ReadFrom.Services(services)
+.Enrich.FromLogContext());
 
-// 1) DbContext MUSI być przed Build()
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MainDb")));
 
-// 2) Identity (na tym samym DbContext)
 builder.Services
     .AddIdentity<ApplicationUser, IdentityRole<int>>(options =>
     {
@@ -28,7 +30,14 @@ builder.Services
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-// 3) Authorization – UWAGA: role muszą być takie jak w bazie/seedzie
+var ollamaUrl = builder.Configuration["Ollama:BaseUrl"] ?? "http://localhost:11434";
+var ollamaModel = builder.Configuration["Ollama:Model"] ?? "glm-5.1:cloud";
+
+builder.Services.AddSingleton<IChatClient>(sp =>
+{
+    return new Microsoft.Extensions.AI.OllamaChatClient(new Uri(ollamaUrl), ollamaModel);
+});
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("SalesAdministrator", p => p.RequireRole("SalesAdministrator"));
@@ -39,7 +48,6 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Customer", p => p.RequireRole("Customer"));
 });
 
-// 4) Cookie paths – przed Build()
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";
@@ -50,9 +58,9 @@ builder.Services.AddScoped<ICallFactoryForVinHelper, CallFactoryForVinHelper>();
 builder.Services.AddScoped<IUpdateOfferPricing, UpdateOfferPricing>();
 builder.Services.AddScoped<ISalespeopleHelper, SalespeopleHelper>();
 builder.Services.AddScoped<IOrderHelper, OrderHelper>();
+builder.Services.AddScoped<IAiService, AiService>();
+builder.Services.AddScoped<ICaseService, CaseService>();
 
-
-// 5) Razor Pages + konwencje (tylko raz)
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/");
@@ -68,12 +76,10 @@ builder.Services.AddRazorPages(options =>
 });
 
 builder.Services.AddControllers();
-
 var app = builder.Build();
-
-
 await DataSeeder.SeedAsync(app.Services);
 
+app.UseSerilogRequestLogging();
 
 app.MapGet("/", () => Results.Redirect("/Home"));
 app.UseStaticFiles();
@@ -81,6 +87,24 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+//Przy każdym żądaniu logujemy informacje o użytkowniku, co pozwala nam później analizować logi pod kątem aktywności konkretnych użytkowników.
+app.UseMiddleware<Trim.Middleware.UserLoggingMiddleware>();
+app.UseSerilogRequestLogging(options =>
+{
+    options.GetLevel = (httpContext, elapsed, ex) =>
+    {
+        if (ex != null || httpContext.Response.StatusCode > 499)
+        {
+            return LogEventLevel.Error;
+        }    
+        if (httpContext.Request.Path.StartsWithSegments("/NewUI/Case", StringComparison.OrdinalIgnoreCase))
+        {
+            return LogEventLevel.Debug;
+        }
+        return LogEventLevel.Information;
+    };
+});
 
 app.MapControllers();
 app.MapRazorPages();

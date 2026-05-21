@@ -24,5 +24,6 @@ public class Vehicle
     public Offer? Offer { get; set; }
     public int? OrderId { get; set; }
     public Order? Order { get; set; }
+    public bool ParkingLot { get; set; }
 }
 

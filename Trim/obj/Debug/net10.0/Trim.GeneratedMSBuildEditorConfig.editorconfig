@@ -87,6 +87,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3VzdG9tZXJcT2ZmZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Piotr/source/repos/piotr99/Trim/Trim/Pages/Customer/Order.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3VzdG9tZXJcT3JkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Piotr/source/repos/piotr99/Trim/Trim/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -121,6 +125,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Piotr/source/repos/piotr99/Trim/Trim/Pages/NewUI/Vehicles/Configurator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmV3VUlcVmVoaWNsZXNcQ29uZmlndXJhdG9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Piotr/source/repos/piotr99/Trim/Trim/Pages/NewUI/Vehicles/ParkingLotVehicles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmV3VUlcVmVoaWNsZXNcUGFya2luZ0xvdFZlaGljbGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Piotr/source/repos/piotr99/Trim/Trim/Pages/Privacy.cshtml]

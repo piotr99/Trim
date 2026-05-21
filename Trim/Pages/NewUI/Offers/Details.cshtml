@@ -167,11 +167,6 @@
                         });
                         
 
-                        // Logika biznesowa: Sprawdzamy status bezpośrednio z obiektu 'data'.
-                        // UWAGA: Zmieniłem warunek na "DRAFT", ponieważ zazwyczaj przycisk wysyłania
-                        // ma sens tylko wtedy, gdy oferta jest jeszcze szkicem.
-                        // Jeśli faktycznie chciałeś wysyłać ponownie na statusie "SENT", po prostu zmień słowo.
-
                         let actionButtons = ``
                         if (data.status === "ACCEPTED"){
                             
@@ -181,6 +176,9 @@
                             <div class="col-12 mt-3 d-flex gap-2">
                                 <a class="btn btn-outline-primary" href="/NewUI/Vehicles/Configurator?id=@Model.Id">
                                     <i class="bi bi-plus-lg me-1"></i> Skonfiguruj nowy pojazd
+                                </a>
+                                <a class="btn btn-outline-primary" href="/NewUI/Vehicles/ParkingLotVehicles?id=@Model.Id">
+                                    <i class="bi bi-plus-lg me-1"></i> Wybierz pojazdy z parkingu
                                 </a>
                                 <button class="btn btn-primary shadow-sm" id="send-offer">
                                     <i class="bi bi-send me-1"></i> Wyślij ofertę klientowi
@@ -212,6 +210,9 @@
                             <div class="col-12 mt-2">
                                 <a class="btn btn-outline-primary" href="/NewUI/Vehicles/Configurator?id=@Model.Id">
                                     <i class="bi bi-plus-lg me-1"></i> Skonfiguruj nowy pojazd
+                                </a>
+                                <a class="btn btn-outline-primary" href="/NewUI/Vehicles/ParkingLotVehicles?id=@Model.Id">
+                                    <i class="bi bi-plus-lg me-1"></i> Wybierz pojazdy z parkingu
                                 </a>
                             </div>
                         `);
@@ -246,7 +247,7 @@
                     btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
 
                     $.ajax({
-                        url: `/NewUI/Offers/Details?handler=DeleteVehicle&vehicleId=${vehicleId}`,
+                        url: `/NewUI/Offers/Details?handler=DeleteVehicle&vehicleId=${vehicleId}&id=${offerId}`,
                         type: 'POST', // Używamy POST, ponieważ usuwamy dane z bazy
                         headers: {
                             "RequestVerificationToken": csrfToken

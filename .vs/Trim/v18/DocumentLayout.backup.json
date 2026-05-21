@@ -3,16 +3,75 @@
   "WorkspaceRootPath": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\case.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\case.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\controlers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\controlers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\case.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\case.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\services\\caseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\services\\caseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\models\\dtos\\casedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\models\\dtos\\casedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\customer\\case.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\customer\\case.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Piotr\\AppData\\Local\\Temp\\vd1r15pi..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\models\\customercommunication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\models\\customercommunication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\customer\\case.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\customer\\case.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\customer\\home.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\customer\\home.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\customer\\home.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\customer\\home.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\middleware\\userloggingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\middleware\\userloggingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\services\\ai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\services\\ai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\admin\\manageusers.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\admin\\manageusers.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\helpers\\updateofferpricing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\helpers\\updateofferpricing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\helpers\\salespeoplehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\helpers\\salespeoplehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\helpers\\createorderhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -23,8 +82,79 @@
       "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\helpers\\callfactoryforvinhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\customer\\home.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\customer\\home.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\helpers\\calculatemargin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\helpers\\calculatemargin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\dbcontext\\dataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\dbcontext\\dataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Piotr\\AppData\\Local\\Temp\\ij3ezamp..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\offers\\details.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\offers\\details.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\offers\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\offers\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\vehicles\\parkinglotvehicles.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\vehicles\\parkinglotvehicles.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\models\\vehilce.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\models\\vehilce.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\models\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\models\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\models\\indentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\models\\indentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\vehicles\\parkinglotvehicles.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\vehicles\\parkinglotvehicles.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\vehicles\\configurator.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\vehicles\\configurator.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\vehicles\\configurator.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\vehicles\\configurator.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\customer\\order.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\customer\\order.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\customer\\order.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\customer\\order.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\customer\\offer.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\customer\\offer.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\customer\\offer.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\customer\\offer.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\controlers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\controlers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\orders\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -35,14 +165,6 @@
       "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\orders\\details.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\case.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\case.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\case.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\case.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Piotr\\AppData\\Local\\Temp\\ncfnmvrl..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|"
     },
     {
@@ -50,24 +172,8 @@
       "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\sql||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\customer\\offer.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\customer\\offer.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\helpers\\salespeoplehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\helpers\\salespeoplehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\newcase.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\newcase.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\dbcontext\\dataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\dbcontext\\dataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\account\\logout.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -78,75 +184,27 @@
       "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\account\\logout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\models\\salescase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\models\\salescase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\models\\offer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\models\\offer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\customer\\offer.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\customer\\offer.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\newcase.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\newcase.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\offers\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\offers\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\offers\\details.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\offers\\details.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\models\\vehiclecomponents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\models\\vehiclecomponents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\vehicles\\configurator.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\vehicles\\configurator.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\newui\\vehicles\\configurator.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\newui\\vehicles\\configurator.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\models\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\models\\enums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\account\\lockout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\account\\lockout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\models\\indentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\models\\indentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\models\\inputmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\models\\inputmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\helpers\\calculatemargin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\helpers\\calculatemargin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Piotr\\AppData\\Local\\Temp\\3hpulfqj..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Piotr\\AppData\\Local\\Temp\\5mkv2ey5..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|"
@@ -169,10 +227,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Piotr\\AppData\\Local\\Temp\\daaxswx0..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\models\\viewmodels\\editoffervm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\models\\viewmodels\\editoffervm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|c:\\users\\piotr\\source\\repos\\piotr99\\trim\\trim\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -198,10 +252,10 @@
       "RelativeMoniker": "D:0:0:{69EF2F6E-3081-466E-9285-646B418D1B20}|Trim\\Trim.csproj|solutionrelative:trim\\pages\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Piotr\\AppData\\Local\\Temp\\ncfnmvrl..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Piotr\\AppData\\Local\\Temp\\vd1r15pi..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|CodeFrame"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Piotr\\AppData\\Local\\Temp\\ncfnmvrl..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|ResultFrame"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Piotr\\AppData\\Local\\Temp\\vd1r15pi..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|ResultFrame"
     }
   ],
   "DocumentGroupContainers": [
@@ -211,108 +265,68 @@
       "DocumentGroups": [
         {
           "DockedWidth": 280,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SQLQuery1.sql ",
+              "DocumentMoniker": "C:\\Users\\Piotr\\AppData\\Local\\Temp\\vd1r15pi..sql",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\vd1r15pi..sql",
+              "ToolTip": "SQLQuery1.sql *",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-05-21T07:12:20.956Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": ".gitignore",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\.gitignore",
-              "RelativeDocumentMoniker": "Trim\\.gitignore",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\.gitignore",
-              "RelativeToolTip": "Trim\\.gitignore",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-05-20T09:27:55.779Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "OrdersController.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Controlers\\OrdersController.cs",
-              "RelativeDocumentMoniker": "Trim\\Controlers\\OrdersController.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Controlers\\OrdersController.cs",
-              "RelativeToolTip": "Trim\\Controlers\\OrdersController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-20T08:34:41.74Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
               "Title": "Case.cshtml",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Case.cshtml",
               "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Case.cshtml",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Case.cshtml",
-              "RelativeToolTip": "Trim\\Pages\\NewUI\\Case.cshtml",
-              "ViewState": "AgIAAIYAAAAAAAAAAAAkwKYAAABOAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Case.cshtml*",
+              "RelativeToolTip": "Trim\\Pages\\NewUI\\Case.cshtml*",
+              "ViewState": "AgIAAOkAAAAAAAAAAAAQwA0BAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-05-20T07:09:08.432Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Details.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Orders\\Details.cshtml.cs",
-              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Orders\\Details.cshtml.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Orders\\Details.cshtml.cs",
-              "RelativeToolTip": "Trim\\Pages\\NewUI\\Orders\\Details.cshtml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-17T05:51:01.195Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Orders\\Details.cshtml",
-              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Orders\\Details.cshtml",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Orders\\Details.cshtml",
-              "RelativeToolTip": "Trim\\Pages\\NewUI\\Orders\\Details.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-18T08:10:36.343Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Home.cshtml",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Home.cshtml",
-              "RelativeDocumentMoniker": "Trim\\Pages\\Customer\\Home.cshtml",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Home.cshtml",
-              "RelativeToolTip": "Trim\\Pages\\Customer\\Home.cshtml",
-              "ViewState": "AgIAADwAAAAAAAAAAAAkwFMAAACLAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-20T08:13:28.826Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 13,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Program.cs",
               "RelativeDocumentMoniker": "Trim\\Program.cs",
               "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Program.cs",
               "RelativeToolTip": "Trim\\Program.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAkwFQAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAmwGMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-20T07:28:57.498Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 2,
+              "Title": "CaseService.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Services\\CaseService.cs",
+              "RelativeDocumentMoniker": "Trim\\Services\\CaseService.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Services\\CaseService.cs",
+              "RelativeToolTip": "Trim\\Services\\CaseService.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAawD4AAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-21T07:06:30.204Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Case.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Case.cshtml.cs",
               "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Case.cshtml.cs",
               "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Case.cshtml.cs",
               "RelativeToolTip": "Trim\\Pages\\NewUI\\Case.cshtml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAiwEUAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-20T08:15:26.963Z",
               "EditorCaption": ""
@@ -320,65 +334,105 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "CreateOrderHelper.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\CreateOrderHelper.cs",
-              "RelativeDocumentMoniker": "Trim\\Helpers\\CreateOrderHelper.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\CreateOrderHelper.cs",
-              "RelativeToolTip": "Trim\\Helpers\\CreateOrderHelper.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAQwB0AAAAjAAAAAAAAAA==",
+              "Title": "CaseDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\DTOs\\CaseDTO.cs",
+              "RelativeDocumentMoniker": "Trim\\Models\\DTOs\\CaseDTO.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\DTOs\\CaseDTO.cs",
+              "RelativeToolTip": "Trim\\Models\\DTOs\\CaseDTO.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAgwAgAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-20T07:12:54.473Z",
+              "WhenOpened": "2026-05-21T07:06:11.112Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "SQLQuery2.sql ",
-              "DocumentMoniker": "C:\\Users\\Piotr\\AppData\\Local\\Temp\\ncfnmvrl..sql",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\ncfnmvrl..sql",
-              "ToolTip": "SQLQuery2.sql *",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2026-05-20T08:20:04.108Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "sql",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\sql",
-              "RelativeDocumentMoniker": "Trim\\sql",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\sql",
-              "RelativeToolTip": "Trim\\sql",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-05-15T19:22:45.454Z",
+              "DocumentIndex": 20,
+              "Title": "CalculateMargin.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\CalculateMargin.cs",
+              "RelativeDocumentMoniker": "Trim\\Helpers\\CalculateMargin.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\CalculateMargin.cs",
+              "RelativeToolTip": "Trim\\Helpers\\CalculateMargin.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAwwG0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T07:32:32.749Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 12,
-              "Title": "Offer.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Offer.cshtml.cs",
-              "RelativeDocumentMoniker": "Trim\\Pages\\Customer\\Offer.cshtml.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Offer.cshtml.cs",
-              "RelativeToolTip": "Trim\\Pages\\Customer\\Offer.cshtml.cs",
-              "ViewState": "AgIAAF4AAAAAAAAAAAAcwBQAAAAnAAAAAAAAAA==",
+              "Title": "Ai.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Services\\Ai.cs",
+              "RelativeDocumentMoniker": "Trim\\Services\\Ai.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Services\\Ai.cs",
+              "RelativeToolTip": "Trim\\Services\\Ai.cs",
+              "ViewState": "AgIAAFgAAAAAAAAAAAAcwGoAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-20T07:09:20.213Z",
+              "WhenOpened": "2026-05-20T11:38:52.904Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "SalespeopleHelper.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\SalespeopleHelper.cs",
-              "RelativeDocumentMoniker": "Trim\\Helpers\\SalespeopleHelper.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\SalespeopleHelper.cs",
-              "RelativeToolTip": "Trim\\Helpers\\SalespeopleHelper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-18T12:07:44.007Z",
+              "DocumentIndex": 9,
+              "Title": "Home.cshtml",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Home.cshtml",
+              "RelativeDocumentMoniker": "Trim\\Pages\\Customer\\Home.cshtml",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Home.cshtml",
+              "RelativeToolTip": "Trim\\Pages\\Customer\\Home.cshtml",
+              "ViewState": "AgIAAKQAAAAAAAAAAAAWwK4AAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-20T08:13:28.826Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Case.cshtml",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Case.cshtml",
+              "RelativeDocumentMoniker": "Trim\\Pages\\Customer\\Case.cshtml",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Case.cshtml",
+              "RelativeToolTip": "Trim\\Pages\\Customer\\Case.cshtml",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAIwIoAAABWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-20T10:56:12.642Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Trim\\Pages\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Trim\\Pages\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAWwGsAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-15T19:32:57.541Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CustomerCommunication.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\CustomerCommunication.cs",
+              "RelativeDocumentMoniker": "Trim\\Models\\CustomerCommunication.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\CustomerCommunication.cs",
+              "RelativeToolTip": "Trim\\Models\\CustomerCommunication.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T11:52:01.876Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "Details.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Orders\\Details.cshtml.cs",
+              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Orders\\Details.cshtml.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Orders\\Details.cshtml.cs",
+              "RelativeToolTip": "Trim\\Pages\\NewUI\\Orders\\Details.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T05:51:01.195Z"
             },
             {
               "$type": "Document",
@@ -388,193 +442,202 @@
               "RelativeDocumentMoniker": "Trim\\appsettings.json",
               "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\appsettings.json",
               "RelativeToolTip": "Trim\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABlAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2026-05-20T08:19:59.3Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 11,
+              "Title": "UserLoggingMiddleware.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Middleware\\UserLoggingMiddleware.cs",
+              "RelativeDocumentMoniker": "Trim\\Middleware\\UserLoggingMiddleware.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Middleware\\UserLoggingMiddleware.cs",
+              "RelativeToolTip": "Trim\\Middleware\\UserLoggingMiddleware.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-21T06:38:37.326Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Home.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Home.cshtml.cs",
+              "RelativeDocumentMoniker": "Trim\\Pages\\Customer\\Home.cshtml.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Home.cshtml.cs",
+              "RelativeToolTip": "Trim\\Pages\\Customer\\Home.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-21T08:11:56.867Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
               "Title": "DataSeeder.cs",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\DbContext\\DataSeeder.cs",
               "RelativeDocumentMoniker": "Trim\\DbContext\\DataSeeder.cs",
               "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\DbContext\\DataSeeder.cs",
               "RelativeToolTip": "Trim\\DbContext\\DataSeeder.cs",
-              "ViewState": "AgIAAGcAAAAAAAAAAAAgwIUAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAADMBAAAAAAAAAAAgwFABAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-20T08:06:02.748Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "NewCase.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\NewCase.cshtml.cs",
-              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\NewCase.cshtml.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\NewCase.cshtml.cs",
-              "RelativeToolTip": "Trim\\Pages\\NewUI\\NewCase.cshtml.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAowE0AAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-18T11:42:59.399Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Logout.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Account\\Logout.cshtml.cs",
-              "RelativeDocumentMoniker": "Trim\\Pages\\Account\\Logout.cshtml.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Account\\Logout.cshtml.cs",
-              "RelativeToolTip": "Trim\\Pages\\Account\\Logout.cshtml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-20T08:06:48.005Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "Logout.cshtml",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Account\\Logout.cshtml",
-              "RelativeDocumentMoniker": "Trim\\Pages\\Account\\Logout.cshtml",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Account\\Logout.cshtml",
-              "RelativeToolTip": "Trim\\Pages\\Account\\Logout.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-20T08:06:44.337Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "SalesCase.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\SalesCase.cs",
-              "RelativeDocumentMoniker": "Trim\\Models\\SalesCase.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\SalesCase.cs",
-              "RelativeToolTip": "Trim\\Models\\SalesCase.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-20T08:04:38.454Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 19,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Account\\Login.cshtml",
-              "RelativeDocumentMoniker": "Trim\\Pages\\Account\\Login.cshtml",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Account\\Login.cshtml",
-              "RelativeToolTip": "Trim\\Pages\\Account\\Login.cshtml",
-              "ViewState": "AgIAACgAAAAAAAAAAAAIwEsAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-19T06:25:35.513Z",
+              "Title": "CallFactoryForVinHelper.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\CallFactoryForVinHelper.cs",
+              "RelativeDocumentMoniker": "Trim\\Helpers\\CallFactoryForVinHelper.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\CallFactoryForVinHelper.cs",
+              "RelativeToolTip": "Trim\\Helpers\\CallFactoryForVinHelper.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAywCwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-21T06:42:51.743Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "Offer.cshtml",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Offer.cshtml",
-              "RelativeDocumentMoniker": "Trim\\Pages\\Customer\\Offer.cshtml",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Offer.cshtml",
-              "RelativeToolTip": "Trim\\Pages\\Customer\\Offer.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-20T07:09:19.086Z",
+              "DocumentIndex": 15,
+              "Title": "ManageUsers.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Admin\\ManageUsers.cshtml.cs",
+              "RelativeDocumentMoniker": "Trim\\Pages\\Admin\\ManageUsers.cshtml.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Admin\\ManageUsers.cshtml.cs",
+              "RelativeToolTip": "Trim\\Pages\\Admin\\ManageUsers.cshtml.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAADwvwYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-21T07:09:13.347Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "NewCase.cshtml",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\NewCase.cshtml",
-              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\NewCase.cshtml",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\NewCase.cshtml",
-              "RelativeToolTip": "Trim\\Pages\\NewUI\\NewCase.cshtml",
-              "ViewState": "AgIAAG0AAAAAAAAAAAAIwK8AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-18T11:38:12.069Z",
+              "DocumentIndex": 16,
+              "Title": "UpdateOfferPricing.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\UpdateOfferPricing.cs",
+              "RelativeDocumentMoniker": "Trim\\Helpers\\UpdateOfferPricing.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\UpdateOfferPricing.cs",
+              "RelativeToolTip": "Trim\\Helpers\\UpdateOfferPricing.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAIwCYAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-21T06:54:54.583Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 25,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Offers\\Details.cshtml",
-              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Offers\\Details.cshtml",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Offers\\Details.cshtml",
-              "RelativeToolTip": "Trim\\Pages\\NewUI\\Offers\\Details.cshtml",
-              "ViewState": "AgIAAJkAAAAAAAAAAAAkwLEAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-20T06:26:38.062Z",
-              "EditorCaption": ""
+              "Title": "ParkingLotVehicles.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Vehicles\\ParkingLotVehicles.cshtml.cs",
+              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Vehicles\\ParkingLotVehicles.cshtml.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Vehicles\\ParkingLotVehicles.cshtml.cs",
+              "RelativeToolTip": "Trim\\Pages\\NewUI\\Vehicles\\ParkingLotVehicles.cshtml.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAIwEQAAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T19:35:34.912Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 27,
               "Title": "Enums.cs",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\Enums.cs",
               "RelativeDocumentMoniker": "Trim\\Models\\Enums.cs",
               "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\Enums.cs",
               "RelativeToolTip": "Trim\\Models\\Enums.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBcAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-16T10:46:21.239Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "VehicleComponents.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\VehicleComponents.cs",
-              "RelativeDocumentMoniker": "Trim\\Models\\VehicleComponents.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\VehicleComponents.cs",
-              "RelativeToolTip": "Trim\\Models\\VehicleComponents.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T10:53:30.307Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "Details.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Offers\\Details.cshtml.cs",
-              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Offers\\Details.cshtml.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Offers\\Details.cshtml.cs",
-              "RelativeToolTip": "Trim\\Pages\\NewUI\\Offers\\Details.cshtml.cs",
-              "ViewState": "AgIAAEQAAAAAAAAAAAAIwDkAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-19T05:42:28.713Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 28,
               "Title": "Indentity.cs",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\Indentity.cs",
               "RelativeDocumentMoniker": "Trim\\Models\\Indentity.cs",
               "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\Indentity.cs",
               "RelativeToolTip": "Trim\\Models\\Indentity.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAA1wB0AAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAQwB0AAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-16T10:46:22.384Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "InputModel.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\InputModel.cs",
-              "RelativeDocumentMoniker": "Trim\\Models\\InputModel.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\InputModel.cs",
-              "RelativeToolTip": "Trim\\Models\\InputModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 18,
+              "Title": "CreateOrderHelper.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\CreateOrderHelper.cs",
+              "RelativeDocumentMoniker": "Trim\\Helpers\\CreateOrderHelper.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\CreateOrderHelper.cs",
+              "RelativeToolTip": "Trim\\Helpers\\CreateOrderHelper.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAIwEUAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T10:52:52.954Z"
+              "WhenOpened": "2026-05-20T07:12:54.473Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 30,
+              "Title": "Configurator.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Vehicles\\Configurator.cshtml.cs",
+              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Vehicles\\Configurator.cshtml.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Vehicles\\Configurator.cshtml.cs",
+              "RelativeToolTip": "Trim\\Pages\\NewUI\\Vehicles\\Configurator.cshtml.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAcwIcAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T07:32:53.084Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "SalespeopleHelper.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\SalespeopleHelper.cs",
+              "RelativeDocumentMoniker": "Trim\\Helpers\\SalespeopleHelper.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\SalespeopleHelper.cs",
+              "RelativeToolTip": "Trim\\Helpers\\SalespeopleHelper.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAswCsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T12:07:44.007Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Details.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Offers\\Details.cshtml.cs",
+              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Offers\\Details.cshtml.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Offers\\Details.cshtml.cs",
+              "RelativeToolTip": "Trim\\Pages\\NewUI\\Offers\\Details.cshtml.cs",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAWwIoAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-19T05:42:28.713Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "ParkingLotVehicles.cshtml",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Vehicles\\ParkingLotVehicles.cshtml",
+              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Vehicles\\ParkingLotVehicles.cshtml",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Vehicles\\ParkingLotVehicles.cshtml",
+              "RelativeToolTip": "Trim\\Pages\\NewUI\\Vehicles\\ParkingLotVehicles.cshtml",
+              "ViewState": "AgIAAIoAAAAAAAAAAAAAAKcAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-20T19:28:33.037Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Offers\\Details.cshtml",
+              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Offers\\Details.cshtml",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Offers\\Details.cshtml",
+              "RelativeToolTip": "Trim\\Pages\\NewUI\\Offers\\Details.cshtml",
+              "ViewState": "AgIAAN8AAAAAAAAAAAAWwPkAAABwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-20T06:26:38.062Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
               "Title": "Configurator.cshtml",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Vehicles\\Configurator.cshtml",
               "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Vehicles\\Configurator.cshtml",
@@ -586,31 +649,233 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
-              "Title": "Configurator.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Vehicles\\Configurator.cshtml.cs",
-              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Vehicles\\Configurator.cshtml.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Vehicles\\Configurator.cshtml.cs",
-              "RelativeToolTip": "Trim\\Pages\\NewUI\\Vehicles\\Configurator.cshtml.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAgwA0AAAA8AAAAAAAAAA==",
+              "DocumentIndex": 22,
+              "Title": "ij3ezamp..sql",
+              "DocumentMoniker": "C:\\Users\\Piotr\\AppData\\Local\\Temp\\ij3ezamp..sql",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\ij3ezamp..sql",
+              "ToolTip": "C:\\Users\\Piotr\\AppData\\Local\\Temp\\ij3ezamp..sql",
+              "RelativeToolTip": "..\\..\\..\\..\\AppData\\Local\\Temp\\ij3ezamp..sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-05-20T20:43:28.679Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Vehilce.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\Vehilce.cs",
+              "RelativeDocumentMoniker": "Trim\\Models\\Vehilce.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\Vehilce.cs",
+              "RelativeToolTip": "Trim\\Models\\Vehilce.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-18T07:32:53.084Z"
+              "WhenOpened": "2026-05-20T19:44:53.095Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Trim\\Pages\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Account\\Login.cshtml",
+              "RelativeToolTip": "Trim\\Pages\\Account\\Login.cshtml",
+              "ViewState": "AgIAADEAAAAAAAAAAAAIwFoAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-19T06:25:35.513Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Orders\\Details.cshtml",
+              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\Orders\\Details.cshtml",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\Orders\\Details.cshtml",
+              "RelativeToolTip": "Trim\\Pages\\NewUI\\Orders\\Details.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-18T08:10:36.343Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "Offer.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Offer.cshtml.cs",
+              "RelativeDocumentMoniker": "Trim\\Pages\\Customer\\Offer.cshtml.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Offer.cshtml.cs",
+              "RelativeToolTip": "Trim\\Pages\\Customer\\Offer.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T07:09:20.213Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "Offer.cshtml",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Offer.cshtml",
+              "RelativeDocumentMoniker": "Trim\\Pages\\Customer\\Offer.cshtml",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Offer.cshtml",
+              "RelativeToolTip": "Trim\\Pages\\Customer\\Offer.cshtml",
+              "ViewState": "AgIAAL0AAAAAAAAAAAAAAM0AAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-20T07:09:19.086Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 34,
-              "Title": "CalculateMargin.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\CalculateMargin.cs",
-              "RelativeDocumentMoniker": "Trim\\Helpers\\CalculateMargin.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\CalculateMargin.cs",
-              "RelativeToolTip": "Trim\\Helpers\\CalculateMargin.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-18T07:32:32.749Z"
+              "Title": "Order.cshtml",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Order.cshtml",
+              "RelativeDocumentMoniker": "Trim\\Pages\\Customer\\Order.cshtml",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Order.cshtml",
+              "RelativeToolTip": "Trim\\Pages\\Customer\\Order.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-20T10:57:13.555Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 38,
+              "Title": "OrdersController.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Controlers\\OrdersController.cs",
+              "RelativeDocumentMoniker": "Trim\\Controlers\\OrdersController.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Controlers\\OrdersController.cs",
+              "RelativeToolTip": "Trim\\Controlers\\OrdersController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T08:34:41.74Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "Order.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Order.cshtml.cs",
+              "RelativeDocumentMoniker": "Trim\\Pages\\Customer\\Order.cshtml.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Order.cshtml.cs",
+              "RelativeToolTip": "Trim\\Pages\\Customer\\Order.cshtml.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAA8wBsAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T11:00:23.814Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": ".gitignore",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\.gitignore",
+              "RelativeDocumentMoniker": "Trim\\.gitignore",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\.gitignore",
+              "RelativeToolTip": "Trim\\.gitignore",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-05-20T09:27:55.779Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "ncfnmvrl..sql",
+              "DocumentMoniker": "C:\\Users\\Piotr\\AppData\\Local\\Temp\\ncfnmvrl..sql",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\ncfnmvrl..sql",
+              "ToolTip": "C:\\Users\\Piotr\\AppData\\Local\\Temp\\ncfnmvrl..sql",
+              "RelativeToolTip": "..\\..\\..\\..\\AppData\\Local\\Temp\\ncfnmvrl..sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-05-20T08:20:04.108Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "sql",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\sql",
+              "RelativeDocumentMoniker": "Trim\\sql",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\sql",
+              "RelativeToolTip": "Trim\\sql",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-05-15T19:22:45.454Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "NewCase.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\NewCase.cshtml.cs",
+              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\NewCase.cshtml.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\NewCase.cshtml.cs",
+              "RelativeToolTip": "Trim\\Pages\\NewUI\\NewCase.cshtml.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAowE0AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T11:42:59.399Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "Logout.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Account\\Logout.cshtml.cs",
+              "RelativeDocumentMoniker": "Trim\\Pages\\Account\\Logout.cshtml.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Account\\Logout.cshtml.cs",
+              "RelativeToolTip": "Trim\\Pages\\Account\\Logout.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T08:06:48.005Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "Logout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Account\\Logout.cshtml",
+              "RelativeDocumentMoniker": "Trim\\Pages\\Account\\Logout.cshtml",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Account\\Logout.cshtml",
+              "RelativeToolTip": "Trim\\Pages\\Account\\Logout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-20T08:06:44.337Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "SalesCase.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\SalesCase.cs",
+              "RelativeDocumentMoniker": "Trim\\Models\\SalesCase.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\SalesCase.cs",
+              "RelativeToolTip": "Trim\\Models\\SalesCase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T08:04:38.454Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "NewCase.cshtml",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\NewCase.cshtml",
+              "RelativeDocumentMoniker": "Trim\\Pages\\NewUI\\NewCase.cshtml",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\NewUI\\NewCase.cshtml",
+              "RelativeToolTip": "Trim\\Pages\\NewUI\\NewCase.cshtml",
+              "ViewState": "AgIAAG0AAAAAAAAAAAAIwK8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-18T11:38:12.069Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "VehicleComponents.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\VehicleComponents.cs",
+              "RelativeDocumentMoniker": "Trim\\Models\\VehicleComponents.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\VehicleComponents.cs",
+              "RelativeToolTip": "Trim\\Models\\VehicleComponents.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-16T10:53:30.307Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "InputModel.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\InputModel.cs",
+              "RelativeDocumentMoniker": "Trim\\Models\\InputModel.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\InputModel.cs",
+              "RelativeToolTip": "Trim\\Models\\InputModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-16T10:52:52.954Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
               "Title": "Lockout.cshtml",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Account\\Lockout.cshtml",
               "RelativeDocumentMoniker": "Trim\\Pages\\Account\\Lockout.cshtml",
@@ -622,31 +887,18 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 51,
               "Title": "3hpulfqj..sql",
               "DocumentMoniker": "C:\\Users\\Piotr\\AppData\\Local\\Temp\\3hpulfqj..sql",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\3hpulfqj..sql",
               "ToolTip": "C:\\Users\\Piotr\\AppData\\Local\\Temp\\3hpulfqj..sql",
               "RelativeToolTip": "..\\..\\..\\..\\AppData\\Local\\Temp\\3hpulfqj..sql",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2026-05-18T11:56:15.295Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-18T11:56:15.295Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "Trim\\Pages\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "Trim\\Pages\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAADIAAAAAAAAAAAAswEYAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-15T19:32:57.541Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 52,
               "Title": "5mkv2ey5..sql",
               "DocumentMoniker": "C:\\Users\\Piotr\\AppData\\Local\\Temp\\5mkv2ey5..sql",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\5mkv2ey5..sql",
@@ -657,7 +909,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 53,
               "Title": "Linking.cs",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\Linking.cs",
               "RelativeDocumentMoniker": "Trim\\Models\\Linking.cs",
@@ -669,19 +921,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 54,
               "Title": "OfferCalculations.cs",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\OfferCalculations.cs",
               "RelativeDocumentMoniker": "Trim\\Models\\OfferCalculations.cs",
               "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\OfferCalculations.cs",
               "RelativeToolTip": "Trim\\Models\\OfferCalculations.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAABQwAwAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-16T10:52:59.685Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 55,
               "Title": "OptionPrices.cs",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\OptionPrices.cs",
               "RelativeDocumentMoniker": "Trim\\Models\\OptionPrices.cs",
@@ -693,19 +945,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 56,
               "Title": "Pricing.cs",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\Pricing.cs",
               "RelativeDocumentMoniker": "Trim\\Models\\Pricing.cs",
               "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\Pricing.cs",
               "RelativeToolTip": "Trim\\Models\\Pricing.cs",
-              "ViewState": "AgIAADQAAAAAAAAAAAA9wAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADUAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-16T10:53:10.922Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 57,
               "Title": "daaxswx0..sql",
               "DocumentMoniker": "C:\\Users\\Piotr\\AppData\\Local\\Temp\\daaxswx0..sql",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\daaxswx0..sql",
@@ -716,19 +968,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
-              "Title": "EditOfferVM.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\ViewModels\\EditOfferVM.cs",
-              "RelativeDocumentMoniker": "Trim\\Models\\ViewModels\\EditOfferVM.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\ViewModels\\EditOfferVM.cs",
-              "RelativeToolTip": "Trim\\Models\\ViewModels\\EditOfferVM.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAA0wA0AAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-16T16:35:06.001Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 58,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Index.cshtml",
               "RelativeDocumentMoniker": "Trim\\Pages\\Index.cshtml",
@@ -740,31 +980,30 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 59,
               "Title": "beoqlyfs..sql",
               "DocumentMoniker": "C:\\Users\\Piotr\\AppData\\Local\\Temp\\beoqlyfs..sql",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\beoqlyfs..sql",
               "ToolTip": "C:\\Users\\Piotr\\AppData\\Local\\Temp\\beoqlyfs..sql",
               "RelativeToolTip": "..\\..\\..\\..\\AppData\\Local\\Temp\\beoqlyfs..sql",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2026-05-16T12:46:58.832Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-16T12:46:58.832Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 60,
               "Title": "Trim.csproj",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Trim.csproj",
               "RelativeDocumentMoniker": "Trim\\Trim.csproj",
               "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Trim.csproj",
               "RelativeToolTip": "Trim\\Trim.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2026-05-16T11:37:32.435Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 61,
               "Title": "RegisterModel.cs",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\RegisterModel.cs",
               "RelativeDocumentMoniker": "Trim\\Models\\RegisterModel.cs",
@@ -776,7 +1015,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 63,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "Trim\\Pages\\_ViewStart.cshtml",
@@ -788,7 +1027,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 62,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "Trim\\Pages\\_ViewImports.cshtml",
@@ -802,46 +1041,19 @@
         },
         {
           "DockedWidth": 280,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "Order.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\Order.cs",
-              "RelativeDocumentMoniker": "Trim\\Models\\Order.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\Order.cs",
-              "RelativeToolTip": "Trim\\Models\\Order.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-20T07:11:34.313Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "Offer.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\Offer.cs",
-              "RelativeDocumentMoniker": "Trim\\Models\\Offer.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Models\\Offer.cs",
-              "RelativeToolTip": "Trim\\Models\\Offer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-19T11:01:12.487Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "CallFactoryForVinHelper.cs",
-              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\CallFactoryForVinHelper.cs",
-              "RelativeDocumentMoniker": "Trim\\Helpers\\CallFactoryForVinHelper.cs",
-              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Helpers\\CallFactoryForVinHelper.cs",
-              "RelativeToolTip": "Trim\\Helpers\\CallFactoryForVinHelper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "Case.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Case.cshtml.cs",
+              "RelativeDocumentMoniker": "Trim\\Pages\\Customer\\Case.cshtml.cs",
+              "ToolTip": "C:\\Users\\Piotr\\source\\repos\\piotr99\\Trim\\Trim\\Pages\\Customer\\Case.cshtml.cs",
+              "RelativeToolTip": "Trim\\Pages\\Customer\\Case.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-18T12:11:29.137Z",
+              "WhenOpened": "2026-05-20T10:57:40.018Z",
               "EditorCaption": ""
             }
           ]

@@ -120,7 +120,18 @@ else
                     <!-- Opis zgłoszenia (Pozostaje bez zmian) -->
                     <div>
                         <label class="form-label text-muted small mb-0">Opis (Description)</label>
-                        <div class="p-3 bg-light rounded text-dark" style="white-space: pre-wrap;">@Model.CurrentCase.Description</div>
+
+                        <div class="mt-3">
+                            <textarea id="edit-description-input" class="form-control mb-2" rows="4">@Model.CurrentCase.Description</textarea>
+
+                            <div class="d-flex gap-2">
+                                <button id="save-description-btn" class="btn btn-primary btn-sm">Zapisz nowy opis</button>
+                                <!-- Unikalne ID i inny kolor dla przycisku AI -->
+                                <button id="generate-ai-btn" class="btn btn-outline-info btn-sm">
+                                    <i class="bi bi-robot me-1"></i> Wygeneruj opis przez AI
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -242,45 +253,52 @@ else
             // ==========================================
             // 2. FUNKCJE POMOCNICZE (RENDEROWANIE)
             // ==========================================
-            function renderComments(comments) {
-                // Szybkie wyjście, jeśli brak danych
-                if (!comments || comments.length === 0) {
-                    container.html(`
-                        <div class="text-center text-muted my-5">
-                            <i class="bi bi-chat-square-text fs-3 d-block mb-2 text-opacity-50"></i>
-                            <span class="small">Brak historii aktywności.</span>
-                        </div>
-                    `);
-                    return;
-                }
+                    function renderComments(comments) {
+            if (!comments || comments.length === 0) {
+                container.html(`
+                    <div class="text-center text-muted my-5">
+                        <i class="bi bi-chat-square-text fs-3 d-block mb-2 text-opacity-50"></i>
+                        <span class="small">Brak historii aktywności.</span>
+                    </div>
+                `);
+                return;
+            }
+            console.log(comments);
 
-                let htmlContent = '';
+            let htmlContent = '';
 
-                $.each(comments, function(_, log) {
-                    const isInternal = log.direction === 'INTERNAL';
-                    const itemClass = isInternal ? 'bg-warning bg-opacity-10 border-warning' : 'bg-light border-secondary border-opacity-25';
-                    const iconClass = isInternal ? 'bi-journal-text text-warning' : 'bi-envelope text-primary';
-                    const senderName = log.senderName || 'System';
-                    const sentDate = new Date(log.sentAt).toLocaleString('pl-PL', {
-                        day: '2-digit', month: '2-digit', hour: '2-digit', minute:'2-digit'
-                    });
+            $.each(comments, function(_, log) {
+                // TUTAJ ZMIANA: Sprawdzamy pole isPrivateMessage ALBO direction
+                const isInternal = log.isPrivate === true;
 
-                    htmlContent += `
-                        <div class="card mb-3 ${itemClass} border shadow-none">
-                            <div class="card-body p-3">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="fw-bold small">
-                                        <i class="bi ${iconClass} me-1"></i> ${senderName}
-                                    </span>
-                                    <span class="text-muted small">${sentDate}</span>
-                                </div>
-                                <div class="small text-dark" style="white-space: pre-wrap;">${log.messageContent}</div>
-                            </div>
-                        </div>`;
+                // Jeśli to notatka wewn., dajemy żółty kolor, jeśli publiczna - niebieski/szary
+                const itemClass = isInternal ? 'bg-warning bg-opacity-10 border-warning' : 'bg-light border-secondary border-opacity-25';
+                const iconClass = isInternal ? 'bi-journal-text text-warning' : 'bi-envelope text-primary';
+
+                // Dodajemy etykietę wizualną, żeby było jasne, że to notatka
+                const privateBadge = isInternal ? '<span class="badge bg-warning text-dark ms-2">Notatka wewn.</span>' : '';
+
+                const senderName = log.senderName || 'System';
+                const sentDate = new Date(log.sentAt).toLocaleString('pl-PL', {
+                    day: '2-digit', month: '2-digit', hour: '2-digit', minute:'2-digit'
                 });
 
-                container.html(htmlContent);
-            }
+                htmlContent += `
+                    <div class="card mb-3 ${itemClass} border shadow-none">
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="fw-bold small">
+                                    <i class="bi ${iconClass} me-1"></i> ${senderName} ${privateBadge}
+                                </span>
+                                <span class="text-muted small">${sentDate}</span>
+                            </div>
+                            <div class="small text-dark" style="white-space: pre-wrap;">${log.messageContent}</div>
+                        </div>
+                    </div>`;
+            });
+
+            container.html(htmlContent);
+        }
 
             // ==========================================
             // 3. KOMUNIKACJA Z SERWEREM (AJAX)
@@ -303,7 +321,7 @@ else
                     url: `/NewUI/Case?handler=SaveComment&id=${caseId}`,
                     type: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify({ MessageContent: content, IsPrivateMessage: isPrivate }),
+                    data: JSON.stringify({ MessageContent: content, IsPrivateMessage: isPrivate, caseId: caseId }),
                     headers: { "RequestVerificationToken": token },
                     success: function() {
                         $(textareaSelector).val('');
@@ -445,6 +463,79 @@ else
                 }
             });
         });
+        });
+              document.addEventListener("DOMContentLoaded", function () {
+            const caseId = @Model.CurrentCase.Id;
+            const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
+            const token = tokenElement ? tokenElement.value : '';
+
+            const textArea = document.getElementById('edit-description-input');
+
+            // --- 1. LOGIKA ZAPISU (którą już wcześniej napisaliśmy) ---
+            document.getElementById('save-description-btn').addEventListener('click', function () {
+                const newDescription = textArea.value;
+                const button = this;
+
+                button.disabled = true;
+                button.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Zapisywanie...';
+
+                fetch(`/NewUI/Case?handler=UpdateDescription&id=${caseId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': token
+                    },
+                    body: JSON.stringify({ description: newDescription })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('description').textContent = newDescription;
+                        alert("Opis został zaktualizowany.");
+                    } else {
+                        alert("Nie udało się zapisać: " + data.error);
+                    }
+                })
+                .finally(() => {
+                    button.disabled = false;
+                    button.textContent = 'Zapisz nowy opis';
+                });
+            });
+
+            // --- 2. NOWA LOGIKA: GENEROWANIE PRZEZ AI ---
+            document.getElementById('generate-ai-btn').addEventListener('click', function () {
+                const aiButton = this;
+
+                // Zmieniamy stan przycisku na czas generowania tekstu przez LLM
+                aiButton.disabled = true;
+                aiButton.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> AI myśli...';
+
+                // Zwróć uwagę na handler=GenerateAiSummary
+                fetch(`/NewUI/Case?handler=GenerateAiSummary&id=${caseId}`, {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': token
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Magia! Wstawiamy wygenerowany tekst do pola textarea
+                        textArea.value = data.summary;
+                    } else {
+                        alert("Błąd AI: " + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error("Błąd sieci/AI:", error);
+                    alert("Wystąpił błąd podczas łączenia z serwisem AI.");
+                })
+                .finally(() => {
+                    // Przywracamy przycisk do pierwotnego stanu
+                    aiButton.disabled = false;
+                    aiButton.innerHTML = '<i class="bi bi-robot me-1"></i> Wygeneruj opis przez AI';
+                });
+            });
         });
     </script>
 }

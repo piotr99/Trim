@@ -15,18 +15,35 @@ namespace Trim.Helpers
     public class SalespeopleHelper : ISalespeopleHelper
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILogger<SalespeopleHelper> _logger;
 
-        public SalespeopleHelper(UserManager<ApplicationUser> userManager)
+        public SalespeopleHelper(UserManager<ApplicationUser> userManager, ILogger<SalespeopleHelper> logger) 
         {
             _userManager = userManager;
+                _logger = logger;
         }
 
         public async Task<List<Salesperson>> GetSalespeople()
         {
-            // Metoda OfType<> mówi EF Core, aby wyciągnął tylko rekordy typu Salesperson
-            return await _userManager.Users
-                .OfType<Salesperson>()
-                .ToListAsync();
+            _logger.LogInformation("Rozpoczęto pobieranie listy sprzedawców z bazy danych.");
+
+            try
+            {
+                var salespeople = await _userManager.Users
+                    .AsNoTracking()
+                    .OfType<Salesperson>()
+                    .ToListAsync();
+
+                _logger.LogInformation("Pobrano {Count} sprzedawców z bazy.", salespeople.Count);
+
+                return salespeople;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Krytyczny błąd podczas pobierania listy sprzedawców.");
+
+                return new List<Salesperson>();
+            }
         }
     }
 }

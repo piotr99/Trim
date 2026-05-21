@@ -76,6 +76,26 @@
               "target": "Package",
               "version": "[10.0.8, )"
             },
+            "Microsoft.Extensions.AI": {
+              "target": "Package",
+              "version": "[10.6.0, )"
+            },
+            "Microsoft.Extensions.AI.Ollama": {
+              "target": "Package",
+              "version": "[9.7.0-preview.1.25356.2, )"
+            },
+            "OllamaSharp": {
+              "target": "Package",
+              "version": "[5.4.25, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "Serilog.Sinks.MSSqlServer": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
             "System.ComponentModel.Annotations": {
               "target": "Package",
               "version": "[5.0.0, )"

@@ -12,8 +12,8 @@ using Trim.DbContext;
 namespace Trim.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260519113705_init1")]
-    partial class init1
+    [Migration("20260520203315_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -579,6 +579,9 @@ namespace Trim.Migrations
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("ParkingLot")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");

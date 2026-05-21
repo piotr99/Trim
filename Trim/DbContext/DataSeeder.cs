@@ -275,6 +275,24 @@ public static class DataSeeder
             DrivetrainId = drv6x2.Id
         };
 
+        var config4 = new VehicleConfiguration
+        {
+            SizeId = gCab.Id,
+            EngineId = eng13.Id,
+            GearboxId = gbAllison.Id,
+            InteriorId = intrComfort.Id,
+            DrivetrainId = drv6x2.Id
+        };
+
+        var config5 = new VehicleConfiguration
+        {
+            SizeId = gCab.Id,
+            EngineId = eng13.Id,
+            GearboxId = gbAllison.Id,
+            InteriorId = intrComfort.Id,
+            DrivetrainId = drv6x2.Id
+        };
+
         // ===== POJAZDY =====
         var vehicle1 = new Vehicle
         {
@@ -299,12 +317,30 @@ public static class DataSeeder
             Name = "Scania R420",
             Vin = "VINDEMO00000000003",
             Status = VehicleStatusEnum.DRAFT,
-            CustomerId = customer1.Id,
             Configuration = config3
         };
 
+        var vehicle4 = new Vehicle
+        {
+            Name = "Scania S500 Highline",
+            Vin = "VINDEMO00000000004",
+            Status = VehicleStatusEnum.DRAFT,
+            Configuration = config4,
+            ParkingLot = true
+        };
+
+        // Utworzenie pojazdu nr 5 (np. z config5)
+        var vehicle5 = new Vehicle
+        {
+            Name = "Scania P320 XT",
+            Vin = "VINDEMO00000000005",
+            Status = VehicleStatusEnum.DRAFT,
+            Configuration = config5,
+            ParkingLot = true
+        };
+
         // Zapiszmy je najpierw, aby EF poprawnie śledził graf obiektów
-        db.Vehicles.AddRange(vehicle1, vehicle2, vehicle3);
+        db.Vehicles.AddRange(vehicle1, vehicle2, vehicle3, vehicle4, vehicle5);
         await db.SaveChangesAsync();
 
         // ===== OFERTY (Offers) =====
