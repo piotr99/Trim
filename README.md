@@ -14,6 +14,7 @@ System CRM i wsparcia sprzedaży dedykowany dla branży samochodów ciężarowyc
 Aby uruchomić projekt lokalnie, upewnij się, że posiadasz zainstalowane:
 * [Zestaw SDK dla platformy .NET](https://dotnet.microsoft.com/download)
 * [Docker Desktop](https://www.docker.com/products/docker-desktop)
+* [Ollama](https://ollama.com/download/windows)
 
 ---
 
